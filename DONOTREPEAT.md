@@ -5,7 +5,53 @@ Track of implemented styles and their snapshots to ensure **no repetition** acro
 ## Acceptance summary
 
 - **Styles 1, 5, 10 — Accepted.** Reachable at `/1` (Style 1), `/2` (Style 10 — Maximalist/Bold), `/3` (Style 5 — Art deco).
-- **Styles 2, 3, 4, 6, 7, 8, 9 — Rejected.** Removed from the app. Details retained below for reference and to avoid repeating these directions in future styles.
+- **Styles 2, 3, 4, 6, 7, 8, 9 — Rejected.** Removed from the app. See **Rejected styles** below.
+
+---
+
+## Rejected styles — avoid in future UI generation
+
+Do **not** reuse these color palettes, typography, layouts, or approaches when generating new UI styles.
+
+### Rejected color palettes
+- **Warm cream + burgundy:** `#f8f4ef` bg, `#6b2d2d` accent (Editorial)
+- **Dark blue-gray + cyan:** `#0f1419` bg, `#00e5cc` accent (Retro-futuristic)
+- **Sage + earth green:** `#e8f0e8` bg, `#2d5a27` accent (Organic)
+- **Charcoal + steel blue:** `#252528` bg, `#5b8fb9` accent (Industrial)
+- **Ivory + deep plum:** `#fafaf8` bg, `#5c4d7a` accent (Luxury)
+- **Warm cream + coral/mint/butter:** `#fef9f0` bg, `#e07a5f` coral, `#81b29a` mint, `#f2cc8f` butter (Playful)
+- **Lavender + soft violet:** `#e8e0f0` bg, `#9b8bb5` accent (Soft pastel)
+
+### Rejected typography
+- Playfair Display + Source Serif 4  
+- Orbitron + Rajdhani  
+- Nunito only  
+- Bebas Neue + DM Sans  
+- Libre Baskerville + Lora  
+- Fredoka only  
+- Outfit only (in a soft pastel context)
+
+### Rejected layout / component patterns
+- Bento 12-column grid with “every 4th item wide” (col-span-8 vs col-span-4)
+- Single-column list only (no multi-column grid)
+- Uniform 2–3 column grid with equal card sizes
+- 2-column-only grid with narrow max-width and soft shadows
+- Rivet dots (small circular accents at card corners)
+- Pill buttons (rounded-full) with scale hover
+- Rounded-full buttons + rounded-2xl cards together
+- Very rounded cards (rounded-[1.5rem] or rounded-3xl) in an organic/playful context
+
+### Rejected visual effects and tone
+- Glassmorphism (backdrop-blur) + left-border accent on cards
+- Cyan/teal glow (text-shadow, box-shadow)
+- Noise/grain texture overlay
+- Editorial / magazine tone
+- Retro-futuristic / glass tone
+- Organic / natural tone
+- Industrial / utilitarian tone with 1px borders
+- Luxury / refined tone (generous whitespace, narrow max-width, soft shadows)
+- Playful / toy-like tone (bouncy scale, coral/mint/butter)
+- Soft pastel tone with header gradient overlay
 
 ---
 
@@ -47,113 +93,6 @@ No rounded corners. Electric yellow accents only.
 
 ---
 
-## Style 2 — Path: `/2` — **Rejected**
-
-**Name:** Editorial / Magazine  
-**Snapshot:** `snapshots/style-2.txt`  
-**Screenshot:** `snapshots/style-2.png` (capture when running app)
-
-### High-level idea
-- Editorial, magazine-like: serif typography, warm cream background, bento grid with mixed card widths.
-- Rounded corners, soft shadows, generous whitespace.
-
-### Color scheme
-- Background: `#f8f4ef` (warm cream)
-- Text: `#2c1810` (dark brown)
-- Muted / secondary: `#6b4423`, `#8b4510`, `#d4c4b0`
-- Accent: `#6b2d2d` (deep burgundy) for primary actions and links
-
-### Layout
-- Header: max-w-5xl, no thick border; title + subtitle left, two rounded-full buttons right.
-- Main: 12-column grid; every 4th item col-span-8 (wide), others col-span-4. Cards rounded-2xl.
-
-### Text representation (from snapshot)
-```
-Background: Warm cream. Fonts: Playfair Display, Source Serif 4 (serif).
-Header: "Procurement links" (serif) + rounded-full "Import from JSON" | "Add link" (burgundy).
-Bento grid: 12-col; every 4th card wide (8 cols). Cards rounded-2xl, soft border, burgundy links.
-```
-
-### Do NOT repeat in future styles
-- Warm cream (#f8f4ef) + burgundy (#6b2d2d) palette
-- Playfair Display + Source Serif 4
-- Bento 12-column grid with "every 4th item wide"
-- Rounded-full buttons, rounded-2xl cards
-- Editorial / magazine tone
-
----
-
-## Style 3 — Path: `/3` — **Rejected**
-
-**Name:** Retro-futuristic / Glass  
-**Snapshot:** `snapshots/style-3.txt`  
-**Screenshot:** `snapshots/style-3.png` (capture when running app)
-
-### High-level idea
-- Retro-futuristic: dark blue-gray background, cyan glow, geometric sans (Orbitron, Rajdhani), glassmorphism cards in a single-column list with left-border accent.
-
-### Color scheme
-- Background: `#0f1419` (dark blue-gray)
-- Text: `#e0e6eb` (light gray)
-- Muted: `#6b7b8a`
-- Accent: `#00e5cc` (cyan/teal) with glow (text-shadow, box-shadow)
-
-### Layout
-- Header: thin cyan/30 bottom border; Orbitron title with glow; two outlined/ghost buttons.
-- Main: single-column list (max-w-3xl). Each card: 4px left border cyan, glass (backdrop-blur), rounded-lg; city/state left, links + Edit right.
-
-### Text representation (from snapshot)
-```
-Background: Dark blue-gray + soft cyan glow orbs. Fonts: Orbitron, Rajdhani.
-Header: "PROCUREMENT LINKS" (cyan, glow) + outline buttons.
-Single-column list: cards with left cyan border, glass bg, city left / links right.
-```
-
-### Do NOT repeat in future styles
-- Dark blue-gray (#0f1419) + cyan (#00e5cc) palette
-- Orbitron + Rajdhani
-- Single-column list (no multi-column grid)
-- Glassmorphism (backdrop-blur) + left-border accent cards
-- Glow effects (text-shadow, box-shadow on cyan)
-
----
-
-## Style 4 — Path: `/4` — **Rejected**
-
-**Name:** Organic / Natural  
-**Snapshot:** `snapshots/style-4.txt`  
-**Screenshot:** `snapshots/style-4.png` (capture when running app)
-
-### High-level idea
-- Organic, natural: sage green background, earth green accent, Nunito (soft rounded sans), uniform 2–3 column grid with very rounded cards; subtle noise texture.
-
-### Color scheme
-- Background: `#e8f0e8` (sage green)
-- Text: `#1a2f1a` (dark green)
-- Muted: `#3d5c3d`, `#a8c5a8`, `#b8d0b8`
-- Accent: `#2d5a27` (earth green) for primary actions and links
-
-### Layout
-- Header: max-w-4xl; title + subtitle left; rounded-full buttons right.
-- Main: grid 2 cols (md: 3). Cards equal size, rounded-[1.5rem], white/90, soft green border.
-
-### Text representation (from snapshot)
-```
-Background: Sage green + subtle noise. Font: Nunito.
-Header: "Procurement links" + rounded-full Import | Add link (earth green).
-Uniform 2–3 col grid; cards rounded-[1.5rem], white/90, earth green links.
-```
-
-### Do NOT repeat in future styles
-- Sage (#e8f0e8) + earth green (#2d5a27) palette
-- Nunito only
-- Uniform 2–3 column grid (equal card sizes)
-- Very rounded cards (rounded-[1.5rem] or rounded-3xl)
-- Noise/grain texture overlay
-- Organic / natural tone
-
----
-
 ## Style 5 — Path: `/3` — **Accepted**
 
 **Name:** Art deco / Geometric  
@@ -187,139 +126,6 @@ Header: ◆ "PROCUREMENT LINKS" (gold border) + gold buttons (tracking-widest).
 - Strict 4-column grid
 - Sharp corners (rounded-none) on cards/dialogs
 - Decorative diamond/symbol in header
-
----
-
-## Style 6 — Path: `/6` — **Rejected**
-
-**Name:** Industrial / Utilitarian  
-**Snapshot:** `snapshots/style-6.txt`
-
-### High-level idea
-- Industrial, utilitarian: charcoal background, steel blue accent, Bebas Neue (display) + DM Sans (body). Clean 3-column grid with small “rivet” dot accents on cards (top-right, bottom-left).
-
-### Color scheme
-- Background: `#252528` (charcoal)
-- Text: `#e8e8ed` (light gray)
-- Muted: `#8e8e93`
-- Accent: `#5b8fb9` (steel blue) for CTAs, links, rivet dots
-- Card bg: `#2d2d30`, border `#3a3a3e`
-
-### Layout
-- Header: thin bottom border; Bebas Neue title left; outline + solid steel blue buttons right.
-- Main: responsive grid 1/2/3 columns. Cards equal size, 1px border, rivet dots at two corners.
-
-### Text representation (from snapshot)
-```
-Background: Charcoal. Fonts: Bebas Neue, DM Sans.
-Header: "Procurement links" + steel blue Import | Add link.
-3-col grid; cards with rivet dots (top-right, bottom-left), steel blue links.
-```
-
-### Do NOT repeat in future styles
-- Charcoal (#252528) + steel blue (#5b8fb9) palette
-- Bebas Neue + DM Sans
-- Rivet dots (small circular accents at card corners)
-- Industrial / utilitarian tone with 1px borders
-
----
-
-## Style 7 — Path: `/7` — **Rejected**
-
-**Name:** Luxury / Refined  
-**Snapshot:** `snapshots/style-7.txt`
-
-### High-level idea
-- Luxury, refined: ivory background, dark charcoal text, deep plum accent. Libre Baskerville + Lora. Generous whitespace, narrow max-width content, 2-column grid. Cards with thin border and subtle shadow.
-
-### Color scheme
-- Background: `#fafaf8` (ivory)
-- Text: `#1a1a1a` (dark charcoal)
-- Muted: `#5a5a5a`, borders `#e8e8e6`, `#e0e0de`
-- Accent: `#5c4d7a` (deep plum) for CTAs and links
-
-### Layout
-- Header: no thick border; centered max-w-2xl; large serif title; buttons below with generous top padding.
-- Main: 2-column grid only (1 col mobile). Cards white, rounded-sm, shadow-sm, hover shadow-md.
-
-### Text representation (from snapshot)
-```
-Background: Ivory. Fonts: Libre Baskerville, Lora.
-Header: Serif title + subtitle; plum outline/solid buttons below.
-2-col grid; white cards, thin border, soft shadow, plum links.
-```
-
-### Do NOT repeat in future styles
-- Ivory (#fafaf8) + deep plum (#5c4d7a) palette
-- Libre Baskerville + Lora
-- Luxury / refined tone with 2-column-only grid
-- Generous whitespace + narrow max-width + soft shadows on cards
-
----
-
-## Style 8 — Path: `/8` — **Rejected**
-
-**Name:** Playful / Toy-like  
-**Snapshot:** `snapshots/style-8.txt`
-
-### High-level idea
-- Playful, toy-like: warm cream background (#fef9f0), coral primary (#e07a5f), mint (#81b29a) and butter (#f2cc8f). Fredoka only. Pill buttons (rounded-full), rounded-2xl cards, bouncy hover (scale). 3-column grid.
-
-### Color scheme
-- Background: `#fef9f0` (warm cream)
-- Text: `#2d2d2d`, muted `#6b6b6b`
-- Accent primary: `#e07a5f` (coral)
-- Accent secondary: `#81b29a` (mint)
-- Border/decor: `#f2cc8f` (butter)
-
-### Layout
-- Header: coral title; pill buttons (mint + coral); hover scale.
-- Main: 3-col grid; cards white, rounded-2xl, butter border, shadow; hover scale and coral-tinted border. Links mint → coral on hover.
-
-### Text representation (from snapshot)
-```
-Background: Warm cream. Font: Fredoka.
-Header: Coral title + pill "Import JSON" (mint), "Add link" (coral).
-3-col grid; rounded-2xl cards, butter border, coral/mint links, bouncy hover.
-```
-
-### Do NOT repeat in future styles
-- Coral (#e07a5f) + mint (#81b29a) + butter (#f2cc8f) playful palette
-- Fredoka only
-- Pill buttons (rounded-full) with scale hover
-- Playful / toy-like tone with rounded-2xl cards
-
----
-
-## Style 9 — Path: `/9` — **Rejected**
-
-**Name:** Soft / Pastel  
-**Snapshot:** `snapshots/style-9.txt`
-
-### High-level idea
-- Soft, pastel: lavender background (#e8e0f0), soft violet accent (#9b8bb5). Outfit only. Rounded-xl (not pill) buttons and cards. Subtle gradient in header. Soft shadows, white/90 cards. 3-column grid.
-
-### Color scheme
-- Background: `#e8e0f0` (soft lavender)
-- Text: `#3d3548`, muted `#7a6b8a`
-- Accent: `#9b8bb5` (soft violet)
-- Borders: `#d4c8e0`; dialog bg `#f5f0fa`
-
-### Layout
-- Header: soft gradient overlay; rounded-xl buttons (white/80 outline + violet solid).
-- Main: 3-col grid; cards white/90, rounded-xl, soft border; hover shadow and violet-tinted border.
-
-### Text representation (from snapshot)
-```
-Background: Soft lavender. Font: Outfit.
-Header: Subtle gradient; rounded-xl Import (outline), Add link (violet).
-3-col grid; white/90 cards, rounded-xl, soft violet links, gentle hover.
-```
-
-### Do NOT repeat in future styles
-- Lavender (#e8e0f0) + soft violet (#9b8bb5) pastel palette
-- Outfit only
-- Soft pastel tone with rounded-xl (not pill) and header gradient overlay
 
 ---
 

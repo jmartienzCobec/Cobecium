@@ -1,0 +1,22 @@
+STYLE 2 — EDITORIAL / MAGAZINE
+Path: /2
+
+=== TEXT REPRESENTATION OF DISPLAY ===
+
+- Background: Warm cream (#f8f4ef)
+- Typography: Playfair Display (headings), Source Serif 4 (body) — serif only, no monospace
+- Accent: Deep burgundy (#6b2d2d) for primary button and links; brown (#6b4423, #8b4510) for secondary
+
+HEADER:
+  No thick colored border. Generous padding. Left: large serif title "Procurement links", subtitle "State and city procurement portals" in brown.
+  Right: "Import from JSON" (rounded-full, outline brown), "Add link" (rounded-full, solid burgundy).
+
+MAIN CONTENT:
+  Bento-style 12-column grid. Every 4th card is wide (col-span-8); others col-span-4.
+  Cards: Rounded-2xl, soft border (#d4c4b0), white/70 background, subtle shadow. Hover: shadow-md, border tint burgundy.
+  Each card: City (Playfair Display, large), State (brown, small), "Official site" and "Procurement portal" links (burgundy), "Edit" (brown).
+
+EMPTY STATE:
+  Single rounded-3xl dashed border block, cream/white, "No procurement links yet.", burgundy "Add link" button.
+
+No black background. No electric yellow. No monospace. No raw rectangular borders. Serif editorial feel, bento grid, warm palette.

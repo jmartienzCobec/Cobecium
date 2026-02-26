@@ -1,0 +1,21 @@
+STYLE 8 — PLAYFUL / TOY-LIKE
+Path: /8
+
+=== TEXT REPRESENTATION OF DISPLAY ===
+
+- Background: Warm cream/butter (#fef9f0)
+- Typography: Fredoka (single font, rounded friendly)
+- Accents: Coral (#e07a5f) primary, mint (#81b29a) secondary, butter (#f2cc8f) borders
+
+HEADER:
+  No thick border. Title "Procurement links" in coral (3xl), subtitle muted. Buttons: pill-shaped (rounded-full) — "Import JSON" (mint bg), "Add link" (coral bg). Hover scale-105.
+
+MAIN CONTENT:
+  3-column responsive grid. Cards: white bg, rounded-2xl, 2px butter border, shadow-md. Hover: shadow-lg, scale-[1.02], border tinted coral. City (coral, xl), state (muted), Official site / Procurement (mint, hover coral), Edit (muted). Chunky, friendly.
+
+EMPTY STATE:
+  rounded-3xl dashed butter border, white/60 bg, "No procurement links yet.", coral pill Add link.
+
+Dialog: rounded-3xl, butter border, coral title. Pill Cancel (mint outline), Import (coral).
+
+No sage, no Nunito, no organic tone. Playful multi-color (coral/mint/butter), Fredoka, pill buttons, bouncy hover scale.

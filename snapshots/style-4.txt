@@ -1,0 +1,21 @@
+STYLE 4 — ORGANIC / NATURAL
+Path: /4
+
+=== TEXT REPRESENTATION OF DISPLAY ===
+
+- Background: Sage green (#e8f0e8) with subtle SVG noise texture overlay (very low opacity)
+- Typography: Nunito only — soft, rounded sans-serif
+- Accent: Earth green (#2d5a27) for primary button and links; secondary greens (#3d5c3d, #a8c5a8, #b8d0b8)
+
+HEADER:
+  No thick border. Max-w-4xl. Title "Procurement links" (Nunito bold, dark green). Subtitle in mid-green.
+  Buttons: "Import from JSON" (rounded-full, white/80, green border), "Add link" (rounded-full, solid earth green).
+
+MAIN CONTENT:
+  Uniform grid: 2 columns (md: 3). All cards same size. Cards: rounded-[1.5rem] (very rounded), white/90 bg, soft green border (#b8d0b8). Hover: shadow-md, border darker green.
+  Each card: City (bold), State (green), "Official site" and "Procurement portal" (earth green, font-semibold), "Edit" (green).
+
+EMPTY STATE:
+  rounded-[2rem] dashed border, white/60, "No procurement links yet.", earth green "Add link".
+
+No cyan. No burgundy. No cream. No serif. No monospace. No asymmetric/bento grid. Equal-sized cards in 2–3 col grid. Nunito + sage + earth green only.

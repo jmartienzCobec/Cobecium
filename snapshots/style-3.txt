@@ -1,0 +1,21 @@
+STYLE 3 — RETRO-FUTURISTIC / GLASS
+Path: /3
+
+=== TEXT REPRESENTATION OF DISPLAY ===
+
+- Background: Dark blue-gray (#0f1419) with soft cyan glow orbs (blur) in corners
+- Typography: Orbitron (headings, buttons), Rajdhani (body) — geometric sans, no serif, no monospace
+- Accent: Cyan/teal (#00e5cc) with glow (text-shadow, box-shadow)
+
+HEADER:
+  Thin bottom border (1px) cyan/30. Title "PROCUREMENT LINKS" in Orbitron, cyan, tracking-widest, subtle glow. Subtitle gray.
+  Buttons: "Import JSON" (outline cyan), "Add link" (filled cyan/20 + border cyan). Both with hover glow.
+
+MAIN CONTENT:
+  Single-column vertical list (no grid). Max-width 3xl. Each item: card with left border (4px) cyan, glassmorphism (bg semi-transparent, backdrop-blur), rounded-lg, subtle inset glow.
+  Card layout: City (Orbitron) + State on left; right-aligned: "Official site →", "Procurement →", "Edit" (all cyan or gray). Hover: stronger border and outer glow.
+
+EMPTY STATE:
+  Dashed border cyan/40, glass bg, "No procurement links yet.", outline "Add link".
+
+No cream. No burgundy. No bento grid. No serif. List layout with left-border accent and cyan glow/glass only.

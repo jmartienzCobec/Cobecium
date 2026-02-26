@@ -1,0 +1,21 @@
+STYLE 10 — MAXIMALIST / BOLD
+Path: /10
+
+=== TEXT REPRESENTATION OF DISPLAY ===
+
+- Background: Dark (#1a1a1e) with diagonal stripe pattern (teal + orange lines, low opacity)
+- Typography: Syne (single font, bold/extra bold, uppercase)
+- Dual accents: Orange (#f59e0b) and teal (#0d9488)
+
+HEADER:
+  Thick (4px) orange bottom border. Left: "PROCUREMENT LINKS" (white, extrabold, uppercase). Center: small "STATE & CITY PORTALS" (muted). Right: "Import JSON" (teal outline), "Add link" (orange solid). Uppercase buttons.
+
+MAIN CONTENT:
+  3-column grid. Cards: dark bg (#25252a), 4px left border alternating orange/teal by index. Hover: left border switches to teal, box-shadow 4px 4px 0 teal (offset shadow). City (white, bold, uppercase), state (muted, uppercase), Official site (orange) / Procurement (teal) with hover swap, Edit (muted, uppercase). No rounded corners.
+
+EMPTY STATE:
+  4px dashed orange border, "NO PROCUREMENT LINKS YET.", teal outline Add link.
+
+Dialog: rounded-none, 4px orange border, orange title. Teal textarea border; orange Import button.
+
+No monospace, no single yellow (dual orange+teal), no corner brackets, no rivet dots. Maximalist: diagonal stripe bg, Syne uppercase, thick borders, alternating left-border cards, offset shadow on hover.

@@ -1,0 +1,19 @@
+STYLE 7 — LUXURY / REFINED
+Path: /7
+
+=== TEXT REPRESENTATION OF DISPLAY ===
+
+- Background: Ivory (#fafaf8)
+- Typography: Libre Baskerville (headings), Lora (body)
+- Accent: Deep plum (#5c4d7a) for buttons, links
+
+HEADER:
+  No thick border. Centered narrow (max-w-2xl). Large serif title "Procurement links", subtitle "State and city procurement portals". Buttons below: "Import from JSON" (outline plum), "Add link" (solid plum). Generous padding (py-12).
+
+MAIN CONTENT:
+  2-column grid (1 col on mobile). Cards: white bg, thin border (#e8e8e6), rounded-sm, subtle shadow, hover shadow-md and plum-tinted border. City (Libre Baskerville, xl), state (muted), Official site / Procurement (plum links), Edit (muted, small). Lots of whitespace (gap-8, p-6).
+
+EMPTY STATE:
+  Dashed border, rounded-sm, large padding, "No procurement links yet.", outline Add link.
+
+No charcoal, no steel blue, no Bebas Neue, no rivet dots, no 3-col or 4-col grid. Luxury serif pairing, ivory + plum, 2-col only, soft shadows.

@@ -1,0 +1,20 @@
+STYLE 6 — INDUSTRIAL / UTILITARIAN
+Path: /6
+
+=== TEXT REPRESENTATION OF DISPLAY ===
+
+- Background: Charcoal (#252528)
+- Typography: Bebas Neue (display/headings), DM Sans (body)
+- Accent: Steel blue (#5b8fb9) for primary actions, links, rivet dots
+
+HEADER:
+  Thin bottom border (#3a3a3e). Left: "Procurement links" (Bebas Neue, large), subtitle "State and city procurement portals" (muted gray). Right: "Import JSON" (outline, steel blue), "Add link" (solid steel blue, dark text).
+
+MAIN CONTENT:
+  3-column responsive grid (1 col mobile, 2 sm, 3 lg). Equal-size cards.
+  Cards: 1px border (#3a3a3e), background #2d2d30. Top-right and bottom-left small circular "rivet" dots in steel blue. City (Bebas Neue), state (muted), Official site / Procurement links (steel blue), Edit (muted, small). Hover: border lightens to steel blue.
+
+EMPTY STATE:
+  Dashed border block, "No procurement links yet.", outline "Add link" button.
+
+No monospace, no yellow, no black background, no asymmetric span-2, no serif display, no gold/navy, no corner brackets. Industrial condensed display + geometric sans, steel blue on charcoal.
