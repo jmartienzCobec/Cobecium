@@ -1,0 +1,226 @@
+"use client";
+
+import { useState } from "react";
+import { useMutation, useQuery } from "convex/react";
+import { api } from "../../convex/_generated/api";
+import type { Id } from "../../convex/_generated/dataModel";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import {
+  ProcurementLinkForm,
+  type ProcurementLinkFields,
+} from "@/components/ProcurementLinkForm";
+
+export function ProcurementGrid() {
+  const links = useQuery(api.procurementLinks.list);
+  const importFromJson = useMutation(api.procurementLinks.importFromJson);
+  const [formOpen, setFormOpen] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
+  const [importText, setImportText] = useState("");
+  const [importError, setImportError] = useState<string | null>(null);
+  const [importing, setImporting] = useState(false);
+  const [editing, setEditing] = useState<{
+    id: Id<"procurementLinks">;
+    fields: ProcurementLinkFields;
+  } | null>(null);
+
+  const handleAdd = () => {
+    setEditing(null);
+    setFormOpen(true);
+  };
+
+  const handleEdit = (id: Id<"procurementLinks">, fields: ProcurementLinkFields) => {
+    setEditing({ id, fields });
+    setFormOpen(true);
+  };
+
+  const handleFormClose = (open: boolean) => {
+    setFormOpen(open);
+    if (!open) setEditing(null);
+  };
+
+  const handleSubmit = (_data: ProcurementLinkFields) => {
+    setFormOpen(false);
+    setEditing(null);
+    // TODO: wire to Convex mutation when implemented
+  };
+
+  const handleImportSubmit = async () => {
+    setImportError(null);
+    let data: Record<string, Array<{ state: string; city: string; official_website: string; procurement_link: string }>>;
+    try {
+      data = JSON.parse(importText) as typeof data;
+    } catch {
+      setImportError("Invalid JSON.");
+      return;
+    }
+    if (typeof data !== "object" || data === null || Array.isArray(data)) {
+      setImportError("JSON must be an object with keys (e.g. us_state_procurement) and arrays of links.");
+      return;
+    }
+    const hasArrays = Object.values(data).every((v) => Array.isArray(v));
+    if (!hasArrays) {
+      setImportError("Each value must be an array of { state, city, official_website, procurement_link }.");
+      return;
+    }
+    setImporting(true);
+    try {
+      const { inserted } = await importFromJson({ data });
+      setImportOpen(false);
+      setImportText("");
+      setImportError(null);
+      if (inserted > 0) {
+        // Optional: toast or message "Imported N links"
+      }
+    } catch (e) {
+      setImportError(e instanceof Error ? e.message : "Import failed.");
+    } finally {
+      setImporting(false);
+    }
+  };
+
+  if (links === undefined) {
+    return (
+      <div className="container mx-auto p-6">
+        <p className="text-muted-foreground">Loading procurement links…</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="container mx-auto p-6 space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="font-display text-2xl font-semibold tracking-tight">
+            Procurement links
+          </h1>
+          <p className="text-muted-foreground text-sm mt-1">
+            State and city procurement portals
+          </p>
+        </div>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => { setImportOpen(true); setImportError(null); setImportText(""); }}>
+            Import from JSON
+          </Button>
+          <Button onClick={handleAdd}>Add link</Button>
+        </div>
+      </div>
+
+      <Dialog open={importOpen} onOpenChange={setImportOpen}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Import procurement links</DialogTitle>
+          </DialogHeader>
+          <p className="text-muted-foreground text-sm">
+            Paste JSON in the form of an object with keys and arrays of links, e.g.{" "}
+            <code className="text-xs bg-muted px-1 rounded">&#123; &quot;us_state_procurement&quot;: [ &#123; &quot;state&quot;, &quot;city&quot;, &quot;official_website&quot;, &quot;procurement_link&quot; &#125;, ... ] &#125;</code>
+          </p>
+          <textarea
+            className="min-h-[200px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            placeholder={'{"us_state_procurement": [{"state": "...", "city": "...", "official_website": "...", "procurement_link": "..."}]}'}
+            value={importText}
+            onChange={(e) => setImportText(e.target.value)}
+          />
+          {importError && (
+            <p className="text-destructive text-sm">{importError}</p>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setImportOpen(false)} disabled={importing}>
+              Cancel
+            </Button>
+            <Button onClick={handleImportSubmit} disabled={importing || !importText.trim()}>
+              {importing ? "Importing…" : "Import"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {links.length === 0 ? (
+          <Card className="sm:col-span-2 lg:col-span-3 border-dashed">
+            <CardContent className="flex flex-col items-center justify-center py-12 text-center">
+              <p className="text-muted-foreground mb-4">
+                No procurement links yet. Run the seed or add one.
+              </p>
+              <Button variant="outline" onClick={handleAdd}>
+                Add link
+              </Button>
+            </CardContent>
+          </Card>
+        ) : (
+          links.map((link) => (
+            <Card key={link._id} className="flex flex-col">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg">{link.city}</CardTitle>
+                <CardDescription>{link.state}</CardDescription>
+              </CardHeader>
+              <CardContent className="flex-1 space-y-2 text-sm">
+                {link.official_website && (
+                  <p>
+                    <a
+                      href={link.official_website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline truncate block"
+                    >
+                      Official site
+                    </a>
+                  </p>
+                )}
+                {link.procurement_link && (
+                  <p>
+                    <a
+                      href={link.procurement_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline truncate block"
+                    >
+                      Procurement portal
+                    </a>
+                  </p>
+                )}
+              </CardContent>
+              <CardContent className="pt-0">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() =>
+                    handleEdit(link._id, {
+                      state: link.state,
+                      city: link.city,
+                      official_website: link.official_website,
+                      procurement_link: link.procurement_link,
+                    })
+                  }
+                >
+                  Edit
+                </Button>
+              </CardContent>
+            </Card>
+          ))
+        )}
+      </div>
+
+      <ProcurementLinkForm
+        open={formOpen}
+        onOpenChange={handleFormClose}
+        initial={editing?.fields}
+        onSubmit={handleSubmit}
+        isEditing={editing !== null}
+      />
+    </div>
+  );
+}

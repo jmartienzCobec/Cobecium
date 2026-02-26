@@ -1,0 +1,16 @@
+# Dependencies
+node_modules
+
+# Env files (secrets and local config)
+.env
+.env.example
+.env.local
+.env*.local
+
+# Build and local state
+dist
+.convex/local
+
+# Logs and OS
+*.log
+.DS_Store
