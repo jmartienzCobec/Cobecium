@@ -1,11 +1,11 @@
 # DONOTREPEAT.md — Procurement hub UI styles
 
-Track of implemented styles and their snapshots to ensure **no repetition** across /1 through /5.
+Track of implemented styles and their snapshots to ensure **no repetition** across /1 through /10.
 
 ## Acceptance summary
 
-- **Styles 1 and 5 — Accepted.** Kept in the app; reachable at `/1` and `/5`.
-- **Styles 2, 3, and 4 — Rejected.** Removed from the app. Details retained below for reference and to avoid repeating these directions in future styles.
+- **Styles 1, 5, 10 — Accepted.** Reachable at `/1` (Style 1), `/2` (Style 10 — Maximalist/Bold), `/3` (Style 5 — Art deco).
+- **Styles 2, 3, 4, 6, 7, 8, 9 — Rejected.** Removed from the app. Details retained below for reference and to avoid repeating these directions in future styles.
 
 ---
 
@@ -154,7 +154,7 @@ Uniform 2–3 col grid; cards rounded-[1.5rem], white/90, earth green links.
 
 ---
 
-## Style 5 — Path: `/5` — **Accepted**
+## Style 5 — Path: `/3` — **Accepted**
 
 **Name:** Art deco / Geometric  
 **Snapshot:** `snapshots/style-5.txt`  
@@ -187,3 +187,172 @@ Header: ◆ "PROCUREMENT LINKS" (gold border) + gold buttons (tracking-widest).
 - Strict 4-column grid
 - Sharp corners (rounded-none) on cards/dialogs
 - Decorative diamond/symbol in header
+
+---
+
+## Style 6 — Path: `/6` — **Rejected**
+
+**Name:** Industrial / Utilitarian  
+**Snapshot:** `snapshots/style-6.txt`
+
+### High-level idea
+- Industrial, utilitarian: charcoal background, steel blue accent, Bebas Neue (display) + DM Sans (body). Clean 3-column grid with small “rivet” dot accents on cards (top-right, bottom-left).
+
+### Color scheme
+- Background: `#252528` (charcoal)
+- Text: `#e8e8ed` (light gray)
+- Muted: `#8e8e93`
+- Accent: `#5b8fb9` (steel blue) for CTAs, links, rivet dots
+- Card bg: `#2d2d30`, border `#3a3a3e`
+
+### Layout
+- Header: thin bottom border; Bebas Neue title left; outline + solid steel blue buttons right.
+- Main: responsive grid 1/2/3 columns. Cards equal size, 1px border, rivet dots at two corners.
+
+### Text representation (from snapshot)
+```
+Background: Charcoal. Fonts: Bebas Neue, DM Sans.
+Header: "Procurement links" + steel blue Import | Add link.
+3-col grid; cards with rivet dots (top-right, bottom-left), steel blue links.
+```
+
+### Do NOT repeat in future styles
+- Charcoal (#252528) + steel blue (#5b8fb9) palette
+- Bebas Neue + DM Sans
+- Rivet dots (small circular accents at card corners)
+- Industrial / utilitarian tone with 1px borders
+
+---
+
+## Style 7 — Path: `/7` — **Rejected**
+
+**Name:** Luxury / Refined  
+**Snapshot:** `snapshots/style-7.txt`
+
+### High-level idea
+- Luxury, refined: ivory background, dark charcoal text, deep plum accent. Libre Baskerville + Lora. Generous whitespace, narrow max-width content, 2-column grid. Cards with thin border and subtle shadow.
+
+### Color scheme
+- Background: `#fafaf8` (ivory)
+- Text: `#1a1a1a` (dark charcoal)
+- Muted: `#5a5a5a`, borders `#e8e8e6`, `#e0e0de`
+- Accent: `#5c4d7a` (deep plum) for CTAs and links
+
+### Layout
+- Header: no thick border; centered max-w-2xl; large serif title; buttons below with generous top padding.
+- Main: 2-column grid only (1 col mobile). Cards white, rounded-sm, shadow-sm, hover shadow-md.
+
+### Text representation (from snapshot)
+```
+Background: Ivory. Fonts: Libre Baskerville, Lora.
+Header: Serif title + subtitle; plum outline/solid buttons below.
+2-col grid; white cards, thin border, soft shadow, plum links.
+```
+
+### Do NOT repeat in future styles
+- Ivory (#fafaf8) + deep plum (#5c4d7a) palette
+- Libre Baskerville + Lora
+- Luxury / refined tone with 2-column-only grid
+- Generous whitespace + narrow max-width + soft shadows on cards
+
+---
+
+## Style 8 — Path: `/8` — **Rejected**
+
+**Name:** Playful / Toy-like  
+**Snapshot:** `snapshots/style-8.txt`
+
+### High-level idea
+- Playful, toy-like: warm cream background (#fef9f0), coral primary (#e07a5f), mint (#81b29a) and butter (#f2cc8f). Fredoka only. Pill buttons (rounded-full), rounded-2xl cards, bouncy hover (scale). 3-column grid.
+
+### Color scheme
+- Background: `#fef9f0` (warm cream)
+- Text: `#2d2d2d`, muted `#6b6b6b`
+- Accent primary: `#e07a5f` (coral)
+- Accent secondary: `#81b29a` (mint)
+- Border/decor: `#f2cc8f` (butter)
+
+### Layout
+- Header: coral title; pill buttons (mint + coral); hover scale.
+- Main: 3-col grid; cards white, rounded-2xl, butter border, shadow; hover scale and coral-tinted border. Links mint → coral on hover.
+
+### Text representation (from snapshot)
+```
+Background: Warm cream. Font: Fredoka.
+Header: Coral title + pill "Import JSON" (mint), "Add link" (coral).
+3-col grid; rounded-2xl cards, butter border, coral/mint links, bouncy hover.
+```
+
+### Do NOT repeat in future styles
+- Coral (#e07a5f) + mint (#81b29a) + butter (#f2cc8f) playful palette
+- Fredoka only
+- Pill buttons (rounded-full) with scale hover
+- Playful / toy-like tone with rounded-2xl cards
+
+---
+
+## Style 9 — Path: `/9` — **Rejected**
+
+**Name:** Soft / Pastel  
+**Snapshot:** `snapshots/style-9.txt`
+
+### High-level idea
+- Soft, pastel: lavender background (#e8e0f0), soft violet accent (#9b8bb5). Outfit only. Rounded-xl (not pill) buttons and cards. Subtle gradient in header. Soft shadows, white/90 cards. 3-column grid.
+
+### Color scheme
+- Background: `#e8e0f0` (soft lavender)
+- Text: `#3d3548`, muted `#7a6b8a`
+- Accent: `#9b8bb5` (soft violet)
+- Borders: `#d4c8e0`; dialog bg `#f5f0fa`
+
+### Layout
+- Header: soft gradient overlay; rounded-xl buttons (white/80 outline + violet solid).
+- Main: 3-col grid; cards white/90, rounded-xl, soft border; hover shadow and violet-tinted border.
+
+### Text representation (from snapshot)
+```
+Background: Soft lavender. Font: Outfit.
+Header: Subtle gradient; rounded-xl Import (outline), Add link (violet).
+3-col grid; white/90 cards, rounded-xl, soft violet links, gentle hover.
+```
+
+### Do NOT repeat in future styles
+- Lavender (#e8e0f0) + soft violet (#9b8bb5) pastel palette
+- Outfit only
+- Soft pastel tone with rounded-xl (not pill) and header gradient overlay
+
+---
+
+## Style 10 — Path: `/2` — **Accepted**
+
+**Name:** Maximalist / Bold  
+**Snapshot:** `snapshots/style-10.txt`
+
+### High-level idea
+- Maximalist, bold: dark background (#1a1a1e) with diagonal stripe pattern (teal + orange). Syne only, uppercase, heavy weight. Dual accents: orange (#f59e0b) and teal (#0d9488). Thick (4px) borders. Cards with alternating 4px left border (orange/teal); hover offset box-shadow. 3-column grid. No rounded corners.
+
+### Color scheme
+- Background: `#1a1a1e` (dark)
+- Card bg: `#25252a`
+- Text: `#f0f0f2`, muted `#8a8a8e`
+- Accent 1: `#f59e0b` (orange)
+- Accent 2: `#0d9488` (teal)
+
+### Layout
+- Header: 4px orange bottom border; Syne extrabold uppercase title; centered small subtitle; teal outline + orange solid buttons.
+- Main: 3-col grid; cards with 4px left border alternating orange/teal; hover shadow offset (4px 4px 0 teal). Links: Official site orange, Procurement teal; hover swap.
+
+### Text representation (from snapshot)
+```
+Background: Dark + diagonal teal/orange stripe pattern. Font: Syne, uppercase.
+Header: Thick orange border; "PROCUREMENT LINKS" + teal/orange buttons.
+3-col grid; cards with alternating orange/teal left border, offset shadow on hover.
+```
+
+### Do NOT repeat in future styles
+- Dark + dual orange (#f59e0b) and teal (#0d9488) palette
+- Syne only, bold uppercase
+- Diagonal stripe pattern background
+- Alternating left-border accent on cards (orange/teal by index)
+- Offset box-shadow on hover (4px 4px 0)
+- Maximalist / bold tone with 4px borders
