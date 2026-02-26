@@ -1,0 +1,24 @@
+STYLE 1 — BRUTALIST / RAW
+Path: /1
+
+=== TEXT REPRESENTATION OF DISPLAY ===
+
+- Background: Pure black (#0a0a0a)
+- Typography: IBM Plex Mono, monospace, uppercase headings and labels
+- Accent: Electric yellow (#ffeb00) for primary actions, links, and key borders
+
+HEADER:
+  Thick bottom border (4px) in electric yellow.
+  Left: "PROCUREMENT LINKS" (large, bold, white), subtitle "STATE AND CITY PROCUREMENT PORTALS" (gray, uppercase, small).
+  Right: Two buttons — "IMPORT JSON" (outline, white border), "ADD LINK" (solid yellow, black text).
+
+MAIN CONTENT:
+  Asymmetric grid: 3 columns (1fr 1fr 1.2fr). Every 5th card spans 2 columns (wider block).
+  Cards: No rounded corners. Raw 2px borders (#222). Bottom + right border per cell.
+  Each card: City name (bold, white), State (gray, small), "OFFICIAL SITE →" and "PROCUREMENT →" links in yellow, "EDIT" text link (gray, small).
+  Hover: border turns yellow, background slightly lighter (#111).
+
+EMPTY STATE:
+  Full-width dashed border block, "NO PROCUREMENT LINKS YET.", outline "ADD LINK" button.
+
+NO purple gradients, no Inter/Roboto, no rounded cards. Stark, high-contrast, raw rectangular layout.
