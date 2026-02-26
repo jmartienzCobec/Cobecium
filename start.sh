@@ -1,6 +1,11 @@
 #!/bin/sh
 set -e
 
+# Install deps so node_modules volume has all packages (e.g. after adding react-router-dom)
+echo "Installing dependencies..."
+bun install --frozen-lockfile || bun install
+echo "Dependencies ready."
+
 # Wait for Convex backend to be ready (same network as backend service)
 # Use Bun for the check — the app image has no curl
 echo "Waiting for Convex backend..."
