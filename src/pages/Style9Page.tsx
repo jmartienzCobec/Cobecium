@@ -18,7 +18,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 
-export function Style10Page() {
+export function Style9Page() {
   const links = useProcurementLinks();
   const importFromJson = useMutation(api.procurementLinks.importFromJson);
   const [formOpen, setFormOpen] = useState(false);
@@ -36,8 +36,8 @@ export function Style10Page() {
     setFormOpen(true);
   };
 
-  const handleEdit = (_id: Id<"procurementLinks">, fields: ProcurementLinkFields) => {
-    setEditing({ id: _id, fields });
+  const handleEdit = (id: Id<"procurementLinks">, fields: ProcurementLinkFields) => {
+    setEditing({ id, fields });
     setFormOpen(true);
   };
 
@@ -84,40 +84,28 @@ export function Style10Page() {
 
   if (links === undefined) {
     return (
-      <div className="min-h-screen bg-[#1a1a1e] flex items-center justify-center" style={{ fontFamily: '"Syne", sans-serif' }}>
-        <p className="text-[#f59e0b]">Loading…</p>
+      <div className="min-h-screen bg-[#f0eeeb] flex items-center justify-center text-[#2563eb]" style={{ fontFamily: '"Manrope", sans-serif' }}>
+        <p>Loading…</p>
       </div>
     );
   }
 
   return (
     <div
-      className="min-h-screen bg-[#1a1a1e] text-[#f0f0f2] antialiased"
-      style={{ fontFamily: '"Syne", sans-serif' }}
+      className="min-h-screen bg-[#f0eeeb] text-[#1c1917] antialiased"
+      style={{ fontFamily: '"Source Sans 3", sans-serif' }}
     >
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap');
       `}</style>
 
-      {/* Diagonal stripe pattern */}
-      <div
-        className="fixed inset-0 pointer-events-none opacity-30"
-        aria-hidden
-        style={{
-          backgroundImage: "repeating-linear-gradient( -45deg, transparent, transparent 20px, #0d9488 20px, #0d9488 21px ), repeating-linear-gradient( 45deg, transparent, transparent 20px, #f59e0b 20px, #f59e0b 21px )",
-          backgroundBlendMode: "overlay",
-        }}
-      />
-
-      <header className="relative border-b-4 border-[#f59e0b] px-6 py-5">
-        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-6">
-          <h1 className="text-3xl font-extrabold text-[#f0f0f2] uppercase tracking-tight">
-            Procurement links
+      <header className="bg-white border-b border-[#e5e2de] px-6 py-4 shadow-sm">
+        <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-4">
+          <h1 className="text-xl font-bold text-[#1c1917] tracking-tight" style={{ fontFamily: '"Manrope", sans-serif' }}>
+            Procurement Links
           </h1>
-          <p className="absolute left-1/2 -translate-x-1/2 top-[3.2rem] text-[#8a8a8e] text-sm uppercase tracking-widest">
-            State & city portals
-          </p>
-          <div className="flex gap-3">
+          <p className="text-[#78716c] text-sm">State and city portals</p>
+          <nav className="flex gap-2">
             <button
               type="button"
               onClick={() => {
@@ -125,44 +113,46 @@ export function Style10Page() {
                 setImportError(null);
                 setImportText("");
               }}
-              className="px-4 py-2.5 border-2 border-[#0d9488] text-[#0d9488] font-semibold uppercase hover:bg-[#0d9488] hover:text-[#1a1a1e] transition-colors"
+              className="px-3 py-2 border border-[#2563eb] text-[#2563eb] rounded-lg text-sm font-semibold hover:bg-[#2563eb] hover:text-white transition-colors"
+              style={{ fontFamily: '"Manrope", sans-serif' }}
             >
               Import JSON
             </button>
             <button
               type="button"
               onClick={handleAdd}
-              className="px-4 py-2.5 bg-[#f59e0b] text-[#1a1a1e] font-bold uppercase hover:bg-[#e58f00] transition-colors"
+              className="px-3 py-2 bg-[#2563eb] text-white rounded-lg text-sm font-bold hover:bg-[#1d4ed8] transition-colors"
+              style={{ fontFamily: '"Manrope", sans-serif' }}
             >
               Add link
             </button>
-          </div>
+          </nav>
         </div>
       </header>
 
       <Dialog open={importOpen} onOpenChange={setImportOpen}>
-        <DialogContent className="sm:max-w-lg bg-[#25252a] border-4 border-[#f59e0b] text-[#f0f0f2] rounded-none">
+        <DialogContent className="sm:max-w-lg bg-white border border-[#e5e2de] text-[#1c1917] rounded-xl shadow-xl">
           <DialogHeader>
-            <DialogTitle className="text-[#f59e0b] font-bold uppercase">
+            <DialogTitle className="text-[#2563eb]" style={{ fontFamily: '"Manrope", sans-serif' }}>
               Import procurement links
             </DialogTitle>
           </DialogHeader>
-          <p className="text-[#8a8a8e] text-sm">
-            Paste JSON: object with keys and arrays of link objects.
+          <p className="text-[#78716c] text-sm">
+            Paste JSON: object with keys and arrays of &#123; state, city, official_website, procurement_link &#125;
           </p>
           <textarea
-            className="min-h-[200px] w-full bg-[#1a1a1e] border-2 border-[#0d9488] px-4 py-3 text-[#f0f0f2] focus:outline-none focus:border-[#f59e0b]"
+            className="min-h-[200px] w-full bg-[#fafaf9] border border-[#e5e2de] rounded-lg px-4 py-3 text-[#1c1917] focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-transparent"
             placeholder='{"us_state_procurement": [...]}'
             value={importText}
             onChange={(e) => setImportText(e.target.value)}
           />
-          {importError && <p className="text-red-400 font-medium">{importError}</p>}
+          {importError && <p className="text-red-600 text-sm">{importError}</p>}
           <DialogFooter className="gap-3 mt-4">
             <button
               type="button"
               onClick={() => setImportOpen(false)}
               disabled={importing}
-              className="px-4 py-2.5 border-2 border-[#8a8a8e] text-[#f0f0f2] hover:border-[#0d9488] font-semibold uppercase"
+              className="px-3 py-2 border border-[#a8a29e] text-[#1c1917] rounded-lg text-sm font-medium hover:bg-[#f0eeeb]"
             >
               Cancel
             </button>
@@ -170,7 +160,8 @@ export function Style10Page() {
               type="button"
               onClick={handleImportSubmit}
               disabled={importing || !importText.trim()}
-              className="px-4 py-2.5 bg-[#f59e0b] text-[#1a1a1e] font-bold disabled:opacity-50 uppercase"
+              className="px-3 py-2 bg-[#2563eb] text-white rounded-lg text-sm font-bold disabled:opacity-50"
+              style={{ fontFamily: '"Manrope", sans-serif' }}
             >
               {importing ? "Importing…" : "Import"}
             </button>
@@ -178,39 +169,39 @@ export function Style10Page() {
         </DialogContent>
       </Dialog>
 
-      <main className="relative max-w-6xl mx-auto px-6 py-10">
+      <main className="max-w-4xl mx-auto px-6 py-6">
         {links.length === 0 ? (
-          <div className="border-4 border-dashed border-[#f59e0b] p-16 text-center">
-            <p className="text-[#8a8a8e] text-xl font-semibold uppercase mb-8">No procurement links yet.</p>
+          <div className="bg-white rounded-xl border border-[#e5e2de] p-10 text-center shadow-sm">
+            <p className="text-[#78716c] mb-4">No procurement links yet.</p>
             <button
               type="button"
               onClick={handleAdd}
-              className="px-4 py-2.5 border-2 border-[#0d9488] text-[#0d9488] font-semibold uppercase hover:bg-[#0d9488] hover:text-[#1a1a1e]"
+              className="px-3 py-2 border-2 border-[#2563eb] text-[#2563eb] rounded-lg font-bold hover:bg-[#2563eb] hover:text-white transition-colors"
+              style={{ fontFamily: '"Manrope", sans-serif' }}
             >
               Add link
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {links.map((link, i) => (
+          <div className="space-y-2">
+            {links.map((link) => (
               <div
                 key={link._id}
-                className="relative bg-[#25252a] border-l-4 border-[#f59e0b] p-5 hover:border-[#0d9488] hover:shadow-[4px_4px_0_0_#0d9488] transition-all"
-                style={{
-                  borderLeftColor: i % 2 === 0 ? "#f59e0b" : "#0d9488",
-                }}
+                className="bg-white rounded-xl border border-[#e5e2de] px-5 py-4 flex flex-wrap items-center justify-between gap-4 hover:border-[#2563eb]/40 hover:shadow-md transition-all"
               >
-                <h2 className="text-xl font-bold text-[#f0f0f2] uppercase">
-                  {link.city}
-                </h2>
-                <p className="text-[#8a8a8e] text-sm mt-1 uppercase tracking-wide">{link.state}</p>
-                <div className="mt-4 space-y-2">
+                <div className="min-w-0">
+                  <h2 className="font-bold text-[#1c1917] text-lg" style={{ fontFamily: '"Manrope", sans-serif' }}>
+                    {link.city}
+                  </h2>
+                  <p className="text-[#78716c] text-sm mt-0.5">{link.state}</p>
+                </div>
+                <div className="flex flex-wrap items-center gap-3">
                   {link.official_website && (
                     <a
                       href={link.official_website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block text-[#f59e0b] hover:text-[#0d9488] font-semibold uppercase text-sm transition-colors"
+                      className="text-[#2563eb] hover:underline font-medium text-sm whitespace-nowrap"
                     >
                       Official site
                     </a>
@@ -220,26 +211,26 @@ export function Style10Page() {
                       href={link.procurement_link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block text-[#0d9488] hover:text-[#f59e0b] font-semibold uppercase text-sm transition-colors"
+                      className="text-[#2563eb] hover:underline font-medium text-sm whitespace-nowrap"
                     >
                       Procurement
                     </a>
                   )}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleEdit(link._id, {
+                        state: link.state,
+                        city: link.city,
+                        official_website: link.official_website,
+                        procurement_link: link.procurement_link,
+                      })
+                    }
+                    className="text-[#78716c] hover:text-[#2563eb] text-sm font-medium"
+                  >
+                    Edit
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  onClick={() =>
-                    handleEdit(link._id, {
-                      state: link.state,
-                      city: link.city,
-                      official_website: link.official_website,
-                      procurement_link: link.procurement_link,
-                    })
-                  }
-                  className="mt-3 text-xs text-[#8a8a8e] hover:text-[#f59e0b] font-semibold uppercase"
-                >
-                  Edit
-                </button>
               </div>
             ))}
           </div>

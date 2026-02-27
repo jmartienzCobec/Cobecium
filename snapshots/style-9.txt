@@ -1,21 +1,21 @@
-STYLE 9 — SOFT / PASTEL
+STYLE 9 — HORIZONTAL STRIPS / BAR LAYOUT
 Path: /9
 
 === TEXT REPRESENTATION OF DISPLAY ===
 
-- Background: Soft lavender (#e8e0f0)
-- Typography: Outfit (single font, light weights)
-- Accent: Soft violet (#9b8bb5); muted (#7a6b8a); borders (#d4c8e0)
+- Background: Light warm gray (#f0eeeb)
+- Header: White bg, subtle shadow, border-bottom #e5e2de
+- Typography: Manrope (headings, buttons), Source Sans 3 (body)
+- Accent: Blue (#2563eb) for links, primary button, focus
+- Text: #1c1917, muted #78716c
 
 HEADER:
-  Subtle gradient overlay (lighter lavender). Title "Procurement links" (dark), subtitle muted. Buttons: rounded-xl (not pill) — "Import JSON" (white/80, soft border), "Add link" (soft violet bg). Soft shadow.
+  White bar with shadow. "Procurement Links" (Manrope), subtitle "State and city portals". "Import JSON" (outline blue), "Add link" (solid blue). Rounded-lg buttons.
 
 MAIN CONTENT:
-  3-column responsive grid. Cards: white/90 bg, rounded-xl, thin border (#d4c8e0), shadow-sm. Hover: shadow-md, border tinted violet. City (dark), state (muted), Official site / Procurement (soft violet links), Edit (muted). Gentle, no bouncy scale.
+  Full-width horizontal strips (bars): each item is one row. Left: city (Manrope, bold), state (muted). Right: "Official site" | "Procurement" | "Edit" (blue/gray). Cards: white bg, rounded-xl, border #e5e2de, hover border blue tint + shadow. Not a multi-column grid; stacked horizontal bars.
 
 EMPTY STATE:
-  rounded-2xl dashed border, white/60 bg, "No procurement links yet.", violet rounded-xl Add link.
+  White card, rounded-xl, "Add link" blue outline button.
 
-Dialog: rounded-2xl, bg #f5f0fa, violet title. Rounded-xl buttons.
-
-No coral/mint/butter, no Fredoka, no pill buttons. Soft pastel lavender + soft violet, Outfit, rounded-xl (not rounded-full), subtle gradient in header.
+No magenta/green/red/gold/orange/teal. No numbered list. No masonry. Horizontal bar/strip layout: content left, links right on same row. Manrope + Source Sans 3. Blue accent on light gray. Rounded-xl cards.

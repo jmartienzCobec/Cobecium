@@ -1,20 +1,20 @@
-STYLE 6 — INDUSTRIAL / UTILITARIAN
+STYLE 6 — TERMINAL CRT / PHOSPHOR GREEN
 Path: /6
 
 === TEXT REPRESENTATION OF DISPLAY ===
 
-- Background: Charcoal (#252528)
-- Typography: Bebas Neue (display/headings), DM Sans (body)
-- Accent: Steel blue (#5b8fb9) for primary actions, links, rivet dots
+- Background: Dark green-black (#0c120c)
+- Typography: JetBrains Mono (header, buttons, labels), Plus Jakarta Sans (card body)
+- Accent: Phosphor green (#69f0ae) for primary actions, links, left border on cards
+- Muted: #558b2f, borders #2e7d32
 
 HEADER:
-  Thin bottom border (#3a3a3e). Left: "Procurement links" (Bebas Neue, large), subtitle "State and city procurement portals" (muted gray). Right: "Import JSON" (outline, steel blue), "Add link" (solid steel blue, dark text).
+  Thin bottom border (#2e7d32). Left: "> procurement_links" (JetBrains Mono, light green), subtitle "state and city procurement portals" (muted green). Right: "import_json" (outline), "add_link" (solid phosphor green, dark text). Buttons rounded-sm.
 
 MAIN CONTENT:
-  3-column responsive grid (1 col mobile, 2 sm, 3 lg). Equal-size cards.
-  Cards: 1px border (#3a3a3e), background #2d2d30. Top-right and bottom-left small circular "rivet" dots in steel blue. City (Bebas Neue), state (muted), Official site / Procurement links (steel blue), Edit (muted, small). Hover: border lightens to steel blue.
+  6-column grid with staggered card spans (pattern: 2,2,2 then 3,3 then 2,3,2 then 3,2,3...). Cards: 3px left border in #69f0ae, 1px solid #2e7d32, rounded-sm, bg #0a0f0a/50. City (semibold), State (muted), "Official site →" and "Procurement →" (phosphor green), "edit" (JetBrains Mono, small). Hover: border to #69f0ae.
 
 EMPTY STATE:
-  Dashed border block, "No procurement links yet.", outline "Add link" button.
+  Dashed #2e7d32 border, rounded-sm, "add_link" outline button.
 
-No monospace, no yellow, no black background, no asymmetric span-2, no serif display, no gold/navy, no corner brackets. Industrial condensed display + geometric sans, steel blue on charcoal.
+No black+yellow. No navy+gold. No orange/teal. No diagonal stripes. No corner brackets. No monospace-only. Two fonts: JetBrains Mono + Plus Jakarta Sans. 6-column staggered span pattern. Terminal/CRT phosphor green aesthetic.

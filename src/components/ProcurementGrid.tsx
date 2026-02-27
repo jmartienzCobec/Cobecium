@@ -23,6 +23,7 @@ import {
   ProcurementLinkForm,
   type ProcurementLinkFields,
 } from "@/components/ProcurementLinkForm";
+import { normalizeProcurementImport } from "@/lib/procurementImport";
 
 export function ProcurementGrid() {
   const links = useQuery(api.procurementLinks.list);
@@ -60,25 +61,25 @@ export function ProcurementGrid() {
 
   const handleImportSubmit = async () => {
     setImportError(null);
-    let data: Record<string, Array<{ state: string; city: string; official_website: string; procurement_link: string }>>;
+    let parsed: unknown;
     try {
-      data = JSON.parse(importText) as typeof data;
+      parsed = JSON.parse(importText);
     } catch {
       setImportError("Invalid JSON.");
       return;
     }
-    if (typeof data !== "object" || data === null || Array.isArray(data)) {
-      setImportError("JSON must be an object with keys (e.g. us_state_procurement) and arrays of links.");
+    const { links, error } = normalizeProcurementImport(parsed);
+    if (error) {
+      setImportError(error);
       return;
     }
-    const hasArrays = Object.values(data).every((v) => Array.isArray(v));
-    if (!hasArrays) {
-      setImportError("Each value must be an array of { state, city, official_website, procurement_link }.");
+    if (links.length === 0) {
+      setImportError("No valid links to import. Provide an array of link objects, or an object with arrays of link objects. Each link needs state, city, official_website (or officialWebsite), and procurement_link (or procurementLink).");
       return;
     }
     setImporting(true);
     try {
-      const { inserted } = await importFromJson({ data });
+      const { inserted } = await importFromJson({ links });
       setImportOpen(false);
       setImportText("");
       setImportError(null);

@@ -1,19 +1,20 @@
-STYLE 7 — LUXURY / REFINED
+STYLE 7 — NEON NOIR / MAGENTA
 Path: /7
 
 === TEXT REPRESENTATION OF DISPLAY ===
 
-- Background: Ivory (#fafaf8)
-- Typography: Libre Baskerville (headings), Lora (body)
-- Accent: Deep plum (#5c4d7a) for buttons, links
+- Background: Near black (#0d0d0d)
+- Typography: Archivo (headings, buttons — bold sans), Sora (body)
+- Accent: Neon magenta (#e91e8c) for border, links, CTAs; hover #f06292
+- Card bg: #1a1a1a, borders #2a2a2a
 
 HEADER:
-  No thick border. Centered narrow (max-w-2xl). Large serif title "Procurement links", subtitle "State and city procurement portals". Buttons below: "Import from JSON" (outline plum), "Add link" (solid plum). Generous padding (py-12).
+  Thick bottom border (4px) in magenta. Left: "Procurement Links" (Archivo, white), subtitle "State & city portals" (gray, Sora). Right: "Import JSON" (outline magenta), "Add link" (solid magenta). Buttons rounded-lg.
 
 MAIN CONTENT:
-  2-column grid (1 col on mobile). Cards: white bg, thin border (#e8e8e6), rounded-sm, subtle shadow, hover shadow-md and plum-tinted border. City (Libre Baskerville, xl), state (muted), Official site / Procurement (plum links), Edit (muted, small). Lots of whitespace (gap-8, p-6).
+  2-column masonry (column-count: 2, break-inside-avoid on cards). Cards: 4px top border in magenta, 2px body border #2a2a2a, rounded-lg, bg #1a1a1a. City (Archivo, white), State (gray), "Official site" / "Procurement portal" (magenta), "Edit" (small gray). Hover: top border lightens, magenta glow box-shadow.
 
 EMPTY STATE:
-  Dashed border, rounded-sm, large padding, "No procurement links yet.", outline Add link.
+  Dashed magenta border, rounded-lg, "Add link" outline button.
 
-No charcoal, no steel blue, no Bebas Neue, no rivet dots, no 3-col or 4-col grid. Luxury serif pairing, ivory + plum, 2-col only, soft shadows.
+No green/yellow/gold/orange/teal. No diagonal stripes. No left-border accent. 4px top border on cards. 2-column masonry (unequal heights). Neon noir tone. Archivo + Sora.

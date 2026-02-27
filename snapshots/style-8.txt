@@ -1,21 +1,20 @@
-STYLE 8 — PLAYFUL / TOY-LIKE
+STYLE 8 — SWISS / NUMBERED LIST (TWO COLUMNS)
 Path: /8
 
 === TEXT REPRESENTATION OF DISPLAY ===
 
-- Background: Warm cream/butter (#fef9f0)
-- Typography: Fredoka (single font, rounded friendly)
-- Accents: Coral (#e07a5f) primary, mint (#81b29a) secondary, butter (#f2cc8f) borders
+- Background: Light cream (#faf8f5)
+- Typography: Fraunces (headings, buttons — serif), Open Sans (body)
+- Accent: Deep red (#b71c1c) for numerals, links, primary button
+- Text: #1a1a1a, muted #666
 
 HEADER:
-  No thick border. Title "Procurement links" in coral (3xl), subtitle muted. Buttons: pill-shaped (rounded-full) — "Import JSON" (mint bg), "Add link" (coral bg). Hover scale-105.
+  Thin bottom border (2px) black. Left: "Procurement Links" (Fraunces), subtitle "State and city procurement portals" (gray). Right: "Import JSON" (outline black), "Add link" (solid red). Buttons rounded-md (not rounded-full, not rounded-lg).
 
 MAIN CONTENT:
-  3-column responsive grid. Cards: white bg, rounded-2xl, 2px butter border, shadow-md. Hover: shadow-lg, scale-[1.02], border tinted coral. City (coral, xl), state (muted), Official site / Procurement (mint, hover coral), Edit (muted). Chunky, friendly.
+  Two-column layout (grid 2 cols on md): each column is a vertical numbered list. Each row: large numeral (1, 2, 3…) in red (Fraunces, right-aligned), then city (Fraunces), state, "Official site" / "Procurement portal" (red), "Edit". Rows have divide-y; hover row bg lightens. Not a card grid; numbered rows in two columns.
 
 EMPTY STATE:
-  rounded-3xl dashed butter border, white/60 bg, "No procurement links yet.", coral pill Add link.
+  Dashed gray border, rounded-md, "Add link" red outline button.
 
-Dialog: rounded-3xl, butter border, coral title. Pill Cancel (mint outline), Import (coral).
-
-No sage, no Nunito, no organic tone. Playful multi-color (coral/mint/butter), Fredoka, pill buttons, bouncy hover scale.
+No purple/gold/teal/magenta/green. No single-column list only. No card grid. Numbered rows in two columns. Swiss/light tone. Fraunces + Open Sans. Red accent on light.

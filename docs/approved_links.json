@@ -1,0 +1,458 @@
+[
+  {
+    "state": "Alabama",
+    "city": "Montgomery",
+    "officialWebsite": "https://www.montgomeryal.gov/",
+    "procurementLink": "https://procurement.opengov.com/portal/montgomeryal"
+  },
+  {
+    "state": "Alaska",
+    "city": "Juneau",
+    "officialWebsite": "https://juneau.org/",
+    "procurementLink": "https://juneau.org/finance/purchasing/bids-publicpurchase"
+  },
+  {
+    "state": "Arizona",
+    "city": "Phoenix",
+    "officialWebsite": "https://www.phoenix.gov/",
+    "procurementLink": "https://procurement.opengov.com/portal/phoenix/?departmentId=all&status=open&page=1&limit=50&sortField=proposalDeadline&sortDirection=DESC"
+  },
+  {
+    "state": "Arkansas",
+    "city": "Little Rock",
+    "officialWebsite": "https://www.littlerock.gov/",
+    "procurementLink": "https://littlerock.bonfirehub.com/portal/?tab=publicContracts"
+  },
+  {
+    "state": "California",
+    "city": "Sacramento",
+    "officialWebsite": "https://www.cityofsacramento.gov/",
+    "procurementLink": "https://vendors.planetbids.com/portal/15300/bo/bo-search"
+  },
+  {
+    "state": "Colorado",
+    "city": "Denver",
+    "officialWebsite": "https://www.denvergov.org/",
+    "procurementLink": "https://www.denvergov.org/Business/Contract-Administration/Current"
+  },
+  {
+    "state": "Connecticut",
+    "city": "Stamford",
+    "officialWebsite": "https://stamfordct.procureware.com/Bids",
+    "procurementLink": "https://stamfordct.procureware.com/Bids"
+  },
+  {
+    "state": "Delaware",
+    "city": "Dover",
+    "officialWebsite": "https://www.cityofdover.com/",
+    "procurementLink": "https://www.cityofdover.gov/bid-procurement"
+  },
+  {
+    "state": "Florida",
+    "city": "Orlando",
+    "officialWebsite": "https://www.orlando.gov/Home",
+    "procurementLink": "https://procurement.opengov.com/portal/orlando"
+  },
+  {
+    "state": "Georgia",
+    "city": "Atlanta",
+    "officialWebsite": "https://ssl.doas.ga.gov/PRSapp/PRSearch.do",
+    "procurementLink": "https://ssl.doas.state.ga.us/gpr/index"
+  },
+  {
+    "state": "Hawaii",
+    "city": "Honolulu",
+    "officialWebsite": "https://www.honolulu.gov/",
+    "procurementLink": "https://hands.ehawaii.gov/hands/opportunities"
+  },
+  {
+    "state": "Idaho",
+    "city": "Boise",
+    "officialWebsite": "https://www.cityofboise.org/",
+    "procurementLink": "https://bids.sciquest.com/apps/Router/PublicEvent?CustomerOrg=CityofBoise"
+  },
+  {
+    "state": "Illinois",
+    "city": "Springfield",
+    "officialWebsite": "https://www.springfield.il.us/",
+    "procurementLink": "https://www.springfield.il.us/Departments/OBM/OBMHome.aspx?Purchasing"
+  },
+  {
+    "state": "Indiana",
+    "city": "Indianapolis",
+    "officialWebsite": "https://www.indy.gov/",
+    "procurementLink": "https://www.indy.gov/workflow/find-bid-opportunities"
+  },
+  {
+    "state": "Iowa",
+    "city": "Des Moines",
+    "officialWebsite": "https://www.dsm.city/",
+    "procurementLink": "https://dsm.ionwave.net/SourcingEvents.aspx?SourceType=1"
+  },
+  {
+    "state": "Kansas",
+    "city": "Topeka",
+    "officialWebsite": "https://www.topeka.org/",
+    "procurementLink": "https://topeka.gov/business/bid_tabulations/index.php#outer-2367"
+  },
+  {
+    "state": "Kentucky",
+    "city": "Frankfort",
+    "officialWebsite": "https://www.frankfort.ky.gov/",
+    "procurementLink": "https://www.frankfort.ky.gov/Bids.aspx"
+  },
+  {
+    "state": "Louisiana",
+    "city": "Baton Rouge",
+    "officialWebsite": "https://www.brla.gov/",
+    "procurementLink": "https://wwwcfprd.doa.louisiana.gov/osp/lapac/dspBid.cfm?search=department&term=102"
+  },
+  {
+    "state": "Maine",
+    "city": "Augusta",
+    "officialWebsite": "https://www.augustamaine.gov/",
+    "procurementLink": "https://www.augustamaine.gov/purchasing"
+  },
+  {
+    "state": "Maryland",
+    "city": "Annapolis",
+    "officialWebsite": "https://www.annapolis.gov/",
+    "procurementLink": "https://www.annapolis.gov/bids.aspx"
+  },
+  {
+    "state": "Michigan",
+    "city": "Lansing",
+    "officialWebsite": "https://www.lansingmi.gov/",
+    "procurementLink": "https://www.bidnetdirect.com/mitn"
+  },
+  {
+    "state": "Minnesota",
+    "city": "Saint Paul",
+    "officialWebsite": "https://sms-stpaul-prd.inforcloudsuite.com/fsm/SupplyManagementSupplier/list/SourcingEvent.XiOpenForBid?csk.SupplierGroup=CoSP&menu=SPEvents.BrowseOpenEvents",
+    "procurementLink": "https://sms-stpaul-prd.inforcloudsuite.com/fsm/SupplyManagementSupplier/list/SourcingEvent.XiOpenForBid?csk.SupplierGroup=CoSP&menu=SPEvents.BrowseOpenEvents"
+  },
+  {
+    "state": "Mississippi",
+    "city": "Jackson",
+    "officialWebsite": "https://www.jacksonms.gov/",
+    "procurementLink": "https://www.centralauctionhouse.com/rfpc10376-city-of-jackson.html"
+  },
+  {
+    "state": "Missouri",
+    "city": "Jefferson City",
+    "officialWebsite": "https://www.jeffersoncitymo.gov/",
+    "procurementLink": "https://jeffersoncitymo.bonfirehub.com/portal/?tab=openOpportunities"
+  },
+  {
+    "state": "Montana",
+    "city": "Helena",
+    "officialWebsite": "https://www.helenamt.gov/",
+    "procurementLink": "http://helenamt.gov/Business/Bids-RFP-RFQ"
+  },
+  {
+    "state": "Nebraska",
+    "city": "Lincoln",
+    "officialWebsite": "https://www.lincoln.ne.gov/",
+    "procurementLink": "https://col.ionwave.net/SourcingEvents.aspx?SourceType=1"
+  },
+  {
+    "state": "Nevada",
+    "city": "Carson City",
+    "officialWebsite": "https://www.carson.org/",
+    "procurementLink": "https://nevada.ionwave.net/SourcingEvents.aspx?SourceType=1"
+  },
+  {
+    "state": "New Hampshire",
+    "city": "Concord",
+    "officialWebsite": "https://www.concordnh.gov/",
+    "procurementLink": "https://www.concordnh.gov/bids.aspx"
+  },
+  {
+    "state": "New Jersey",
+    "city": "Trenton",
+    "officialWebsite": "https://www.trentonnj.org/",
+    "procurementLink": "https://procurement.opengov.com/portal/embed/newarknj/project-list?departmentId=all&status=all&page=1&limit=50&sortField=proposalDeadline&sortDirection=DESC"
+  },
+  {
+    "state": "New Mexico",
+    "city": "Santa Fe",
+    "officialWebsite": "https://santafenm.gov/finance-2/purchasing-1/solicitations",
+    "procurementLink": "https://procurement.opengov.com/portal/santafenm"
+  },
+  {
+    "state": "New York",
+    "city": "New York",
+    "officialWebsite": "https://ogs.ny.gov/procurement/ogs-centralized-contracts-list",
+    "procurementLink": "https://ogs.ny.gov/procurement/ogs-centralized-contracts-list"
+  },
+  {
+    "state": "North Carolina",
+    "city": "Raleigh",
+    "officialWebsite": "https://raleighnc.gov/",
+    "procurementLink": "https://evp.nc.gov/solicitations/"
+  },
+  {
+    "state": "North Dakota",
+    "city": "Bismarck",
+    "officialWebsite": "https://www.bismarcknd.gov/",
+    "procurementLink": "https://qcpi.questcdn.com/cdn/posting/?group=1265745&provider=1265745"
+  },
+  {
+    "state": "Ohio",
+    "city": "Columbus",
+    "officialWebsite": "https://www.columbus.gov/",
+    "procurementLink": "https://columbusvendorservices.powerappsportals.com/OpenRFQs/"
+  },
+  {
+    "state": "Oklahoma",
+    "city": "Oklahoma City",
+    "officialWebsite": "https://www.okc.gov/",
+    "procurementLink": "https://www.bidnetdirect.com/oklahoma/cityofoklahomacityandtrusts"
+  },
+  {
+    "state": "Oregon",
+    "city": "Salem",
+    "officialWebsite": "https://www.cityofsalem.net/",
+    "procurementLink": "https://oregonbuys.gov/bso/view/search/external/advancedSearchBid.xhtml?openBids=true"
+  },
+  {
+    "state": "Pennsylvania",
+    "city": "Harrisburg",
+    "officialWebsite": "https://harrisburgpa.gov/",
+    "procurementLink": "https://pennbid.bonfirehub.com/portal/?tab=openOpportunities"
+  },
+  {
+    "state": "Rhode Island",
+    "city": "Providence",
+    "officialWebsite": "https://www.providenceri.gov/purchasing/openrfpsummary/",
+    "procurementLink": "https://www.bidnetdirect.com/rhode-island/providenceri"
+  },
+  {
+    "state": "South Carolina",
+    "city": "Columbia",
+    "officialWebsite": "https://procurement.columbiasc.gov/",
+    "procurementLink": "https://columbiasc.ionwave.net/SourcingEvents.aspx?SourceType=1"
+  },
+  {
+    "state": "South Dakota",
+    "city": "Pierre",
+    "officialWebsite": "https://www.cityofpierre.org/jobs.aspx",
+    "procurementLink": "https://www.cityofpierre.org/bids.aspx"
+  },
+  {
+    "state": "Tennessee",
+    "city": "Nashville",
+    "officialWebsite": "https://www.nashville.gov/",
+    "procurementLink": "https://r12.oci.nashville.org/OA_HTML/OA.jsp?OAFunc=PON_ABSTRACT_PAGE&PON_ORGANIZATION_ID=83"
+  },
+  {
+    "state": "Texas",
+    "city": "san antonio",
+    "officialWebsite": "https://www.sa.gov/Home",
+    "procurementLink": "https://webapp1.sanantonio.gov/BidContractOpps/Default.aspx"
+  },
+  {
+    "state": "Utah",
+    "city": "Salt Lake City",
+    "officialWebsite": "https://www.slc.gov/",
+    "procurementLink": "https://utah.bonfirehub.com/portal/?tab=openOpportunities"
+  },
+  {
+    "state": "Vermont",
+    "city": "Montpelier",
+    "officialWebsite": "https://www.montpelier-vt.org/",
+    "procurementLink": "https://www.montpelier-vt.org/Bids.aspx"
+  },
+  {
+    "state": "Virginia",
+    "city": "Richmond",
+    "officialWebsite": "https://www.rva.gov/",
+    "procurementLink": "https://mvendor.cgieva.com/Vendor/public/AllOpportunities.jsp?doccddesc=Future%20Procurement%20(FPR)"
+  },
+  {
+    "state": "Washington",
+    "city": "Olympia",
+    "officialWebsite": "https://www.olympiawa.gov/",
+    "procurementLink": "https://www.olympiawa.gov/government/contracts___purchasing/rfps_rfqs.php"
+  },
+  {
+    "state": "West Virginia",
+    "city": "Charleston",
+    "officialWebsite": "https://charlestonwv.gov/",
+    "procurementLink": "https://www.bidexpress.com/businesses/60904/home?agency=trueadded)"
+  },
+  {
+    "state": "Wisconsin",
+    "city": "Madison",
+    "officialWebsite": "https://www.cityofmadison.com/",
+    "procurementLink": "https://www.demandstar.com/app/agencies/wisconsin/city-of-madison-purchasing-services/procurement-opportunities/573ff565-ce2b-4c75-86ec-401cd5abf736/"
+  },
+  {
+    "state": "Wyoming",
+    "city": "Cheyenne",
+    "officialWebsite": "https://www.cheyennecity.org/",
+    "procurementLink": "https://procurement.opengov.com/portal/cheyennecity"
+  },
+  {
+    "state": "Texas",
+    "city": "Austin",
+    "officialWebsite": "https://www.austintexas.gov",
+    "procurementLink": "https://financeonline.austintexas.gov/afo/account_services/solicitation/solicitations.cfm"
+  },
+  {
+    "state": "Utah",
+    "city": "Salt Lake City",
+    "officialWebsite": "https://www.utah.gov",
+    "procurementLink": "https://bids.sciquest.com/apps/Router/PublicEvent?CustomerOrg=StateOfUtah"
+  },
+  {
+    "state": "Utah",
+    "city": "Salt Lake City",
+    "officialWebsite": "https://www.slc.gov",
+    "procurementLink": "https://utah.bonfirehub.com/portal/?tab=openOpportunities"
+  },
+  {
+    "state": "Massachusetts",
+    "city": "Boston",
+    "officialWebsite": "https://www.boston.gov",
+    "procurementLink": "https://www.boston.gov/bid-listings"
+  },
+  {
+    "state": "Pennsylvania",
+    "city": "Philadelphia",
+    "officialWebsite": "https://www.phila.gov",
+    "procurementLink": "https://contracts.phila.gov/#/"
+  },
+  {
+    "state": "Maryland",
+    "city": "Baltimore",
+    "officialWebsite": "https://www.baltimorecity.gov",
+    "procurementLink": "https://procurement.opengov.com/portal/embed/baltimorecountymd/project-list"
+  },
+  {
+    "state": "District of Columbia",
+    "city": "Washington",
+    "officialWebsite": "https://ocp.dc.gov",
+    "procurementLink": "https://contracts.ocp.dc.gov/solicitations/results?hash=e88yffevw5eu6ixo"
+  },
+  {
+    "state": "Florida",
+    "city": "Miami",
+    "officialWebsite": "https://www.miamigov.com",
+    "procurementLink": "https://imiami.miamigov.com/OA_HTML/OA.jsp?page=/xxcmia/oracle/apps/okc/external/search/webui/XxcmiaOkcExternalSearchPG"
+  },
+  {
+    "state": "Florida",
+    "city": "Tampa",
+    "officialWebsite": "https://www.tampa.gov",
+    "procurementLink": "https://www.tampa.gov/purchasing/info/bid-schedule"
+  },
+  {
+    "state": "Virginia",
+    "city": "Virginia Beach",
+    "officialWebsite": "https://virginiabeach.gov/",
+    "procurementLink": "https://ejbs.fa.us6.oraclecloud.com/fscmUI/faces/NegotiationAbstracts?prcBuId=300000003501148"
+  },
+  {
+    "state": "Delaware",
+    "city": "wilmington",
+    "officialWebsite": "https://www.wilmingtonde.gov/government/city-departments/finance/procurement-and-records-381",
+    "procurementLink": "https://www.wilmingtonde.gov/government/city-departments/finance/procurement-and-records-381"
+  },
+  {
+    "state": "Texas",
+    "city": "Houston",
+    "officialWebsite": "[https://www.houstontx.gov](https://www.houstontx.gov)",
+    "procurementLink": "https://www.beaconbid.com/solicitations/city-of-houston/open"
+  },
+  {
+    "state": "Texas",
+    "city": "Dallas",
+    "officialWebsite": "[https://www.dallascounty.org](https://www.dallascounty.org)",
+    "procurementLink": "https://www.bidnetdirect.com/texas/dallas-county"
+  },
+  {
+    "state": "Texas",
+    "city": "Fort Worth",
+    "officialWebsite": "[https://www.fortworthtexas.gov](https://www.fortworthtexas.gov)",
+    "procurementLink": "https://fortworthtexas.bonfirehub.com/portal/?tab=openOpportunities"
+  },
+  {
+    "state": "Texas",
+    "city": "El Paso",
+    "officialWebsite": "[https://www.epcounty.com](https://www.epcounty.com)",
+    "procurementLink": "https://epcountypurchasing.ionwave.net/SourcingEvents.aspx?SourceType=1"
+  },
+  {
+    "state": "Texas",
+    "city": "Arlington",
+    "officialWebsite": "[https://www.arlingtontx.gov](https://www.arlingtontx.gov)",
+    "procurementLink": "https://arlington-tx.ionwave.net/SourcingEvents.aspx?SourceType=1"
+  },
+  {
+    "state": "Texas",
+    "city": "Corpus Christi",
+    "officialWebsite": "[https://www.cctexas.com](https://www.cctexas.com)",
+    "procurementLink": "https://www.publicpurchase.com/gems/cctexas,tx/buyer/public/home"
+  },
+  {
+    "state": "Texas",
+    "city": "Plano",
+    "officialWebsite": "[https://www.plano.gov](https://www.plano.gov)",
+    "procurementLink": "https://planotx.ionwave.net/SourcingEvents.aspx?SourceType=1"
+  },
+  {
+    "state": "Texas",
+    "city": "Laredo",
+    "officialWebsite": "[https://www.cityoflaredo.com](https://www.cityoflaredo.com)",
+    "procurementLink": "https://cityoflaredo.ionwave.net/SourcingEvents.aspx?SourceType=1"
+  },
+  {
+    "state": "Texas",
+    "city": "Lubbock",
+    "officialWebsite": "[https://www.lubbockcounty.gov](https://www.lubbockcounty.gov)",
+    "procurementLink": "https://lubbock.bonfirehub.com"
+  },
+  {
+    "state": "Florida",
+    "city": "Jacksonville",
+    "officialWebsite": "https://www.jacksonville.gov",
+    "procurementLink": "https://eims.fa.us2.oraclecloud.com/fscmUI/faces/NegotiationAbstracts?prcBuId=300000008806179&_adf.ctrl-state=136yhzr0zu_62&_afrLoop=9028344373088139&_afrWindowMode=0&_afrWindowId=null&_afrFS=16&_afrM"
+  },
+  {
+    "state": "Georgia",
+    "city": "Savannah",
+    "officialWebsite": "https://www.savannahga.gov",
+    "procurementLink": "https://savannahairport.bonfirehub.com/portal/?tab=openOpportunities"
+  },
+  {
+    "state": "South Carolina",
+    "city": "Charleston",
+    "officialWebsite": "https://www.charleston-sc.gov",
+    "procurementLink": "https://www.charleston-sc.gov/Bids.aspx?CatID=17"
+  },
+  {
+    "state": "Tennessee",
+    "city": "Memphis",
+    "officialWebsite": "https://www.memphistn.gov",
+    "procurementLink": "https://memphistn.gov/rfp-rfq/#rfprfq"
+  },
+  {
+    "state": "Tennessee",
+    "city": "Knoxville",
+    "officialWebsite": "https://www.knoxcounty.org",
+    "procurementLink": "https://www.knoxcounty.org/apps/solicitations/solicitations.php"
+  },
+  {
+    "state": "Georgia",
+    "city": "Decatur",
+    "officialWebsite": "https://www.dekalbcountyga.gov",
+    "procurementLink": "https://procurement.opengov.com/portal/dekalbcountyga"
+  },
+  {
+    "state": "Georgia",
+    "city": "gwinnet",
+    "officialWebsite": "https://www.gwinnettcounty.com/government/departments/financial-services/purchasing/bids-rfps",
+    "procurementLink": "https://www.gwinnettcounty.com/government/departments/financial-services/purchasing/bids-rfps"
+  }
+]

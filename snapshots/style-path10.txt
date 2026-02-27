@@ -1,0 +1,20 @@
+STYLE 10 (PATH /10) — SLATE + VIOLET WITH INITIAL CIRCLES
+Path: /10
+
+=== TEXT REPRESENTATION OF DISPLAY ===
+
+- Background: Slate dark (#0f172a)
+- Card bg: #1e293b, borders #334155
+- Typography: Lexend (headings, buttons), Figtree (body)
+- Accent: Violet (#7c3aed, #a78bfa for links)
+
+HEADER:
+  Thin bottom border #334155. "Procurement Links" (Lexend, white), subtitle "State and city portals" (muted). "Import JSON" (outline violet), "Add link" (solid violet). Rounded-lg.
+
+MAIN CONTENT:
+  3-column grid (1 col sm, 2 sm, 3 lg). Each card: left = large circle with city initial (e.g. "A") in violet bg, white letter; right = city (Lexend), state, "Official site" / "Procurement" (violet link), "Edit". Cards: #1e293b, rounded-xl, border #334155, hover border violet tint. Distinct component: initial circle (avatar-style) on every card.
+
+EMPTY STATE:
+  Dashed #475569 border, rounded-xl, "Add link" violet outline.
+
+No lavender/soft pastel (this is dark slate). No orange/teal/gold/green/magenta/red. Initial/avatar circle on each card. Slate + violet palette. Lexend + Figtree. 3-col grid with circle+content card layout.

@@ -4,8 +4,9 @@ Track of implemented styles and their snapshots to ensure **no repetition** acro
 
 ## Acceptance summary
 
-- **Styles 1, 5, 10 — Accepted.** Reachable at `/1` (Style 1), `/2` (Style 10 — Maximalist/Bold), `/3` (Style 5 — Art deco).
-- **Styles 2, 3, 4, 6, 7, 8, 9 — Rejected.** Removed from the app. See **Rejected styles** below.
+- **Styles 1, 5, 10 — Accepted.** Reachable at `/1` (Style 1 — Brutalist), `/2` (Style 10 — Maximalist/Bold), `/3` (Style 5 — Art deco).
+- **Styles 6, 7, 8, 9, 10 (paths /6–/10) — Accepted.** Reachable at `/6` (Terminal CRT), `/7` (Neon Noir), `/8` (Swiss numbered), `/9` (Horizontal strips), `/10` (Slate + violet, initial circles).
+- **Styles 2, 3, 4, 6, 7, 8, 9 (earlier attempts) — Rejected.** See **Rejected styles** below.
 
 ---
 
@@ -162,3 +163,180 @@ Header: Thick orange border; "PROCUREMENT LINKS" + teal/orange buttons.
 - Alternating left-border accent on cards (orange/teal by index)
 - Offset box-shadow on hover (4px 4px 0)
 - Maximalist / bold tone with 4px borders
+
+---
+
+## Style 6 — Path: `/6` — **Accepted**
+
+**Name:** Terminal CRT / Phosphor green  
+**Snapshot:** `snapshots/style-6.txt`  
+**Screenshot:** `snapshots/style-6.png` (capture when running app)
+
+### High-level idea
+- Terminal/CRT aesthetic: phosphor green on dark green-black. JetBrains Mono for header/buttons, Plus Jakarta Sans for card body. 6-column grid with staggered card spans (2,2,2 then 3,3 then 2,3,2…). Cards: 3px left accent, rounded-sm, no corner brackets.
+
+### Color scheme
+- Background: `#0c120c` (dark green-black)
+- Text: `#c8e6c9` (light green)
+- Muted: `#558b2f`
+- Borders: `#2e7d32`
+- Accent: `#69f0ae` (phosphor green)
+
+### Layout
+- Header: thin green bottom border; terminal-style "> procurement_links"; import_json / add_link buttons (rounded-sm).
+- Main: 6-column grid; cards span 2 or 3 columns in staggered pattern; 3px left border accent, 1px solid, rounded-sm.
+
+### Text representation (from snapshot)
+```
+Background: Dark green-black. Fonts: JetBrains Mono (header/buttons), Plus Jakarta Sans (body).
+Header: "> procurement_links" + import_json | add_link (phosphor green).
+6-col grid; staggered spans; cards with 3px left phosphor border, rounded-sm.
+```
+
+### Do NOT repeat in future styles
+- Dark green-black (#0c120c) + phosphor green (#69f0ae) palette
+- JetBrains Mono + Plus Jakarta Sans
+- Terminal/CRT phosphor green tone
+- 6-column grid with staggered span pattern (2,2,2 then 3,3 etc.)
+- 3px left border accent on cards with rounded-sm
+
+---
+
+## Style 7 — Path: `/7` — **Accepted**
+
+**Name:** Neon Noir / Magenta  
+**Snapshot:** `snapshots/style-7.txt`  
+**Screenshot:** `snapshots/style-7.png` (capture when running app)
+
+### High-level idea
+- Neon noir: near black (#0d0d0d), single accent neon magenta (#e91e8c). Archivo (headers/buttons) + Sora (body). 2-column masonry layout (column-count: 2); cards with 4px top border accent, rounded-lg, magenta glow on hover.
+
+### Color scheme
+- Background: `#0d0d0d` (near black)
+- Card bg: `#1a1a1a`
+- Text: `#e0e0e0`, muted `#888`
+- Accent: `#e91e8c` (neon magenta), hover `#f06292`
+
+### Layout
+- Header: 4px magenta bottom border; title + subtitle left; Import JSON / Add link right (rounded-lg).
+- Main: 2-column masonry (CSS column-count); cards with 4px top border magenta, rounded-lg; break-inside-avoid so cards don’t split.
+
+### Text representation (from snapshot)
+```
+Background: Near black. Fonts: Archivo, Sora.
+Header: "Procurement Links" + magenta border; Import JSON | Add link (rounded-lg).
+2-col masonry; cards with 4px top magenta border, rounded-lg, glow on hover.
+```
+
+### Do NOT repeat in future styles
+- Near black + neon magenta (#e91e8c) palette
+- Archivo + Sora
+- 4px top border accent on cards
+- 2-column masonry (column-count: 2) layout
+- Neon noir tone with magenta glow
+
+---
+
+## Style 8 — Path: `/8` — **Accepted**
+
+**Name:** Swiss / Numbered list (two columns)  
+**Snapshot:** `snapshots/style-8.txt`  
+**Screenshot:** `snapshots/style-8.png` (capture when running app)
+
+### High-level idea
+- Swiss/light: cream bg (#faf8f5), black text, deep red (#b71c1c) accent. Fraunces (display/serif) + Open Sans (body). Two-column layout of numbered rows: each column is a vertical list with large red numerals (1, 2, 3…), city/state/links. Not a card grid; not single-column only.
+
+### Color scheme
+- Background: `#faf8f5` (light cream)
+- Text: `#1a1a1a`, muted `#666`
+- Accent: `#b71c1c` (deep red)
+- Border: `#1a1a1a`, divide `#ddd`
+
+### Layout
+- Header: 2px black bottom border; title + subtitle; Import JSON (outline) / Add link (red), rounded-md.
+- Main: 2-column grid (md:grid-cols-2); each column is a list of numbered rows (numeral + city/state/links); divide-y between rows.
+
+### Text representation (from snapshot)
+```
+Background: Light cream. Fonts: Fraunces, Open Sans.
+Header: "Procurement Links" + black border; Import JSON | Add link (red, rounded-md).
+Two columns of numbered rows; large red numerals, city/state/links per row.
+```
+
+### Do NOT repeat in future styles
+- Light cream (#faf8f5) + deep red (#b71c1c) palette
+- Fraunces + Open Sans
+- Numbered list with large red numerals
+- Two-column numbered rows (not card grid)
+- Swiss / light tone, rounded-md buttons
+
+---
+
+## Style 9 — Path: `/9` — **Accepted**
+
+**Name:** Horizontal strips / Bar layout  
+**Snapshot:** `snapshots/style-9.txt`  
+**Screenshot:** `snapshots/style-9.png` (capture when running app)
+
+### High-level idea
+- Horizontal strip layout: light warm gray (#f0eeeb), white header bar. Each link = one full-width horizontal bar: city/state left, Official site | Procurement | Edit right. Manrope + Source Sans 3. Blue (#2563eb) accent. Rounded-xl white cards, hover shadow.
+
+### Color scheme
+- Background: `#f0eeeb` (light warm gray)
+- Card/header bg: white
+- Text: `#1c1917`, muted `#78716c`
+- Border: `#e5e2de`
+- Accent: `#2563eb` (blue)
+
+### Layout
+- Header: white bar, shadow, title + subtitle left, Import JSON / Add link right (rounded-lg).
+- Main: stacked full-width bars (white, rounded-xl); each row: left = city + state, right = links + Edit; hover border + shadow.
+
+### Text representation (from snapshot)
+```
+Background: Light warm gray. Header: white bar. Fonts: Manrope, Source Sans 3.
+Horizontal strips: city/state left, Official site | Procurement | Edit right. Blue accent, rounded-xl.
+```
+
+### Do NOT repeat in future styles
+- Light warm gray (#f0eeeb) + blue (#2563eb) palette
+- Manrope + Source Sans 3
+- Horizontal strip/bar layout (content left, links right, one row per item)
+- Rounded-xl white cards on gray bg
+- Dashboard/panel tone with white header bar
+
+---
+
+## Style 10 (path `/10`) — **Accepted**
+
+**Name:** Slate + violet with initial circles  
+**Snapshot:** `snapshots/style-path10.txt`  
+**Screenshot:** `snapshots/style-path10.png` (capture when running app)
+
+### High-level idea
+- Dark slate (#0f172a) with violet (#7c3aed) accent. Lexend + Figtree. 3-column grid; each card has a prominent **initial circle** (city first letter in violet circle) left of content. Rounded-xl cards, no left/top border accent.
+
+### Color scheme
+- Background: `#0f172a` (slate)
+- Card bg: `#1e293b`
+- Text: `#e2e8f0`, muted `#94a3b8`
+- Border: `#334155`
+- Accent: `#7c3aed`, links `#a78bfa`
+
+### Layout
+- Header: thin slate border; title + subtitle; Import JSON / Add link (rounded-lg).
+- Main: 3-column grid; each card = flex row: [circle with initial] + [city, state, links, Edit]; rounded-xl.
+
+### Text representation (from snapshot)
+```
+Background: Slate dark. Fonts: Lexend, Figtree.
+Header: "Procurement Links" + violet buttons (rounded-lg).
+3-col grid; cards with violet initial circle (city letter) + content. Rounded-xl.
+```
+
+### Do NOT repeat in future styles
+- Slate (#0f172a) + violet (#7c3aed) palette
+- Lexend + Figtree
+- Initial/avatar circle (city first letter) on each card
+- 3-column grid with circle+content card layout
+- Dark slate tone, rounded-xl cards
