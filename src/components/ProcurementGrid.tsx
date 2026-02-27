@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import type { Id } from "../../convex/_generated/dataModel";
@@ -12,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
@@ -37,6 +38,39 @@ export function ProcurementGrid() {
     id: Id<"procurementLinks">;
     fields: ProcurementLinkFields;
   } | null>(null);
+  const [search, setSearch] = useState("");
+
+  const filteredLinks = useMemo(() => {
+    if (!links) return [];
+    const keywords = search
+      .split(",")
+      .map((k) => k.trim().toLowerCase())
+      .filter(Boolean);
+    if (keywords.length === 0) return links;
+    return links.filter((link) => {
+      const state = (link.state ?? "").toLowerCase();
+      const city = (link.city ?? "").toLowerCase();
+      const officialWebsite = (link.official_website ?? "").toLowerCase();
+      const procurementLink = (link.procurement_link ?? "").toLowerCase();
+      return keywords.some(
+        (q) =>
+          state.includes(q) ||
+          city.includes(q) ||
+          officialWebsite.includes(q) ||
+          procurementLink.includes(q)
+      );
+    });
+  }, [links, search]);
+
+  const linksByState = useMemo(() => {
+    const byState: Record<string, typeof filteredLinks> = {};
+    for (const link of filteredLinks) {
+      const s = link.state ?? "";
+      if (!byState[s]) byState[s] = [];
+      byState[s].push(link);
+    }
+    return byState;
+  }, [filteredLinks]);
 
   const handleAdd = () => {
     setEditing(null);
@@ -120,6 +154,20 @@ export function ProcurementGrid() {
         </div>
       </div>
 
+      <div className="space-y-2">
+        <label htmlFor="procurement-search" className="text-sm font-medium">
+          Search by state or city
+        </label>
+        <Input
+          id="procurement-search"
+          type="text"
+          placeholder="e.g. California, Los Angeles or CA, Austin"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="max-w-md"
+        />
+      </div>
+
       <Dialog open={importOpen} onOpenChange={setImportOpen}>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
@@ -149,9 +197,9 @@ export function ProcurementGrid() {
         </DialogContent>
       </Dialog>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="space-y-4">
         {links.length === 0 ? (
-          <Card className="sm:col-span-2 lg:col-span-3 border-dashed">
+          <Card className="border-dashed">
             <CardContent className="flex flex-col items-center justify-center py-12 text-center">
               <p className="text-muted-foreground mb-4">
                 No procurement links yet. Run the seed or add one.
@@ -161,57 +209,74 @@ export function ProcurementGrid() {
               </Button>
             </CardContent>
           </Card>
+        ) : filteredLinks.length === 0 ? (
+          <Card className="border-dashed">
+            <CardContent className="py-12 text-center">
+              <p className="text-muted-foreground">No matches for your search.</p>
+            </CardContent>
+          </Card>
         ) : (
-          links.map((link) => (
-            <Card key={link._id} className="flex flex-col">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg">{link.city}</CardTitle>
-                <CardDescription>{link.state}</CardDescription>
-              </CardHeader>
-              <CardContent className="flex-1 space-y-2 text-sm">
-                {link.official_website && (
-                  <p>
-                    <a
-                      href={link.official_website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary hover:underline truncate block"
-                    >
-                      Official site
-                    </a>
-                  </p>
-                )}
-                {link.procurement_link && (
-                  <p>
-                    <a
-                      href={link.procurement_link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary hover:underline truncate block"
-                    >
-                      Procurement portal
-                    </a>
-                  </p>
-                )}
-              </CardContent>
-              <CardContent className="pt-0">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() =>
-                    handleEdit(link._id, {
-                      state: link.state,
-                      city: link.city,
-                      official_website: link.official_website,
-                      procurement_link: link.procurement_link,
-                    })
-                  }
-                >
-                  Edit
-                </Button>
-              </CardContent>
-            </Card>
-          ))
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {Object.entries(linksByState)
+              .sort(([a], [b]) => a.localeCompare(b))
+              .map(([state, stateLinks]) => (
+                <Card key={state} className="flex flex-col">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-lg">{state}</CardTitle>
+                    <CardDescription>
+                      {stateLinks.length} {stateLinks.length === 1 ? "city" : "cities"}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex-1 space-y-3 text-sm">
+                    {stateLinks.map((link) => (
+                      <div
+                        key={link._id}
+                        className="flex flex-wrap items-center gap-x-2 gap-y-1 border-b border-border/50 pb-2 last:border-0 last:pb-0"
+                      >
+                        <span className="font-medium">{link.city}</span>
+                        <span className="flex flex-wrap items-center gap-x-2">
+                          {link.procurement_link && (
+                            <a
+                              href={link.procurement_link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-primary hover:underline"
+                            >
+                              Procurement
+                            </a>
+                          )}
+                          {link.official_website && (
+                            <a
+                              href={link.official_website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-primary hover:underline"
+                            >
+                              Official site
+                            </a>
+                          )}
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-7 px-2"
+                            onClick={() =>
+                              handleEdit(link._id, {
+                                state: link.state,
+                                city: link.city,
+                                official_website: link.official_website,
+                                procurement_link: link.procurement_link,
+                              })
+                            }
+                          >
+                            Edit
+                          </Button>
+                        </span>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              ))}
+          </div>
         )}
       </div>
 
