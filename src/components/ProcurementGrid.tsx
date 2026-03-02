@@ -5,13 +5,6 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import type { Id } from "../../convex/_generated/dataModel";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   Dialog,
@@ -61,16 +54,6 @@ export function ProcurementGrid() {
       );
     });
   }, [links, search]);
-
-  const linksByState = useMemo(() => {
-    const byState: Record<string, typeof filteredLinks> = {};
-    for (const link of filteredLinks) {
-      const s = link.state ?? "";
-      if (!byState[s]) byState[s] = [];
-      byState[s].push(link);
-    }
-    return byState;
-  }, [filteredLinks]);
 
   const handleAdd = () => {
     setEditing(null);
@@ -129,156 +112,179 @@ export function ProcurementGrid() {
 
   if (links === undefined) {
     return (
-      <div className="container mx-auto p-6">
-        <p className="text-muted-foreground">Loading procurement links…</p>
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-primary">Loading…</p>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="font-display text-2xl font-semibold tracking-tight">
+    <div className="min-h-screen relative">
+      {/* Diagonal stripe pattern (base theme) */}
+      <div
+        className="fixed inset-0 pointer-events-none opacity-30 base-pattern"
+        aria-hidden
+      />
+
+      <header className="relative border-t-4 border-b-4 border-primary px-6 py-5">
+        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-6">
+          <h1 className="text-3xl font-extrabold text-foreground uppercase tracking-tight">
             Procurement links
           </h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            State and city procurement portals
+          <p className="absolute left-1/2 -translate-x-1/2 top-[3.2rem] text-muted-foreground text-sm uppercase tracking-widest">
+            State & city portals
           </p>
+          <div className="flex gap-3">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setImportOpen(true);
+                setImportError(null);
+                setImportText("");
+              }}
+              className="border-2 border-accent text-accent font-semibold uppercase hover:bg-accent hover:text-accent-foreground rounded-none"
+            >
+              Import JSON
+            </Button>
+            <Button
+              onClick={handleAdd}
+              className="bg-primary text-primary-foreground font-bold uppercase hover:bg-primary/90 rounded-none"
+            >
+              Add link
+            </Button>
+          </div>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={() => { setImportOpen(true); setImportError(null); setImportText(""); }}>
-            Import from JSON
-          </Button>
-          <Button onClick={handleAdd}>Add link</Button>
-        </div>
-      </div>
+      </header>
 
-      <div className="space-y-2">
-        <label htmlFor="procurement-search" className="text-sm font-medium">
-          Search by state or city
-        </label>
-        <Input
-          id="procurement-search"
-          type="text"
-          placeholder="e.g. California, Los Angeles or CA, Austin"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="max-w-md"
-        />
+      <div className="relative max-w-6xl mx-auto px-6 py-6">
+        <div className="space-y-2 mb-6">
+          <label htmlFor="procurement-search" className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+            Search by state or city
+          </label>
+          <Input
+            id="procurement-search"
+            type="text"
+            placeholder="e.g. California, Los Angeles or CA, Austin"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="max-w-md border-2 border-accent bg-card text-foreground placeholder:text-muted-foreground focus-visible:ring-accent rounded-none"
+          />
+        </div>
+
+        {links.length === 0 ? (
+          <div className="border-4 border-dashed border-primary p-16 text-center">
+            <p className="text-muted-foreground text-xl font-semibold uppercase mb-8">
+              No procurement links yet.
+            </p>
+            <Button
+              variant="outline"
+              onClick={handleAdd}
+              className="border-2 border-accent text-accent font-semibold uppercase hover:bg-accent hover:text-accent-foreground rounded-none"
+            >
+              Add link
+            </Button>
+          </div>
+        ) : filteredLinks.length === 0 ? (
+          <div className="border-4 border-dashed border-primary p-12 text-center">
+            <p className="text-muted-foreground uppercase">No matches for your search.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredLinks.map((link, i) => (
+              <div
+                key={link._id}
+                className="relative bg-card border-l-4 p-5 transition-all hover:shadow-[4px_4px_0_0_var(--base-teal)]"
+                style={{
+                  borderLeftColor: i % 2 === 0 ? "var(--base-orange)" : "var(--base-teal)",
+                }}
+              >
+                <h2 className="text-xl font-bold text-foreground uppercase">
+                  {link.city}
+                </h2>
+                <p className="text-muted-foreground text-sm mt-1 uppercase tracking-wide">
+                  {link.state}
+                </p>
+                <div className="mt-4 space-y-2">
+                  {link.official_website && (
+                    <a
+                      href={link.official_website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-primary hover:text-accent font-semibold uppercase text-sm transition-colors"
+                    >
+                      Official site
+                    </a>
+                  )}
+                  {link.procurement_link && (
+                    <a
+                      href={link.procurement_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-accent hover:text-primary font-semibold uppercase text-sm transition-colors"
+                    >
+                      Procurement
+                    </a>
+                  )}
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() =>
+                    handleEdit(link._id, {
+                      state: link.state,
+                      city: link.city,
+                      official_website: link.official_website,
+                      procurement_link: link.procurement_link,
+                    })
+                  }
+                  className="mt-3 text-xs text-muted-foreground hover:text-primary font-semibold uppercase h-auto p-0"
+                >
+                  Edit
+                </Button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <Dialog open={importOpen} onOpenChange={setImportOpen}>
-        <DialogContent className="sm:max-w-lg">
+        <DialogContent className="sm:max-w-lg bg-card border-4 border-primary text-foreground rounded-none">
           <DialogHeader>
-            <DialogTitle>Import procurement links</DialogTitle>
+            <DialogTitle className="text-primary font-bold uppercase">
+              Import procurement links
+            </DialogTitle>
           </DialogHeader>
           <p className="text-muted-foreground text-sm">
-            Paste JSON in the form of an object with keys and arrays of links, e.g.{" "}
-            <code className="text-xs bg-muted px-1 rounded">&#123; &quot;us_state_procurement&quot;: [ &#123; &quot;state&quot;, &quot;city&quot;, &quot;official_website&quot;, &quot;procurement_link&quot; &#125;, ... ] &#125;</code>
+            Paste JSON: object with keys and arrays of link objects.
           </p>
           <textarea
-            className="min-h-[200px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            placeholder={'{"us_state_procurement": [{"state": "...", "city": "...", "official_website": "...", "procurement_link": "..."}]}'}
+            className="min-h-[200px] w-full border-2 border-accent bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary rounded-none"
+            placeholder='{"us_state_procurement": [...]}'
             value={importText}
             onChange={(e) => setImportText(e.target.value)}
           />
           {importError && (
-            <p className="text-destructive text-sm">{importError}</p>
+            <p className="text-destructive font-medium">{importError}</p>
           )}
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setImportOpen(false)} disabled={importing}>
+          <DialogFooter className="gap-3 mt-4">
+            <Button
+              variant="outline"
+              onClick={() => setImportOpen(false)}
+              disabled={importing}
+              className="border-2 border-muted-foreground text-foreground hover:border-accent font-semibold uppercase rounded-none"
+            >
               Cancel
             </Button>
-            <Button onClick={handleImportSubmit} disabled={importing || !importText.trim()}>
+            <Button
+              onClick={handleImportSubmit}
+              disabled={importing || !importText.trim()}
+              className="bg-primary text-primary-foreground font-bold disabled:opacity-50 uppercase rounded-none"
+            >
               {importing ? "Importing…" : "Import"}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
-      <div className="space-y-4">
-        {links.length === 0 ? (
-          <Card className="border-dashed">
-            <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-              <p className="text-muted-foreground mb-4">
-                No procurement links yet. Run the seed or add one.
-              </p>
-              <Button variant="outline" onClick={handleAdd}>
-                Add link
-              </Button>
-            </CardContent>
-          </Card>
-        ) : filteredLinks.length === 0 ? (
-          <Card className="border-dashed">
-            <CardContent className="py-12 text-center">
-              <p className="text-muted-foreground">No matches for your search.</p>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {Object.entries(linksByState)
-              .sort(([a], [b]) => a.localeCompare(b))
-              .map(([state, stateLinks]) => (
-                <Card key={state} className="flex flex-col">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">{state}</CardTitle>
-                    <CardDescription>
-                      {stateLinks.length} {stateLinks.length === 1 ? "city" : "cities"}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex-1 space-y-3 text-sm">
-                    {stateLinks.map((link) => (
-                      <div
-                        key={link._id}
-                        className="flex flex-wrap items-center gap-x-2 gap-y-1 border-b border-border/50 pb-2 last:border-0 last:pb-0"
-                      >
-                        <span className="font-medium">{link.city}</span>
-                        <span className="flex flex-wrap items-center gap-x-2">
-                          {link.procurement_link && (
-                            <a
-                              href={link.procurement_link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-primary hover:underline"
-                            >
-                              Procurement
-                            </a>
-                          )}
-                          {link.official_website && (
-                            <a
-                              href={link.official_website}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-primary hover:underline"
-                            >
-                              Official site
-                            </a>
-                          )}
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-7 px-2"
-                            onClick={() =>
-                              handleEdit(link._id, {
-                                state: link.state,
-                                city: link.city,
-                                official_website: link.official_website,
-                                procurement_link: link.procurement_link,
-                              })
-                            }
-                          >
-                            Edit
-                          </Button>
-                        </span>
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              ))}
-          </div>
-        )}
-      </div>
 
       <ProcurementLinkForm
         open={formOpen}

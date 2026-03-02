@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Barlow", "system-ui", "sans-serif"],
-        display: ["Barlow Condensed", "Barlow", "system-ui", "sans-serif"],
+        sans: ["Syne", "system-ui", "sans-serif"],
+        display: ["Syne", "Barlow Condensed", "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -16,6 +16,32 @@ export default {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
         },
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        ring: "hsl(var(--ring))",
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        input: "hsl(var(--border))",
+        /* Base theme hex tokens for borders/patterns (style /2) */
+        "base-orange": "var(--base-orange)",
+        "base-teal": "var(--base-teal)",
+        "base-card": "var(--base-card)",
+      },
+      borderColor: {
+        "base-orange": "var(--base-orange)",
+        "base-teal": "var(--base-teal)",
       },
       keyframes: {
         "fade-in": {
