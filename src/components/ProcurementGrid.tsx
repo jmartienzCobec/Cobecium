@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import type { Doc, Id } from "../../convex/_generated/dataModel";
@@ -38,6 +38,11 @@ export function ProcurementGrid() {
   const importFromJson = useMutation(api.procurementLinks.importFromJson);
   const createSystemPrompt = useMutation(api.systemPrompts.create);
   const updateSystemPrompt = useMutation(api.systemPrompts.update);
+  const [contextMenu, setContextMenu] = useState<null | {
+    x: number;
+    y: number;
+    state: string;
+  }>(null);
   const [formOpen, setFormOpen] = useState(false);
   const [importOpen, setImportOpen] = useState(false);
   const [importText, setImportText] = useState("");
@@ -227,6 +232,15 @@ export function ProcurementGrid() {
     }
   };
 
+  useEffect(() => {
+    if (!contextMenu) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setContextMenu(null);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [contextMenu]);
+
   if (links === undefined) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -314,24 +328,25 @@ export function ProcurementGrid() {
                   style={{
                     borderLeftColor: isOrange ? "var(--base-orange)" : "var(--base-teal)",
                   }}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    setContextMenu({ x: e.clientX, y: e.clientY, state });
+                  }}
                 >
                   <h2 className="text-xl font-bold text-foreground uppercase">
                     {state}
                   </h2>
-                  <div className="flex items-center justify-between gap-3 mt-1">
-                    <p className="text-muted-foreground text-xs uppercase tracking-wide">
-                      Prompt
-                    </p>
+                  <div className="mt-1">
                     <button
                       type="button"
                       onClick={() => openSystemPromptEditor(state)}
-                      className={`text-xs font-semibold uppercase transition-colors ${
+                      className={`text-muted-foreground text-xs uppercase tracking-wide transition-colors ${
                         affiliatedPrompt
-                          ? "text-accent hover:text-primary"
-                          : "text-muted-foreground hover:text-primary"
+                          ? "hover:text-primary"
+                          : "hover:text-primary"
                       }`}
                     >
-                      {affiliatedPrompt ? "View" : "Add"}
+                      Prompt
                     </button>
                   </div>
                   <ul className="mt-4 space-y-2 list-none p-0">
@@ -353,14 +368,6 @@ export function ProcurementGrid() {
                         )}
                         <button
                           type="button"
-                          onClick={() => openSystemPromptEditor(state)}
-                          className="text-xs text-muted-foreground hover:text-primary font-semibold uppercase shrink-0"
-                        >
-                          Prompt
-                        </button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
                           onClick={() =>
                             handleEdit(link._id, {
                               state: link.state,
@@ -369,10 +376,10 @@ export function ProcurementGrid() {
                               procurement_link: link.procurement_link,
                             })
                           }
-                          className="text-xs text-muted-foreground hover:text-primary font-semibold uppercase h-auto p-0 shrink-0"
+                          className="text-xs text-muted-foreground hover:text-primary font-semibold uppercase shrink-0"
                         >
                           Edit
-                        </Button>
+                        </button>
                       </li>
                     ))}
                   </ul>
@@ -382,6 +389,58 @@ export function ProcurementGrid() {
           </div>
         )}
       </div>
+
+      {contextMenu && (() => {
+        const padding = 8;
+        const menuWidth = 220;
+        const menuHeight = 44;
+        const vw =
+          typeof window !== "undefined" ? window.innerWidth : contextMenu.x + menuWidth + padding;
+        const vh =
+          typeof window !== "undefined"
+            ? window.innerHeight
+            : contextMenu.y + menuHeight + padding;
+        const left = Math.max(
+          padding,
+          Math.min(contextMenu.x, vw - menuWidth - padding)
+        );
+        const top = Math.max(
+          padding,
+          Math.min(contextMenu.y, vh - menuHeight - padding)
+        );
+
+        return (
+          <div
+            className="fixed inset-0 z-50"
+            onClick={() => setContextMenu(null)}
+            onContextMenu={(e) => {
+              e.preventDefault();
+              setContextMenu(null);
+            }}
+            aria-hidden
+          >
+            <div
+              className="fixed bg-card border-2 border-accent shadow-[4px_4px_0_0_var(--base-orange)] rounded-none min-w-[220px]"
+              style={{ left, top }}
+              onClick={(e) => e.stopPropagation()}
+              role="menu"
+              aria-label={`Actions for ${contextMenu.state}`}
+            >
+              <button
+                type="button"
+                className="w-full text-left px-3 py-2 text-sm font-semibold uppercase text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                role="menuitem"
+                onClick={() => {
+                  alert("this integration is not fully implemented yet");
+                  setContextMenu(null);
+                }}
+              >
+                Start Hydra Job
+              </button>
+            </div>
+          </div>
+        );
+      })()}
 
       <Dialog open={importOpen} onOpenChange={setImportOpen}>
         <DialogContent className="sm:max-w-lg bg-card border-4 border-primary text-foreground rounded-none">
