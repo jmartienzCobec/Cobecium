@@ -183,12 +183,14 @@ export function Style10Page() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {links.map((link, i) => (
+            {links.map((link, i) => {
+              const isOrange = i % 2 === 0;
+              return (
               <div
                 key={link._id}
-                className="relative bg-card border-l-4 p-5 transition-all hover:shadow-[4px_4px_0_0_var(--base-teal)]"
+                className={`relative bg-card border-l-4 p-5 transition-all ${isOrange ? "hover:shadow-[4px_4px_0_0_var(--base-orange)]" : "hover:shadow-[4px_4px_0_0_var(--base-teal)]"}`}
                 style={{
-                  borderLeftColor: i % 2 === 0 ? "var(--base-orange)" : "var(--base-teal)",
+                  borderLeftColor: isOrange ? "var(--base-orange)" : "var(--base-teal)",
                 }}
               >
                 <h2 className="text-xl font-bold text-foreground uppercase">
@@ -234,7 +236,8 @@ export function Style10Page() {
                   Edit
                 </button>
               </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </main>
