@@ -102,7 +102,7 @@ export function Style8Page() {
       <header className="border-b-2 border-[#1a1a1a] px-6 py-5">
         <div className="max-w-3xl mx-auto flex flex-wrap items-baseline justify-between gap-4">
           <h1 className="text-2xl font-semibold text-[#1a1a1a] tracking-tight" style={{ fontFamily: '"Fraunces", serif' }}>
-            Procurement Links
+            Lynx
           </h1>
           <p className="text-[#666] text-sm">State and city procurement portals</p>
           <nav className="flex gap-2 w-full sm:w-auto sm:order-3">

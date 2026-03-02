@@ -109,7 +109,7 @@ export function Style6Page() {
         <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <div>
             <h1 className="text-xl font-semibold text-[#c8e6c9]" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
-              &gt; procurement_links
+              &gt; lynx
             </h1>
             <p className="text-[#558b2f] text-sm mt-0.5" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
               state and city procurement portals

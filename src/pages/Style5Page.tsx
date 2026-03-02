@@ -112,7 +112,7 @@ export function Style5Page() {
                 className="text-2xl tracking-[0.2em] uppercase text-[#e8e4dc]"
                 style={{ fontFamily: '"Cinzel", serif' }}
               >
-                Procurement links
+                Lynx
                 <span className="ml-2 text-sm text-[#c9a227] tracking-widest">Art deco</span>
               </h1>
               <p className="text-[#8b9aaa] text-sm mt-0.5 tracking-widest uppercase" style={{ fontFamily: '"Cinzel", serif', letterSpacing: "0.25em" }}>

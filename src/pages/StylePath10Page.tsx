@@ -105,7 +105,7 @@ export function StylePath10Page() {
       <header className="border-b border-[#334155] px-6 py-5">
         <div className="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <h1 className="text-2xl font-semibold text-white tracking-tight" style={{ fontFamily: '"Lexend", sans-serif' }}>
-            Procurement Links
+            Lynx
           </h1>
           <p className="text-[#94a3b8] text-sm">State and city portals</p>
           <nav className="flex gap-2">

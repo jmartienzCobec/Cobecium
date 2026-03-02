@@ -102,7 +102,7 @@ export function Style9Page() {
       <header className="bg-white border-b border-[#e5e2de] px-6 py-4 shadow-sm">
         <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <h1 className="text-xl font-bold text-[#1c1917] tracking-tight" style={{ fontFamily: '"Manrope", sans-serif' }}>
-            Procurement Links
+            Lynx
           </h1>
           <p className="text-[#78716c] text-sm">State and city portals</p>
           <nav className="flex gap-2">

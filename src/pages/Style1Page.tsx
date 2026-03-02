@@ -102,7 +102,7 @@ export function Style1Page() {
         <div className="max-w-[1400px] mx-auto flex items-end justify-between gap-6 flex-wrap">
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-[#f5f5f5] uppercase">
-              Procurement links
+              Lynx
             </h1>
             <p className="text-[#888] mt-1 uppercase tracking-wider text-xs">
               State and city procurement portals

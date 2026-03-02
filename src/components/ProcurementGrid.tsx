@@ -127,13 +127,15 @@ export function ProcurementGrid() {
       />
 
       <header className="relative border-t-4 border-b-4 border-primary px-6 py-5">
-        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-6">
-          <h1 className="text-3xl font-extrabold text-foreground uppercase tracking-tight">
-            Procurement links
-          </h1>
-          <p className="absolute left-1/2 -translate-x-1/2 top-[3.2rem] text-muted-foreground text-sm uppercase tracking-widest">
-            State & city portals
-          </p>
+        <div className="max-w-6xl mx-auto flex items-center justify-end gap-6">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
+            <h1 className="text-3xl font-extrabold text-foreground uppercase tracking-tight">
+              Lynx
+            </h1>
+            <p className="text-muted-foreground text-sm uppercase tracking-widest mt-0.5">
+              State & city portals
+            </p>
+          </div>
           <div className="flex gap-3">
             <Button
               variant="outline"

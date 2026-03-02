@@ -103,7 +103,7 @@ export function Style7Page() {
         <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-white tracking-tight" style={{ fontFamily: '"Archivo", sans-serif' }}>
-              Procurement Links
+              Lynx
             </h1>
             <p className="text-[#888] text-sm mt-0.5" style={{ fontFamily: '"Sora", sans-serif' }}>
               State & city portals
