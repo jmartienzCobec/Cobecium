@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
-import type { Id } from "../../convex/_generated/dataModel";
+import type { Doc, Id } from "../../convex/_generated/dataModel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -18,10 +18,26 @@ import {
   type ProcurementLinkFields,
 } from "@/components/ProcurementLinkForm";
 import { normalizeProcurementImport } from "@/lib/procurementImport";
+import { LynxHeader } from "@/components/LynxHeader";
+import {
+  SystemPromptForm,
+  type SystemPromptFields,
+} from "@/components/SystemPromptForm";
+
+function stateKey(s: string | null | undefined) {
+  return (s ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .replace(/[().,]/g, "");
+}
 
 export function ProcurementGrid() {
   const links = useQuery(api.procurementLinks.list);
+  const prompts = useQuery(api.systemPrompts.list);
   const importFromJson = useMutation(api.procurementLinks.importFromJson);
+  const createSystemPrompt = useMutation(api.systemPrompts.create);
+  const updateSystemPrompt = useMutation(api.systemPrompts.update);
   const [formOpen, setFormOpen] = useState(false);
   const [importOpen, setImportOpen] = useState(false);
   const [importText, setImportText] = useState("");
@@ -32,6 +48,11 @@ export function ProcurementGrid() {
     fields: ProcurementLinkFields;
   } | null>(null);
   const [search, setSearch] = useState("");
+  const [systemPromptFormOpen, setSystemPromptFormOpen] = useState(false);
+  const [editingSystemPrompt, setEditingSystemPrompt] = useState<{
+    id?: Id<"chatSystemPrompts">;
+    initial: SystemPromptFields;
+  } | null>(null);
 
   const filteredLinks = useMemo(() => {
     if (!links) return [];
@@ -54,6 +75,37 @@ export function ProcurementGrid() {
       );
     });
   }, [links, search]);
+
+  const linksByState = useMemo(() => {
+    const byState: Record<string, typeof filteredLinks> = {};
+    for (const link of filteredLinks) {
+      const state = link.state ?? "";
+      if (!byState[state]) byState[state] = [];
+      byState[state].push(link);
+    }
+    return byState;
+  }, [filteredLinks]);
+
+  const sortedStates = useMemo(
+    () => Object.keys(linksByState).sort((a, b) => a.localeCompare(b)),
+    [linksByState]
+  );
+
+  const promptByState = useMemo(() => {
+    const map = new Map<string, Doc<"chatSystemPrompts">>();
+    if (!prompts) return map;
+    for (const p of prompts) {
+      const k = stateKey(p.state);
+      if (!k || k === "not found") continue;
+      const existing = map.get(k);
+      const isLeads = p.typeName === "leads";
+      const existingIsLeads = existing ? existing.typeName === "leads" : false;
+      if (!existing || (isLeads && !existingIsLeads)) {
+        map.set(k, p);
+      }
+    }
+    return map;
+  }, [prompts]);
 
   const handleAdd = () => {
     setEditing(null);
@@ -110,6 +162,71 @@ export function ProcurementGrid() {
     }
   };
 
+  const openSystemPromptEditor = (state: string) => {
+    const affiliated = promptByState.get(stateKey(state));
+    if (affiliated) {
+      setEditingSystemPrompt({
+        id: affiliated._id,
+        initial: {
+          title: affiliated.title,
+          description: affiliated.description,
+          systemPromptText: affiliated.systemPromptText,
+          isPrimarySystemPrompt: affiliated.isPrimarySystemPrompt,
+          type: affiliated.type,
+          typeName: affiliated.typeName,
+          typeDisplayName: affiliated.typeDisplayName,
+        },
+      });
+      setSystemPromptFormOpen(true);
+      return;
+    }
+
+    // Fallback: allow creating a prompt without leaving the page.
+    setEditingSystemPrompt({
+      initial: {
+        title: `${state} - Leads Generation Prompt`,
+        description: `Auto-generated state-specific prompt for ${state}`,
+        systemPromptText: "",
+        isPrimarySystemPrompt: false,
+        type: "",
+        typeName: "leads",
+        typeDisplayName: "Leads",
+      },
+    });
+    setSystemPromptFormOpen(true);
+  };
+
+  const handleSystemPromptSubmit = async (data: SystemPromptFields) => {
+    try {
+      if (editingSystemPrompt?.id) {
+        await updateSystemPrompt({
+          id: editingSystemPrompt.id,
+          title: data.title,
+          description: data.description,
+          systemPromptText: data.systemPromptText,
+          isPrimarySystemPrompt: data.isPrimarySystemPrompt,
+          type: data.type,
+          typeName: data.typeName,
+          typeDisplayName: data.typeDisplayName,
+        });
+      } else {
+        await createSystemPrompt({
+          title: data.title,
+          description: data.description,
+          systemPromptText: data.systemPromptText,
+          isPrimarySystemPrompt: data.isPrimarySystemPrompt,
+          type: data.type,
+          typeName: data.typeName,
+          typeDisplayName: data.typeDisplayName,
+        });
+      }
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Failed to save system prompt.");
+    } finally {
+      setEditingSystemPrompt(null);
+    }
+  };
+
   if (links === undefined) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -126,15 +243,25 @@ export function ProcurementGrid() {
         aria-hidden
       />
 
-      <header className="relative border-t-4 border-b-4 border-primary px-6 py-5">
-        <div className="max-w-6xl mx-auto flex items-center justify-end gap-6">
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-            <h1 className="text-3xl font-extrabold text-foreground uppercase tracking-tight">
-              Lynx
-            </h1>
-            <p className="text-muted-foreground text-sm uppercase tracking-widest mt-0.5">
-              State & city portals
-            </p>
+      <LynxHeader subtitle="State & city portals" activePage="procurement" />
+
+      <div className="relative max-w-6xl mx-auto px-6 py-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between mb-6">
+          <div className="space-y-2 w-full sm:max-w-md">
+            <label
+              htmlFor="procurement-search"
+              className="text-sm font-medium text-muted-foreground uppercase tracking-wide"
+            >
+              Search by state or city
+            </label>
+            <Input
+              id="procurement-search"
+              type="text"
+              placeholder="e.g. California, Los Angeles or CA, Austin"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="border-2 border-accent bg-card text-foreground placeholder:text-muted-foreground focus-visible:ring-accent rounded-none"
+            />
           </div>
           <div className="flex gap-3">
             <Button
@@ -156,22 +283,6 @@ export function ProcurementGrid() {
             </Button>
           </div>
         </div>
-      </header>
-
-      <div className="relative max-w-6xl mx-auto px-6 py-6">
-        <div className="space-y-2 mb-6">
-          <label htmlFor="procurement-search" className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-            Search by state or city
-          </label>
-          <Input
-            id="procurement-search"
-            type="text"
-            placeholder="e.g. California, Los Angeles or CA, Austin"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="max-w-md border-2 border-accent bg-card text-foreground placeholder:text-muted-foreground focus-visible:ring-accent rounded-none"
-          />
-        </div>
 
         {links.length === 0 ? (
           <div className="border-4 border-dashed border-primary p-16 text-center">
@@ -192,60 +303,80 @@ export function ProcurementGrid() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredLinks.map((link, i) => {
-              const isOrange = i % 2 === 0;
+            {sortedStates.map((state, stateIndex) => {
+              const stateLinks = linksByState[state];
+              const isOrange = stateIndex % 2 === 0;
+              const affiliatedPrompt = promptByState.get(stateKey(state));
               return (
-              <div
-                key={link._id}
-                className={`relative bg-card border-l-4 p-5 transition-all ${isOrange ? "hover:shadow-[4px_4px_0_0_var(--base-orange)]" : "hover:shadow-[4px_4px_0_0_var(--base-teal)]"}`}
-                style={{
-                  borderLeftColor: isOrange ? "var(--base-orange)" : "var(--base-teal)",
-                }}
-              >
-                <h2 className="text-xl font-bold text-foreground uppercase">
-                  {link.city}
-                </h2>
-                <p className="text-muted-foreground text-sm mt-1 uppercase tracking-wide">
-                  {link.state}
-                </p>
-                <div className="mt-4 space-y-2">
-                  {link.official_website && (
-                    <a
-                      href={link.official_website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block text-primary hover:text-accent font-semibold uppercase text-sm transition-colors"
-                    >
-                      Official site
-                    </a>
-                  )}
-                  {link.procurement_link && (
-                    <a
-                      href={link.procurement_link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block text-accent hover:text-primary font-semibold uppercase text-sm transition-colors"
-                    >
-                      Procurement
-                    </a>
-                  )}
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() =>
-                    handleEdit(link._id, {
-                      state: link.state,
-                      city: link.city,
-                      official_website: link.official_website,
-                      procurement_link: link.procurement_link,
-                    })
-                  }
-                  className="mt-3 text-xs text-muted-foreground hover:text-primary font-semibold uppercase h-auto p-0"
+                <div
+                  key={state}
+                  className={`relative bg-card border-l-4 p-5 transition-all ${isOrange ? "hover:shadow-[4px_4px_0_0_var(--base-orange)]" : "hover:shadow-[4px_4px_0_0_var(--base-teal)]"}`}
+                  style={{
+                    borderLeftColor: isOrange ? "var(--base-orange)" : "var(--base-teal)",
+                  }}
                 >
-                  Edit
-                </Button>
-              </div>
+                  <h2 className="text-xl font-bold text-foreground uppercase">
+                    {state}
+                  </h2>
+                  <div className="flex items-center justify-between gap-3 mt-1">
+                    <p className="text-muted-foreground text-xs uppercase tracking-wide">
+                      Prompt
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => openSystemPromptEditor(state)}
+                      className={`text-xs font-semibold uppercase transition-colors ${
+                        affiliatedPrompt
+                          ? "text-accent hover:text-primary"
+                          : "text-muted-foreground hover:text-primary"
+                      }`}
+                    >
+                      {affiliatedPrompt ? "View" : "Add"}
+                    </button>
+                  </div>
+                  <ul className="mt-4 space-y-2 list-none p-0">
+                    {stateLinks.map((link) => (
+                      <li key={link._id} className="flex items-center gap-2 flex-wrap">
+                        {link.procurement_link ? (
+                          <a
+                            href={link.procurement_link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-accent hover:text-primary font-semibold uppercase text-sm transition-colors"
+                          >
+                            {link.city}
+                          </a>
+                        ) : (
+                          <span className="text-muted-foreground uppercase text-sm">
+                            {link.city}
+                          </span>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => openSystemPromptEditor(state)}
+                          className="text-xs text-muted-foreground hover:text-primary font-semibold uppercase shrink-0"
+                        >
+                          Prompt
+                        </button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() =>
+                            handleEdit(link._id, {
+                              state: link.state,
+                              city: link.city,
+                              official_website: link.official_website,
+                              procurement_link: link.procurement_link,
+                            })
+                          }
+                          className="text-xs text-muted-foreground hover:text-primary font-semibold uppercase h-auto p-0 shrink-0"
+                        >
+                          Edit
+                        </Button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               );
             })}
           </div>
@@ -297,6 +428,17 @@ export function ProcurementGrid() {
         initial={editing?.fields}
         onSubmit={handleSubmit}
         isEditing={editing !== null}
+      />
+
+      <SystemPromptForm
+        open={systemPromptFormOpen}
+        onOpenChange={(open) => {
+          setSystemPromptFormOpen(open);
+          if (!open) setEditingSystemPrompt(null);
+        }}
+        initial={editingSystemPrompt?.initial}
+        onSubmit={handleSystemPromptSubmit}
+        isEditing={Boolean(editingSystemPrompt?.id)}
       />
     </div>
   );

@@ -17,4 +17,21 @@ export default defineSchema({
     .index("by_city", ["city"])
     .index("by_official_website", ["official_website"])
     .index("by_procurement_link", ["procurement_link"]),
+
+  chatSystemPrompts: defineTable({
+    title: v.string(),
+    description: v.string(),
+    systemPromptText: v.string(),
+    isPrimarySystemPrompt: v.boolean(),
+    type: v.string(),
+    typeName: v.string(),
+    typeDisplayName: v.string(),
+    state: v.string(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_type", ["type"])
+    .index("by_typeName", ["typeName"])
+    .index("by_state", ["state"])
+    .index("by_isPrimarySystemPrompt", ["isPrimarySystemPrompt"]),
 });
