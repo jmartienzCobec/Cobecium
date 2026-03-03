@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as orchestrator from "../orchestrator.js";
 import type * as procurementLinks from "../procurementLinks.js";
 import type * as sample from "../sample.js";
 import type * as seed from "../seed.js";
@@ -20,6 +21,7 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  orchestrator: typeof orchestrator;
   procurementLinks: typeof procurementLinks;
   sample: typeof sample;
   seed: typeof seed;

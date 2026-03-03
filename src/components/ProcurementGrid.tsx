@@ -23,6 +23,7 @@ import {
   SystemPromptForm,
   type SystemPromptFields,
 } from "@/components/SystemPromptForm";
+import { HuntChatModal } from "@/components/HuntChatModal";
 
 function stateKey(s: string | null | undefined) {
   return (s ?? "")
@@ -58,6 +59,9 @@ export function ProcurementGrid() {
     id?: Id<"chatSystemPrompts">;
     initial: SystemPromptFields;
   } | null>(null);
+  const [huntModalOpen, setHuntModalOpen] = useState(false);
+  const [huntModalState, setHuntModalState] = useState<string | null>(null);
+  const [huntModalDefaultPrompt, setHuntModalDefaultPrompt] = useState("");
 
   const filteredLinks = useMemo(() => {
     if (!links) return [];
@@ -350,7 +354,7 @@ export function ProcurementGrid() {
                     </button>
                   </div>
                   <ul className="mt-4 space-y-2 list-none p-0">
-                    {stateLinks.map((link) => (
+                    {(stateLinks ?? []).map((link) => (
                       <li key={link._id} className="flex items-center gap-2 flex-wrap">
                         {link.procurement_link ? (
                           <a
@@ -431,11 +435,16 @@ export function ProcurementGrid() {
                 className="w-full text-left px-3 py-2 text-sm font-semibold uppercase text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
                 role="menuitem"
                 onClick={() => {
-                  alert("this integration is not fully implemented yet");
+                  const state = contextMenu.state;
+                  const defaultPrompt =
+                    promptByState.get(stateKey(state))?.systemPromptText ?? "";
+                  setHuntModalState(state);
+                  setHuntModalDefaultPrompt(defaultPrompt);
+                  setHuntModalOpen(true);
                   setContextMenu(null);
                 }}
               >
-                Start Hydra Job
+                Start Hunt
               </button>
             </div>
           </div>
@@ -498,6 +507,16 @@ export function ProcurementGrid() {
         initial={editingSystemPrompt?.initial}
         onSubmit={handleSystemPromptSubmit}
         isEditing={Boolean(editingSystemPrompt?.id)}
+      />
+
+      <HuntChatModal
+        open={huntModalOpen}
+        onOpenChange={(open) => {
+          setHuntModalOpen(open);
+          if (!open) setHuntModalState(null);
+        }}
+        stateName={huntModalState ?? ""}
+        defaultSystemPrompt={huntModalDefaultPrompt}
       />
     </div>
   );
