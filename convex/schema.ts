@@ -34,4 +34,18 @@ export default defineSchema({
     .index("by_typeName", ["typeName"])
     .index("by_state", ["state"])
     .index("by_isPrimarySystemPrompt", ["isPrimarySystemPrompt"]),
+
+  huntStarts: defineTable({
+    state: v.string(),
+    startedAt: v.number(),
+  }).index("by_state", ["state"]),
+
+  /** Singleton-style row for orchestrator API docs sync (hash + timestamps; optional file storage ref). */
+  orchestratorDocsSync: defineTable({
+    contentHash: v.string(),
+    lastFetchedAt: v.number(),
+    updatedAt: v.number(),
+    lastSeenAt: v.optional(v.number()),
+    storageId: v.optional(v.id("_storage")),
+  }),
 });

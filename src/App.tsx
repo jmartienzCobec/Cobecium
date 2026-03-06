@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ProcurementGrid } from "@/components/ProcurementGrid";
 import { SystemPromptsGrid } from "@/components/SystemPromptsGrid";
+import { AnalyticsPage } from "@/pages/AnalyticsPage";
 import { Style1Page } from "@/pages/Style1Page";
 import { Style5Page } from "@/pages/Style5Page";
 import { Style10Page } from "@/pages/Style10Page";
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<ProcurementGrid />} />
           <Route path="/system-prompts" element={<SystemPromptsGrid />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/1" element={<Style1Page />} />
           <Route path="/2" element={<Style10Page />} />
           <Route path="/3" element={<Style5Page />} />

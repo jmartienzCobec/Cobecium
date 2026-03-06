@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
+import { useQuery, useMutation } from "convex/react";
+import { api } from "../../convex/_generated/api";
 import { Button } from "@/components/ui/button";
 
-type ActivePage = "procurement" | "system-prompts";
+const ORCHESTRATOR_DOCS_URL =
+  import.meta.env.VITE_ORCHESTRATOR_DOCS_URL || "http://cobec-spark:5180/api/docs";
+
+type ActivePage = "procurement" | "system-prompts" | "analytics";
 
 interface LynxHeaderProps {
   subtitle: string;
@@ -9,6 +14,9 @@ interface LynxHeaderProps {
 }
 
 export function LynxHeader({ subtitle, activePage }: LynxHeaderProps) {
+  const docsStatus = useQuery(api.orchestratorDocsSync.getOrchestratorDocsStatus);
+  const markDocsSeen = useMutation(api.orchestratorDocsSync.markOrchestratorDocsSeen);
+
   const navButtonClasses = (isActive: boolean) =>
     `border-2 font-semibold uppercase rounded-none transition-colors ${
       isActive
@@ -16,18 +24,45 @@ export function LynxHeader({ subtitle, activePage }: LynxHeaderProps) {
         : "border-accent text-accent hover:bg-accent hover:text-accent-foreground"
     }`;
 
+  const handleDocsIndicatorClick = () => {
+    window.open(ORCHESTRATOR_DOCS_URL, "_blank", "noopener,noreferrer");
+    void markDocsSeen();
+  };
+
+  const hasUnseenDocsChanges = docsStatus?.hasUnseenChanges ?? false;
+
   return (
-    <header className="relative border-b-4 border-primary px-6 py-5">
-      <div className="max-w-6xl mx-auto flex items-center justify-end gap-6">
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-          <h1 className="text-3xl font-extrabold text-foreground uppercase tracking-tight">
-            Lynx
-          </h1>
-          <p className="text-muted-foreground text-sm uppercase tracking-widest mt-0.5">
+    <header>
+      {/* Top band: logo + tagline; orange line sits under this */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-5 border-b-4 border-primary">
+        <div className="text-center relative">
+          <div className="inline-flex items-center justify-center gap-2">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground uppercase tracking-tight">
+              Lynx
+            </h1>
+            {hasUnseenDocsChanges && (
+              <button
+                type="button"
+                onClick={handleDocsIndicatorClick}
+                title="Orchestrator API docs have changed — click to open"
+                className="flex items-center justify-center size-7 rounded-full bg-accent text-accent-foreground text-xs font-bold shadow-sm hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
+                aria-label="Orchestrator docs updated; open docs"
+              >
+                1
+              </button>
+            )}
+          </div>
+          <p className="text-muted-foreground text-xs sm:text-sm uppercase tracking-widest mt-0.5">
             {subtitle}
           </p>
         </div>
-        <nav className="flex gap-3" aria-label="Primary">
+      </div>
+      {/* Nav row under the orange line */}
+      <div className="bg-primary/5">
+        <nav
+          className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-center sm:justify-end gap-2 sm:gap-3"
+          aria-label="Primary"
+        >
           <Link to="/">
             <Button
               variant="outline"
@@ -42,6 +77,14 @@ export function LynxHeader({ subtitle, activePage }: LynxHeaderProps) {
               className={navButtonClasses(activePage === "system-prompts")}
             >
               System prompts
+            </Button>
+          </Link>
+          <Link to="/analytics">
+            <Button
+              variant="outline"
+              className={navButtonClasses(activePage === "analytics")}
+            >
+              Analytics
             </Button>
           </Link>
         </nav>

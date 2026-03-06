@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useAction } from "convex/react";
+import { useAction, useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import type { WorkflowDoc } from "../../convex/orchestrator";
 import {
@@ -47,11 +47,25 @@ type Phase =
   | "cancelled"
   | "error";
 
+/** Agent options for the Orchestrator (see docs/INTEGRATION.md). */
+export type HuntChatAgentOptions = {
+  enableWebSearch?: boolean;
+  enableBrowserWorkflow?: boolean;
+};
+
 type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   stateName: string;
   defaultSystemPrompt: string;
+  /** AnythingLLM workspace slug for RAG. Omit to use Orchestrator default. */
+  workspaceSlug?: string;
+  /** Enable web search and/or browser workflow (Firecrawl). */
+  agentOptions?: HuntChatAgentOptions;
+  /** Create a dedicated AnythingLLM workspace for this workflow. */
+  createDynamicWorkspace?: boolean;
+  /** URLs to scrape via Firecrawl; content is added to context. */
+  urlsToScrape?: string[];
 };
 
 export function HuntChatModal({
@@ -59,9 +73,14 @@ export function HuntChatModal({
   onOpenChange,
   stateName,
   defaultSystemPrompt,
+  workspaceSlug,
+  agentOptions,
+  createDynamicWorkspace,
+  urlsToScrape,
 }: Props) {
   const createWorkflow = useAction(api.orchestrator.createWorkflow);
   const getWorkflow = useAction(api.orchestrator.getWorkflow);
+  const recordHuntStarted = useMutation(api.huntAnalytics.recordHuntStarted);
 
   const [userMessage, setUserMessage] = useState("");
   const [systemPrompt, setSystemPrompt] = useState(defaultSystemPrompt);
@@ -144,10 +163,17 @@ export function HuntChatModal({
       const { workflowId: id } = await createWorkflow({
         prompt,
         systemPrompt: sysPrompt || "You are a helpful assistant.",
+        ...(workspaceSlug != null && workspaceSlug !== "" ? { workspaceSlug } : {}),
+        ...(agentOptions != null ? { agentOptions } : {}),
+        ...(createDynamicWorkspace === true ? { createDynamicWorkspace: true } : {}),
+        ...(urlsToScrape != null && urlsToScrape.length > 0 ? { urlsToScrape } : {}),
       });
       setWorkflowId(id);
       setWorkflow(null);
       setPhase("polling");
+      recordHuntStarted({ state: stateName }).catch(() => {
+        // Analytics write failure should not affect the hunt flow
+      });
     } catch (err) {
       setPhase("error");
       setErrorMessage(
@@ -229,6 +255,25 @@ export function HuntChatModal({
 
           {phase === "completed" && workflow?.result != null && (
             <div className="space-y-2 flex-shrink-0">
+              {(workflow.workflowType || (workflow.steps && workflow.steps.length > 0) || (workflow.toolsRequired && workflow.toolsRequired.length > 0)) && (
+                <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                  {workflow.workflowType && (
+                    <span className="rounded bg-muted px-2 py-0.5 font-medium">
+                      {workflow.workflowType}
+                    </span>
+                  )}
+                  {workflow.toolsRequired && workflow.toolsRequired.length > 0 && (
+                    <span className="rounded bg-muted px-2 py-0.5">
+                      Tools: {workflow.toolsRequired.join(", ")}
+                    </span>
+                  )}
+                  {workflow.steps && workflow.steps.length > 0 && (
+                    <span className="rounded bg-muted px-2 py-0.5">
+                      Steps: {workflow.steps.join(" → ")}
+                    </span>
+                  )}
+                </div>
+              )}
               <span className="block text-sm font-semibold uppercase tracking-wide text-foreground">
                 Result
               </span>
@@ -240,6 +285,14 @@ export function HuntChatModal({
 
           {phase === "failed" && (
             <div className="space-y-2 flex-shrink-0">
+              {workflow?.validationResult &&
+                workflow.validationResult.valid === false &&
+                workflow.validationResult.rejectionReason && (
+                <div className="rounded-md border border-amber-500/50 bg-amber-500/10 px-3 py-2 text-sm text-amber-800 dark:text-amber-200">
+                  <span className="font-medium">Validation: </span>
+                  {workflow.validationResult.rejectionReason}
+                </div>
+              )}
               <span className="block text-sm font-semibold uppercase tracking-wide text-destructive">
                 Error
               </span>

@@ -2,6 +2,7 @@ import { action } from "./_generated/server";
 import { v } from "convex/values";
 
 const BASE_URL = process.env.ORCHESTRATOR_BASE_URL;
+/** Convex admin key for Orchestrator auth; doc: "Authorization: Convex <ADMIN_KEY>" */
 const AUTH_KEY = process.env.HYDRA_KEY;
 
 function orchestratorFetch(path: "mutation" | "query", body: object): Promise<Response> {
@@ -24,22 +25,50 @@ function orchestratorFetch(path: "mutation" | "query", body: object): Promise<Re
   });
 }
 
+/** Agent capabilities for workflows:create (see INTEGRATION.md) */
+const agentOptionsValidator = v.optional(
+  v.object({
+    enableWebSearch: v.optional(v.boolean()),
+    enableBrowserWorkflow: v.optional(v.boolean()),
+  })
+);
+
 /**
  * Create a workflow on the AI Orchestrator. Returns the workflow ID for polling.
+ * API: POST /api/mutation with path "workflows:create" (see docs/INTEGRATION.md).
  */
 export const createWorkflow = action({
   args: {
     prompt: v.string(),
     systemPrompt: v.string(),
     workspaceSlug: v.optional(v.string()),
+    agentOptions: agentOptionsValidator,
+    createDynamicWorkspace: v.optional(v.boolean()),
+    urlsToScrape: v.optional(v.array(v.string())),
   },
-  handler: async (_ctx, { prompt, systemPrompt, workspaceSlug }) => {
-    const args: { prompt: string; systemPrompt: string; workspaceSlug?: string } = {
+  handler: async (_ctx, { prompt, systemPrompt, workspaceSlug, agentOptions, createDynamicWorkspace, urlsToScrape }) => {
+    const args: {
+      prompt: string;
+      systemPrompt: string;
+      workspaceSlug?: string;
+      agentOptions?: { enableWebSearch?: boolean; enableBrowserWorkflow?: boolean };
+      createDynamicWorkspace?: boolean;
+      urlsToScrape?: string[];
+    } = {
       prompt,
       systemPrompt,
     };
     if (workspaceSlug != null && workspaceSlug !== "") {
       args.workspaceSlug = workspaceSlug;
+    }
+    if (agentOptions != null && (agentOptions.enableWebSearch !== undefined || agentOptions.enableBrowserWorkflow !== undefined)) {
+      args.agentOptions = agentOptions;
+    }
+    if (createDynamicWorkspace === true) {
+      args.createDynamicWorkspace = true;
+    }
+    if (urlsToScrape != null && urlsToScrape.length > 0) {
+      args.urlsToScrape = urlsToScrape;
     }
     const res = await orchestratorFetch("mutation", {
       path: "workflows:create",
@@ -103,7 +132,12 @@ export const getWorkflow = action({
   },
 });
 
-/** Minimal type for the workflow document returned by workflows:get */
+/** Validation result from the Orchestrator (set after validation). */
+export type WorkflowValidationResult =
+  | { valid: true }
+  | { valid: false; rejectionReason?: string };
+
+/** Workflow document returned by workflows:get (see docs/INTEGRATION.md). */
 export type WorkflowDoc = {
   status: string;
   result?: string | null;
@@ -113,4 +147,12 @@ export type WorkflowDoc = {
   prompt?: string;
   systemPrompt?: string;
   workspaceSlug?: string;
+  /** Set after validation (e.g. qa, summarization, research, code_assist, data_gathering, general). */
+  workflowType?: string;
+  /** Ordered steps from the validation agent. */
+  steps?: string[];
+  /** Tools required (e.g. rag, web_search, web_scrape, browser, none). */
+  toolsRequired?: string[];
+  /** Present when validation has run. */
+  validationResult?: WorkflowValidationResult;
 };

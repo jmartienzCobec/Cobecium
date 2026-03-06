@@ -88,3 +88,14 @@ The app container **does not** run the Convex backend binary; it only runs `conv
 - **Dashboard shows “can’t connect”:** Ensure `NEXT_PUBLIC_DEPLOYMENT_URL` (and from Windows, that it uses the Tailscale hostname) matches how the browser reaches the backend (e.g. `http://cobec-spark:3210`).
 - **Vite app can’t reach Convex:** Set `VITE_CONVEX_URL` to the URL the **browser** uses to reach the backend (e.g. `http://cobec-spark:3210` when opening the app at `http://cobec-spark:5173`). Using `127.0.0.1:3210` only works when the browser is on the same machine as the backend.
 - **Dashboard shows no tables/functions:** Ensure `CONVEX_DEPLOYMENT` is not set in `.env.local` when using self-hosted. If you see "CONVEX_DEPLOYMENT must not be set when ...", remove or comment out the `CONVEX_DEPLOYMENT` line, then restart the stack so `convex dev` can push.
+
+---
+
+## Orchestrator docs sync
+
+The app can sync and detect changes to the orchestrator API docs (e.g. `http://cobec-spark:5180/api/docs`). The Convex backend must be able to reach that URL (e.g. same Docker network).
+
+- **Convex env** (backend): Set `ORCHESTRATOR_DOCS_URL` in the Convex dashboard or via `npx convex env set` (e.g. `http://cobec-spark:5180/api/docs`). Used by `convex/orchestratorDocsSync` to fetch and hash the docs.
+- **Optional Vite env**: Set `VITE_ORCHESTRATOR_DOCS_URL` in `.env.local` if the docs link in the header should use a different URL than the default `http://cobec-spark:5180/api/docs`.
+- **CLI**: Run `npx convex run orchestratorDocsSync:fetchAndStoreOrchestratorDocs` anytime to pull and store the latest docs (from a shell where Convex env is configured).
+- A cron job runs the sync every 6 hours. The header shows a “docs updated” indicator when the stored docs have changed since the user last clicked it.
