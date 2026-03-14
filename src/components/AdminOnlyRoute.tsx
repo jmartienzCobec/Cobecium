@@ -20,7 +20,7 @@ export function AdminOnlyRoute({ children }: AdminOnlyRouteProps) {
     );
   }
   if (roleResult === null || roleResult.role !== "admin") {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/app" replace />;
   }
   return <>{children}</>;
 }

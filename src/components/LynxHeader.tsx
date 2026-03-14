@@ -83,7 +83,7 @@ export function LynxHeader({ subtitle, activePage }: LynxHeaderProps) {
           className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-center sm:justify-end gap-2 sm:gap-3"
           aria-label="Primary"
         >
-          <Link to="/">
+          <Link to="/app">
             <Button
               variant="outline"
               className={navButtonClasses(activePage === "procurement")}
