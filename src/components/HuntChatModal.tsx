@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useAction, useMutation } from "convex/react";
+import { useAction } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import type { WorkflowDoc } from "../../convex/orchestrator";
 import {
@@ -73,14 +73,8 @@ export function HuntChatModal({
   onOpenChange,
   stateName,
   defaultSystemPrompt,
-  workspaceSlug,
-  agentOptions,
-  createDynamicWorkspace,
-  urlsToScrape,
 }: Props) {
-  const createWorkflow = useAction(api.orchestrator.createWorkflow);
   const getWorkflow = useAction(api.orchestrator.getWorkflow);
-  const recordHuntStarted = useMutation(api.huntAnalytics.recordHuntStarted);
 
   const [userMessage, setUserMessage] = useState("");
   const [systemPrompt, setSystemPrompt] = useState(defaultSystemPrompt);
