@@ -153,33 +153,11 @@ export function HuntChatModal({
 
   const handleSend = async () => {
     const prompt = userMessage.trim();
-    const sysPrompt = systemPrompt.trim();
     if (!prompt) return;
 
-    setPhase("submitting");
-    setErrorMessage(null);
-
-    try {
-      const { workflowId: id } = await createWorkflow({
-        prompt,
-        systemPrompt: sysPrompt || "You are a helpful assistant.",
-        ...(workspaceSlug != null && workspaceSlug !== "" ? { workspaceSlug } : {}),
-        ...(agentOptions != null ? { agentOptions } : {}),
-        ...(createDynamicWorkspace === true ? { createDynamicWorkspace: true } : {}),
-        ...(urlsToScrape != null && urlsToScrape.length > 0 ? { urlsToScrape } : {}),
-      });
-      setWorkflowId(id);
-      setWorkflow(null);
-      setPhase("polling");
-      recordHuntStarted({ state: stateName }).catch(() => {
-        // Analytics write failure should not affect the hunt flow
-      });
-    } catch (err) {
-      setPhase("error");
-      setErrorMessage(
-        err instanceof Error ? err.message : "Could not reach orchestrator. Try again."
-      );
-    }
+    // Start Hunt workflows are temporarily disabled — do not send to orchestrator.
+    setPhase("error");
+    setErrorMessage("Start Hunt is temporarily disabled. No workflow has been sent.");
   };
 
   const canSend =
