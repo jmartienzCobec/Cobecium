@@ -15,6 +15,8 @@ type Props = {
   prompt: Doc<"chatSystemPrompts">;
   onEdit: (id: Id<"chatSystemPrompts">, fields: SystemPromptFields) => void;
   onDelete: (id: Id<"chatSystemPrompts">) => void;
+  /** When false, Edit and Delete buttons are hidden (e.g. for non-admin users). */
+  canEdit?: boolean;
   autoOpenView?: boolean;
   highlight?: boolean;
 };
@@ -25,6 +27,7 @@ export function SystemPromptCard({
   prompt,
   onEdit,
   onDelete,
+  canEdit = true,
   autoOpenView,
   highlight,
 }: Props) {
@@ -83,32 +86,36 @@ export function SystemPromptCard({
             >
               View
             </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() =>
-                onEdit(prompt._id, {
-                  title: prompt.title,
-                  description: prompt.description,
-                  systemPromptText: prompt.systemPromptText,
-                  isPrimarySystemPrompt: prompt.isPrimarySystemPrompt,
-                  type: prompt.type,
-                  typeName: prompt.typeName,
-                  typeDisplayName: prompt.typeDisplayName,
-                })
-              }
-              className="text-xs text-muted-foreground hover:text-primary font-semibold uppercase h-auto py-1"
-            >
-              Edit
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => onDelete(prompt._id)}
-              className="text-xs text-destructive hover:text-destructive font-semibold uppercase h-auto py-1"
-            >
-              Delete
-            </Button>
+            {canEdit && (
+              <>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() =>
+                    onEdit(prompt._id, {
+                      title: prompt.title,
+                      description: prompt.description,
+                      systemPromptText: prompt.systemPromptText,
+                      isPrimarySystemPrompt: prompt.isPrimarySystemPrompt,
+                      type: prompt.type,
+                      typeName: prompt.typeName,
+                      typeDisplayName: prompt.typeDisplayName,
+                    })
+                  }
+                  className="text-xs text-muted-foreground hover:text-primary font-semibold uppercase h-auto py-1"
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => onDelete(prompt._id)}
+                  className="text-xs text-destructive hover:text-destructive font-semibold uppercase h-auto py-1"
+                >
+                  Delete
+                </Button>
+              </>
+            )}
           </div>
         </div>
         {prompt.systemPromptText.length > TRUNCATE_LEN && (

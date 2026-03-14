@@ -1,0 +1,51 @@
+[
+    {
+      "state": "Illinois",
+      "city": "Chicago",
+      "officialWebsite": "https://www.chicago.gov/",
+      "procurementLink": "https://webapps1.chicago.gov/vcsearch/solicitations",
+      "notes": "Direct solicitation search with active solicitations listed on-page."
+    },
+    {
+      "state": "Illinois",
+      "city": "Chicago",
+      "officialWebsite": "https://www.chicago.gov/",
+      "procurementLink": "https://webapps1.chicago.gov/vcsearch/solicitations",
+      "notes": "Direct bid hub (same as above). Replaced invalid department landing page that required an extra click to reach eProcurement."
+    },
+    {
+      "state": "California",
+      "city": "San Diego",
+      "officialWebsite": "https://www.sandiego.gov/",
+      "procurementLink": "https://vendors.planetbids.com/portal/17950/bo/bo-search",
+      "notes": "Direct bid search hub. City uses PlanetBids for solicitations (not .gov); sandiego.gov/purchasing is a department page that links here."
+    },
+    {
+      "state": "Alaska",
+      "city": "Anchorage",
+      "officialWebsite": "https://www.muni.org/",
+      "procurementLink": "https://www.muni.org/Departments/purchasing/pages/bidding.aspx",
+      "notes": "Current bidding opportunities page with open/closed/history sections."
+    },
+    {
+      "state": "Washington",
+      "city": "Tacoma",
+      "officialWebsite": "https://tacoma.gov/",
+      "procurementLink": "https://tacoma.gov/government/departments/finance/procurement-and-payables-division/purchasing/contracting-opportunities/",
+      "notes": "Direct contracting opportunities hub (Services, Supplies, Public Works, Surplus, Small Works, A&E). Replaced department overview page; each category page lists current solicitations on-page."
+    },
+    {
+      "state": "Washington",
+      "city": "Everett",
+      "officialWebsite": "https://www.everettwa.gov/",
+      "procurementLink": "https://www.everettwa.gov/319/Procurement",
+      "notes": "Bid opportunities page with specific project notices shown on-page."
+    },
+    {
+      "state": "Georgia",
+      "city": "Cumming",
+      "officialWebsite": "https://www.forsythco.com/",
+      "procurementLink": "https://bid-public.forsythco.com/",
+      "notes": "Forsyth County public bid portal with solicitation documents listed."
+    }
+  ]

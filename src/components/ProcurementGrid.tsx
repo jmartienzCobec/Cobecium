@@ -36,6 +36,8 @@ function stateKey(s: string | null | undefined) {
 export function ProcurementGrid() {
   const links = useQuery(api.procurementLinks.list);
   const prompts = useQuery(api.systemPrompts.list);
+  const myRole = useQuery(api.users.getMyRole);
+  const isAdmin = myRole?.role === "admin";
   const importFromJson = useMutation(api.procurementLinks.importFromJson);
   const createSystemPrompt = useMutation(api.systemPrompts.create);
   const updateSystemPrompt = useMutation(api.systemPrompts.update);
@@ -281,25 +283,27 @@ export function ProcurementGrid() {
               className="border-2 border-accent bg-card text-foreground placeholder:text-muted-foreground focus-visible:ring-accent rounded-none"
             />
           </div>
-          <div className="flex gap-3">
-            <Button
-              variant="outline"
-              onClick={() => {
-                setImportOpen(true);
-                setImportError(null);
-                setImportText("");
-              }}
-              className="border-2 border-accent text-accent font-semibold uppercase hover:bg-accent hover:text-accent-foreground rounded-none"
-            >
-              Import JSON
-            </Button>
-            <Button
-              onClick={handleAdd}
-              className="bg-primary text-primary-foreground font-bold uppercase hover:bg-primary/90 rounded-none"
-            >
-              Add link
-            </Button>
-          </div>
+          {isAdmin && (
+            <div className="flex gap-3">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setImportOpen(true);
+                  setImportError(null);
+                  setImportText("");
+                }}
+                className="border-2 border-accent text-accent font-semibold uppercase hover:bg-accent hover:text-accent-foreground rounded-none"
+              >
+                Import JSON
+              </Button>
+              <Button
+                onClick={handleAdd}
+                className="bg-primary text-primary-foreground font-bold uppercase hover:bg-primary/90 rounded-none"
+              >
+                Add link
+              </Button>
+            </div>
+          )}
         </div>
 
         {links.length === 0 ? (
@@ -307,13 +311,15 @@ export function ProcurementGrid() {
             <p className="text-muted-foreground text-xl font-semibold uppercase mb-8">
               No procurement links yet.
             </p>
-            <Button
-              variant="outline"
-              onClick={handleAdd}
-              className="border-2 border-accent text-accent font-semibold uppercase hover:bg-accent hover:text-accent-foreground rounded-none"
-            >
-              Add link
-            </Button>
+            {isAdmin && (
+              <Button
+                variant="outline"
+                onClick={handleAdd}
+                className="border-2 border-accent text-accent font-semibold uppercase hover:bg-accent hover:text-accent-foreground rounded-none"
+              >
+                Add link
+              </Button>
+            )}
           </div>
         ) : filteredLinks.length === 0 ? (
           <div className="border-4 border-dashed border-primary p-12 text-center">
@@ -340,19 +346,17 @@ export function ProcurementGrid() {
                   <h2 className="text-xl font-bold text-foreground uppercase">
                     {state}
                   </h2>
-                  <div className="mt-1">
-                    <button
-                      type="button"
-                      onClick={() => openSystemPromptEditor(state)}
-                      className={`text-muted-foreground text-xs uppercase tracking-wide transition-colors ${
-                        affiliatedPrompt
-                          ? "hover:text-primary"
-                          : "hover:text-primary"
-                      }`}
-                    >
-                      Prompt
-                    </button>
-                  </div>
+                  {isAdmin && (
+                    <div className="mt-1">
+                      <button
+                        type="button"
+                        onClick={() => openSystemPromptEditor(state)}
+                        className="text-muted-foreground text-xs uppercase tracking-wide transition-colors hover:text-primary"
+                      >
+                        Prompt
+                      </button>
+                    </div>
+                  )}
                   <ul className="mt-4 space-y-2 list-none p-0">
                     {(stateLinks ?? []).map((link) => (
                       <li key={link._id} className="flex items-center gap-2 flex-wrap">
@@ -370,20 +374,22 @@ export function ProcurementGrid() {
                             {link.city}
                           </span>
                         )}
-                        <button
-                          type="button"
-                          onClick={() =>
-                            handleEdit(link._id, {
-                              state: link.state,
-                              city: link.city,
-                              official_website: link.official_website,
-                              procurement_link: link.procurement_link,
-                            })
-                          }
-                          className="text-xs text-muted-foreground hover:text-primary font-semibold uppercase shrink-0"
-                        >
-                          Edit
-                        </button>
+                        {isAdmin && (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              handleEdit(link._id, {
+                                state: link.state,
+                                city: link.city,
+                                official_website: link.official_website,
+                                procurement_link: link.procurement_link,
+                              })
+                            }
+                            className="text-xs text-muted-foreground hover:text-primary font-semibold uppercase shrink-0"
+                          >
+                            Edit
+                          </button>
+                        )}
                       </li>
                     ))}
                   </ul>

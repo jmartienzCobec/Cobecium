@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { useSystemPrompts } from "@/hooks/useSystemPrompts";
 import type { Id } from "../../convex/_generated/dataModel";
@@ -25,6 +25,8 @@ import { LynxHeader } from "@/components/LynxHeader";
 
 export function SystemPromptsGrid() {
   const prompts = useSystemPrompts();
+  const myRole = useQuery(api.users.getMyRole);
+  const isAdmin = myRole?.role === "admin";
   const createPrompt = useMutation(api.systemPrompts.create);
   const updatePrompt = useMutation(api.systemPrompts.update);
   const removePrompt = useMutation(api.systemPrompts.remove);
@@ -188,25 +190,27 @@ export function SystemPromptsGrid() {
               className="border-2 border-accent bg-card text-foreground placeholder:text-muted-foreground focus-visible:ring-accent rounded-none"
             />
           </div>
-          <div className="flex gap-3">
-            <Button
-              variant="outline"
-              onClick={() => {
-                setImportOpen(true);
-                setImportError(null);
-                setImportText("");
-              }}
-              className="border-2 border-accent text-accent font-semibold uppercase hover:bg-accent hover:text-accent-foreground rounded-none"
-            >
-              Import JSON
-            </Button>
-            <Button
-              onClick={handleAdd}
-              className="bg-primary text-primary-foreground font-bold uppercase hover:bg-primary/90 rounded-none"
-            >
-              Add prompt
-            </Button>
-          </div>
+          {isAdmin && (
+            <div className="flex gap-3">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setImportOpen(true);
+                  setImportError(null);
+                  setImportText("");
+                }}
+                className="border-2 border-accent text-accent font-semibold uppercase hover:bg-accent hover:text-accent-foreground rounded-none"
+              >
+                Import JSON
+              </Button>
+              <Button
+                onClick={handleAdd}
+                className="bg-primary text-primary-foreground font-bold uppercase hover:bg-primary/90 rounded-none"
+              >
+                Add prompt
+              </Button>
+            </div>
+          )}
         </div>
 
         {prompts.length === 0 ? (
@@ -214,13 +218,15 @@ export function SystemPromptsGrid() {
             <p className="text-muted-foreground text-xl font-semibold uppercase mb-8">
               No system prompts yet.
             </p>
-            <Button
-              variant="outline"
-              onClick={handleAdd}
-              className="border-2 border-accent text-accent font-semibold uppercase hover:bg-accent hover:text-accent-foreground rounded-none"
-            >
-              Add prompt
-            </Button>
+            {isAdmin && (
+              <Button
+                variant="outline"
+                onClick={handleAdd}
+                className="border-2 border-accent text-accent font-semibold uppercase hover:bg-accent hover:text-accent-foreground rounded-none"
+              >
+                Add prompt
+              </Button>
+            )}
           </div>
         ) : filteredPrompts.length === 0 ? (
           <div className="border-4 border-dashed border-primary p-12 text-center">
@@ -236,6 +242,7 @@ export function SystemPromptsGrid() {
                 prompt={prompt}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
+                canEdit={isAdmin}
                 autoOpenView={openId === prompt._id}
                 highlight={openId === prompt._id}
               />

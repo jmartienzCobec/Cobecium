@@ -16,6 +16,7 @@ import type * as procurementLinks from "../procurementLinks.js";
 import type * as sample from "../sample.js";
 import type * as seed from "../seed.js";
 import type * as systemPrompts from "../systemPrompts.js";
+import type * as users from "../users.js";
 
 import type {
   ApiFromModules,
@@ -32,6 +33,7 @@ declare const fullApi: ApiFromModules<{
   sample: typeof sample;
   seed: typeof seed;
   systemPrompts: typeof systemPrompts;
+  users: typeof users;
 }>;
 
 /**

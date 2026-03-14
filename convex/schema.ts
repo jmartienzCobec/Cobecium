@@ -40,6 +40,14 @@ export default defineSchema({
     startedAt: v.number(),
   }).index("by_state", ["state"]),
 
+  lynxUsers: defineTable({
+    clerkUserId: v.string(),
+    name: v.optional(v.string()),
+    email: v.optional(v.string()),
+    role: v.union(v.literal("admin"), v.literal("user")),
+    updatedAt: v.number(),
+  }).index("by_clerkUserId", ["clerkUserId"]),
+
   /** Singleton-style row for orchestrator API docs sync (hash + timestamps; optional file storage ref). */
   orchestratorDocsSync: defineTable({
     contentHash: v.string(),

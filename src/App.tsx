@@ -2,6 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ProcurementGrid } from "@/components/ProcurementGrid";
 import { SystemPromptsGrid } from "@/components/SystemPromptsGrid";
 import { AnalyticsPage } from "@/pages/AnalyticsPage";
+import { AdminPage } from "@/pages/AdminPage";
+import { AdminOnlyRoute } from "@/components/AdminOnlyRoute";
+import { useStoreUserEffect } from "@/hooks/useStoreUserEffect";
 import { Style1Page } from "@/pages/Style1Page";
 import { Style5Page } from "@/pages/Style5Page";
 import { Style10Page } from "@/pages/Style10Page";
@@ -12,13 +15,37 @@ import { Style9Page } from "@/pages/Style9Page";
 import { StylePath10Page } from "@/pages/StylePath10Page";
 
 function App() {
+  useStoreUserEffect();
+
   return (
     <BrowserRouter>
       <main className="min-h-screen bg-background text-foreground">
         <Routes>
           <Route path="/" element={<ProcurementGrid />} />
-          <Route path="/system-prompts" element={<SystemPromptsGrid />} />
-          <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route
+            path="/system-prompts"
+            element={
+              <AdminOnlyRoute>
+                <SystemPromptsGrid />
+              </AdminOnlyRoute>
+            }
+          />
+          <Route
+            path="/analytics"
+            element={
+              <AdminOnlyRoute>
+                <AnalyticsPage />
+              </AdminOnlyRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <AdminOnlyRoute>
+                <AdminPage />
+              </AdminOnlyRoute>
+            }
+          />
           <Route path="/1" element={<Style1Page />} />
           <Route path="/2" element={<Style10Page />} />
           <Route path="/3" element={<Style5Page />} />

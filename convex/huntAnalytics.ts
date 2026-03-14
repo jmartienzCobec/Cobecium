@@ -1,5 +1,6 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
+import { requireAdmin } from "./users";
 
 /**
  * Record that a hunt was started for the given US state.
@@ -24,6 +25,7 @@ export const recordHuntStarted = mutation({
 export const getHuntCountsByState = query({
   args: {},
   handler: async (ctx) => {
+    await requireAdmin(ctx);
     const all = await ctx.db.query("huntStarts").collect();
     const byStateMap = new Map<string, number>();
     for (const doc of all) {
