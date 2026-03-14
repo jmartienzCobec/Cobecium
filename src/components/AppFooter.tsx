@@ -24,6 +24,7 @@ export function AppFooter() {
         <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
           <Link
             to="/welcome"
+            onClick={() => window.scrollTo(0, 0)}
             className="text-xs font-semibold uppercase tracking-widest text-accent/90 hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded-sm"
           >
             Why Lynx

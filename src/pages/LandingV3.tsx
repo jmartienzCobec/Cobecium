@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { SignInButton, SignUpButton } from "@clerk/react";
+import { SignInButton, SignUpButton, useAuth, UserButton } from "@clerk/react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 
@@ -26,6 +26,12 @@ const features = [
 ];
 
 export function LandingV3() {
+  const { isSignedIn } = useAuth();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="relative bg-[var(--base-bg)] text-[var(--base-text)] overflow-hidden">
       <style>{`
@@ -48,7 +54,7 @@ export function LandingV3() {
 
       {/* ===== HERO SECTION with diagonal bottom edge ===== */}
       <section
-        className="relative min-h-screen flex flex-col"
+        className="relative z-20 min-h-screen flex flex-col"
         style={{
           clipPath: "polygon(0 0, 100% 0, 100% 88%, 0 100%)",
           background: `
@@ -68,16 +74,29 @@ export function LandingV3() {
         <header className="relative z-10 flex items-center justify-between px-6 sm:px-12 lg:px-20 pt-8">
           <span className="v3-display text-3xl tracking-wider text-[var(--base-text)]">LYNX</span>
           <div className="flex items-center gap-3">
-            <SignInButton mode="modal">
-              <Button variant="ghost" size="sm" className="v3-body uppercase text-xs font-medium tracking-widest text-[var(--base-muted)] hover:text-[var(--base-text)]">
-                Sign in
-              </Button>
-            </SignInButton>
-            <SignUpButton mode="modal">
-              <Button size="sm" className="v3-body uppercase text-xs font-semibold tracking-widest bg-[var(--base-orange)] text-[var(--base-bg)] hover:bg-[var(--base-orange-hover)] rounded-none px-6 skew-x-[-6deg]">
-                <span className="inline-block skew-x-[6deg]">Get started</span>
-              </Button>
-            </SignUpButton>
+            {isSignedIn ? (
+              <>
+                <Link to="/app">
+                  <Button size="sm" className="v3-body uppercase text-xs font-semibold tracking-widest rounded-none px-6 skew-x-[-6deg] border-2 border-black text-black hover:bg-black hover:text-white">
+                    <span className="inline-block skew-x-[6deg]">Go to app</span>
+                  </Button>
+                </Link>
+                <UserButton afterSignOutUrl="/welcome" />
+              </>
+            ) : (
+              <>
+                <SignInButton mode="modal">
+                  <Button variant="ghost" size="sm" className="v3-body uppercase text-xs font-medium tracking-widest text-[var(--base-muted)] hover:text-[var(--base-text)]">
+                    Sign in
+                  </Button>
+                </SignInButton>
+                <SignUpButton mode="modal">
+                  <Button size="sm" className="v3-body uppercase text-xs font-semibold tracking-widest bg-[var(--base-orange)] text-[var(--base-bg)] hover:bg-[var(--base-orange-hover)] rounded-none px-6 skew-x-[-6deg]">
+                    <span className="inline-block skew-x-[6deg]">Get started</span>
+                  </Button>
+                </SignUpButton>
+              </>
+            )}
           </div>
         </header>
 
@@ -109,7 +128,7 @@ export function LandingV3() {
             </h1>
 
             <div
-              className="mt-8 max-w-lg"
+              className="relative z-20 mt-8 max-w-lg"
               style={{ animation: "v3-slide-up 0.7s 0.4s cubic-bezier(0.16,1,0.3,1) backwards" }}
             >
               <p className="v3-body text-lg text-[var(--base-muted)] leading-relaxed">
@@ -119,33 +138,46 @@ export function LandingV3() {
             </div>
 
             <div
-              className="mt-10 flex flex-wrap gap-4"
+              className="relative z-30 mt-10 flex flex-wrap gap-4"
               style={{ animation: "v3-slide-up 0.7s 0.55s cubic-bezier(0.16,1,0.3,1) backwards" }}
             >
-              <SignUpButton mode="modal">
-                <Button
-                  size="lg"
-                  className="v3-body uppercase font-bold text-sm px-10 py-6 rounded-none bg-[var(--base-orange)] text-[var(--base-bg)] hover:bg-[var(--base-orange-hover)] skew-x-[-6deg] transition-transform hover:skew-x-0 duration-300"
-                >
-                  <span className="inline-block skew-x-[6deg] hover:skew-x-0 transition-transform duration-300">Get started</span>
-                </Button>
-              </SignUpButton>
-              <Link to="/app">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="v3-body uppercase font-bold text-sm px-10 py-6 rounded-none border-2 border-[var(--base-teal)] text-[var(--base-teal)] hover:bg-[var(--base-teal)] hover:text-[var(--base-bg)] skew-x-[-6deg] transition-all hover:skew-x-0 duration-300"
-                >
-                  <span className="inline-block skew-x-[6deg] hover:skew-x-0 transition-transform duration-300">Explore app</span>
-                </Button>
-              </Link>
+              {isSignedIn ? (
+                <Link to="/app">
+                  <Button
+                    size="lg"
+                    className="v3-body uppercase font-bold text-sm px-10 py-6 rounded-none bg-[var(--base-orange)] text-[var(--base-bg)] hover:bg-[var(--base-orange-hover)] skew-x-[-6deg] transition-transform hover:skew-x-0 duration-300"
+                  >
+                    <span className="inline-block skew-x-[6deg] hover:skew-x-0 transition-transform duration-300">Go to app</span>
+                  </Button>
+                </Link>
+              ) : (
+                <>
+                  <SignUpButton mode="modal">
+                    <Button
+                      size="lg"
+                      className="v3-body uppercase font-bold text-sm px-10 py-6 rounded-none bg-[var(--base-orange)] text-[var(--base-bg)] hover:bg-[var(--base-orange-hover)] skew-x-[-6deg] transition-transform hover:skew-x-0 duration-300"
+                    >
+                      <span className="inline-block skew-x-[6deg] hover:skew-x-0 transition-transform duration-300">Get started</span>
+                    </Button>
+                  </SignUpButton>
+                  <Link to="/app">
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="v3-body uppercase font-bold text-sm px-10 py-6 rounded-none border-2 border-[var(--base-teal)] text-[var(--base-teal)] hover:bg-[var(--base-teal)] hover:text-[var(--base-bg)] skew-x-[-6deg] transition-all hover:skew-x-0 duration-300"
+                    >
+                      <span className="inline-block skew-x-[6deg] hover:skew-x-0 transition-transform duration-300">Explore app</span>
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
       </section>
 
       {/* ===== FEATURES: Diagonal counter-sliced bands ===== */}
-      <section className="relative -mt-20 sm:-mt-32">
+      <section className="relative z-10 -mt-20 sm:-mt-32">
         {features.map((feat, i) => {
           const isEven = i % 2 === 0;
           const RevealBlock = () => {
@@ -294,15 +326,28 @@ export function LandingV3() {
           </div>
 
           <div className="text-center pb-12">
-            <p className="v3-body text-[var(--base-muted)] text-lg mb-4">Already have an account?</p>
-            <SignInButton mode="modal">
-              <Button
-                variant="outline"
-                className="v3-body uppercase font-semibold text-sm rounded-none border-2 border-[var(--base-muted)]/40 hover:border-[var(--base-text)] px-8 py-5 skew-x-[-6deg] transition-all hover:skew-x-0 duration-300"
-              >
-                <span className="inline-block skew-x-[6deg]">Sign in</span>
-              </Button>
-            </SignInButton>
+            {isSignedIn ? (
+              <Link to="/app">
+                <Button
+                  size="lg"
+                  className="v3-body uppercase font-bold text-sm px-10 py-6 rounded-none bg-[var(--base-orange)] text-[var(--base-bg)] hover:bg-[var(--base-orange-hover)] skew-x-[-6deg] transition-transform hover:skew-x-0 duration-300"
+                >
+                  <span className="inline-block skew-x-[6deg]">Go to app</span>
+                </Button>
+              </Link>
+            ) : (
+              <>
+                <p className="v3-body text-[var(--base-muted)] text-lg mb-4">Already have an account?</p>
+                <SignInButton mode="modal">
+                  <Button
+                    variant="outline"
+                    className="v3-body uppercase font-semibold text-sm rounded-none border-2 border-[var(--base-muted)]/40 hover:border-[var(--base-text)] px-8 py-5 skew-x-[-6deg] transition-all hover:skew-x-0 duration-300"
+                  >
+                    <span className="inline-block skew-x-[6deg]">Sign in</span>
+                  </Button>
+                </SignInButton>
+              </>
+            )}
           </div>
         </div>
       </section>
