@@ -13,13 +13,13 @@ Lynx uses **Clerk** for sign-in and **Convex** for identity and roles. The Conve
 The Convex **backend** does not read `.env` or `.env.local`. It only uses variables set in the **Convex Dashboard** for the deployment you’re pushing to. If you see “Environment variable CLERK_JWT_ISSUER_DOMAIN is used in auth config file but its value was not set”:
 
 1. Open your deployment’s **Settings → Environment variables** in the [Convex Dashboard](https://dashboard.convex.dev).
-2. Ensure you’re on the **same deployment** (and branch) that `convex dev` uses (e.g. **Development** for `dev:ceaseless-elk-79`). Development and Production often have separate env var lists.
-3. Add `CLERK_JWT_ISSUER_DOMAIN` with your Clerk Frontend API URL (e.g. `https://prime-dingo-70.clerk.accounts.dev`), save, then run `npx convex dev` again.
+2. Ensure you’re on the **same deployment** (and branch) that `convex dev` uses (e.g. **Development** for your dev deployment). Development and Production often have separate env var lists.
+3. Add `CLERK_JWT_ISSUER_DOMAIN` with your Clerk Frontend API URL (see format below), save, then run `npx convex dev` again.
 
 Set these in the **Convex dashboard** (Settings → Environment Variables):
 
 - **`CLERK_JWT_ISSUER_DOMAIN`** – Clerk Frontend API URL (JWT issuer).
-  - **Development:** `https://<your-clerk-frontend-api>.clerk.accounts.dev` (e.g. `https://prime-dingo-70.clerk.accounts.dev`).
+  - **Development:** `https://<your-tenant>.clerk.accounts.dev` (replace `<your-tenant>` with the value from Clerk Dashboard).
   - **Production:** `https://clerk.<your-domain>.com` if you use a custom domain.
   - You can copy this from the Clerk Dashboard (API Keys or Configure → Paths).
 

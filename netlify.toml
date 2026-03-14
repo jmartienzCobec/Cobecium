@@ -7,8 +7,8 @@
 
 [build.environment]
   NODE_VERSION = "20"
-  # Publishable key is meant to be in the client bundle; allow it so secrets scan doesn't fail the build.
-  SECRETS_SCAN_OMIT_KEYS = "VITE_CLERK_PUBLISHABLE_KEY"
+  # Allow these in repo/build so secrets scan doesn't fail: publishable key (public), JWT issuer domain (URL, not a signing secret).
+  SECRETS_SCAN_OMIT_KEYS = "VITE_CLERK_PUBLISHABLE_KEY,CLERK_JWT_ISSUER_DOMAIN"
 
 # SPA: serve index.html for all routes so client-side routing works
 # (direct visits and refreshes to /analytics, /system-prompts, etc.)
