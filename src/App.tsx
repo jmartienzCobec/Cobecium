@@ -8,9 +8,11 @@ import { LandingPage } from "@/pages/LandingPage";
 import { AdminOnlyRoute } from "@/components/AdminOnlyRoute";
 import { AppFooter } from "@/components/AppFooter";
 import { useStoreUserEffect } from "@/hooks/useStoreUserEffect";
-import { Style1Page } from "@/pages/Style1Page";
-import { Style5Page } from "@/pages/Style5Page";
-import { Style10Page } from "@/pages/Style10Page";
+import { LandingV1 } from "@/pages/LandingV1";
+import { LandingV2 } from "@/pages/LandingV2";
+import { LandingV3 } from "@/pages/LandingV3";
+import { LandingV4 } from "@/pages/LandingV4";
+import { LandingV5 } from "@/pages/LandingV5";
 import { Style6Page } from "@/pages/Style6Page";
 import { Style7Page } from "@/pages/Style7Page";
 import { Style8Page } from "@/pages/Style8Page";
@@ -20,7 +22,7 @@ import { StylePath10Page } from "@/pages/StylePath10Page";
 function HomeOrRedirect() {
   const { isSignedIn } = useAuth();
   if (isSignedIn) return <Navigate to="/app" replace />;
-  return <LandingPage />;
+  return <LandingV3 />;
 }
 
 function App() {
@@ -32,7 +34,7 @@ function App() {
         <div className="flex-1 flex flex-col">
           <Routes>
           <Route path="/" element={<HomeOrRedirect />} />
-          <Route path="/welcome" element={<LandingPage />} />
+          <Route path="/welcome" element={<LandingV3 />} />
           <Route path="/app" element={<ProcurementGrid />} />
           <Route
             path="/system-prompts"
@@ -58,9 +60,11 @@ function App() {
               </AdminOnlyRoute>
             }
           />
-          <Route path="/1" element={<Style1Page />} />
-          <Route path="/2" element={<Style10Page />} />
-          <Route path="/3" element={<Style5Page />} />
+          <Route path="/1" element={<LandingV1 />} />
+          <Route path="/2" element={<LandingV2 />} />
+          <Route path="/3" element={<LandingV3 />} />
+          <Route path="/4" element={<LandingV4 />} />
+          <Route path="/5" element={<LandingV5 />} />
           <Route path="/6" element={<Style6Page />} />
           <Route path="/7" element={<Style7Page />} />
           <Route path="/8" element={<Style8Page />} />
