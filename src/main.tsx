@@ -7,10 +7,11 @@ import App from "./App";
 import "./index.css";
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL ?? "http://localhost:3210");
+const clerkPublishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY ?? "";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ClerkProvider afterSignOutUrl="/">
+    <ClerkProvider publishableKey={clerkPublishableKey} afterSignOutUrl="/">
       <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
         <App />
       </ConvexProviderWithClerk>

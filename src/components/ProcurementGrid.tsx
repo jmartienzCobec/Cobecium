@@ -330,7 +330,6 @@ export function ProcurementGrid() {
             {sortedStates.map((state, stateIndex) => {
               const stateLinks = linksByState[state];
               const isOrange = stateIndex % 2 === 0;
-              const affiliatedPrompt = promptByState.get(stateKey(state));
               return (
                 <div
                   key={state}

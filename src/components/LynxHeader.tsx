@@ -52,7 +52,7 @@ export function LynxHeader({ subtitle, activePage }: LynxHeaderProps) {
             </SignUpButton>
           </Show>
           <Show when="signed-in">
-            <UserButton afterSignOutUrl="/" />
+            <UserButton />
           </Show>
         </div>
         <div className="text-center relative">
