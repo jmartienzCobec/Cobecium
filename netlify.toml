@@ -7,6 +7,8 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  # Publishable key is meant to be in the client bundle; allow it so secrets scan doesn't fail the build.
+  SECRETS_SCAN_OMIT_KEYS = "VITE_CLERK_PUBLISHABLE_KEY"
 
 # SPA: serve index.html for all routes so client-side routing works
 # (direct visits and refreshes to /analytics, /system-prompts, etc.)
