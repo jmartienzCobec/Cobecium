@@ -10,7 +10,7 @@ function useScrollReveal() {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      ([e]) => { if (e?.isIntersecting) { setVisible(true); obs.disconnect(); } },
       { threshold: 0.15 }
     );
     obs.observe(el);
@@ -201,7 +201,7 @@ export function LandingV1() {
           />
         </div>
 
-        {features.map((feat, i) => {
+        {features.map((feat) => {
           const Reveal = () => {
             const r = useScrollReveal();
             const isLeft = feat.align === "left";

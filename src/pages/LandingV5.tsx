@@ -10,7 +10,7 @@ function useReveal(threshold = 0.2) {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setVis(true); obs.disconnect(); } },
+      ([e]) => { if (e?.isIntersecting) { setVis(true); obs.disconnect(); } },
       { threshold }
     );
     obs.observe(el);
@@ -200,7 +200,7 @@ export function LandingV5() {
             return (
               <div
                 ref={(el) => {
-                  r.ref.current = el;
+                  (r.ref as React.MutableRefObject<HTMLDivElement | null>).current = el;
                   sectionRefs.current[i] = el;
                 }}
                 key={feat.num}

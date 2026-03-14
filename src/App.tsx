@@ -4,7 +4,6 @@ import { ProcurementGrid } from "@/components/ProcurementGrid";
 import { SystemPromptsGrid } from "@/components/SystemPromptsGrid";
 import { AnalyticsPage } from "@/pages/AnalyticsPage";
 import { AdminPage } from "@/pages/AdminPage";
-import { LandingPage } from "@/pages/LandingPage";
 import { AdminOnlyRoute } from "@/components/AdminOnlyRoute";
 import { AppFooter } from "@/components/AppFooter";
 import { useStoreUserEffect } from "@/hooks/useStoreUserEffect";
