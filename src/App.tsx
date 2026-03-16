@@ -5,6 +5,7 @@ import { SystemPromptsGrid } from "@/components/SystemPromptsGrid";
 import { AnalyticsPage } from "@/pages/AnalyticsPage";
 import { AdminPage } from "@/pages/AdminPage";
 import { AdminOnlyRoute } from "@/components/AdminOnlyRoute";
+import { AuthenticatedRoute } from "@/components/AuthenticatedRoute";
 import { AppFooter } from "@/components/AppFooter";
 import { useStoreUserEffect } from "@/hooks/useStoreUserEffect";
 import { LandingV1 } from "@/pages/LandingV1";
@@ -12,6 +13,8 @@ import { LandingV2 } from "@/pages/LandingV2";
 import { LandingV3 } from "@/pages/LandingV3";
 import { LandingV4 } from "@/pages/LandingV4";
 import { LandingV5 } from "@/pages/LandingV5";
+import { FeedbackPage } from "@/pages/FeedbackPage";
+import { FeedbackDetailPage } from "@/pages/FeedbackDetailPage";
 import { Style6Page } from "@/pages/Style6Page";
 import { Style7Page } from "@/pages/Style7Page";
 import { Style8Page } from "@/pages/Style8Page";
@@ -57,6 +60,22 @@ function App() {
               <AdminOnlyRoute>
                 <AdminPage />
               </AdminOnlyRoute>
+            }
+          />
+          <Route
+            path="/feedback"
+            element={
+              <AuthenticatedRoute>
+                <FeedbackPage />
+              </AuthenticatedRoute>
+            }
+          />
+          <Route
+            path="/feedback/:id"
+            element={
+              <AuthenticatedRoute>
+                <FeedbackDetailPage />
+              </AuthenticatedRoute>
             }
           />
           <Route path="/1" element={<LandingV1 />} />

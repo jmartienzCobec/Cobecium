@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { SignInButton, SignUpButton, useAuth, UserButton } from "@clerk/react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
@@ -27,6 +27,8 @@ const features = [
 
 export function LandingV3() {
   const { isSignedIn } = useAuth();
+  const [searchParams] = useSearchParams();
+  const returnUrl = searchParams.get("redirect") || "/feedback";
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -81,7 +83,7 @@ export function LandingV3() {
                     <span className="inline-block skew-x-[6deg]">Go to app</span>
                   </Button>
                 </Link>
-                <UserButton afterSignOutUrl="/welcome" />
+                <UserButton />
               </>
             ) : (
               <>
@@ -322,6 +324,30 @@ export function LandingV3() {
             <p className="v3-body text-sm text-center text-[var(--base-muted)]" style={{ transform: "skew(2deg)" }}>
               <strong className="text-[var(--base-text)]">Lynx is currently in beta.</strong>{" "}
               Features and workflows are subject to change. We welcome feedback.
+            </p>
+            <div className="text-center mt-4" style={{ transform: "skew(2deg)" }}>
+              {isSignedIn ? (
+                <Link to="/feedback">
+                  <Button
+                    size="sm"
+                    className="v3-body uppercase font-semibold rounded-none border-2 border-[var(--base-orange)] text-[var(--base-orange)] hover:bg-[var(--base-orange)] hover:text-[var(--base-bg)]"
+                  >
+                    Send feedback / Report a bug
+                  </Button>
+                </Link>
+              ) : (
+                <SignInButton mode="modal" fallbackRedirectUrl={returnUrl}>
+                  <Button
+                    size="sm"
+                    className="v3-body uppercase font-semibold rounded-none border-2 border-[var(--base-orange)] text-[var(--base-orange)] hover:bg-[var(--base-orange)] hover:text-[var(--base-bg)]"
+                  >
+                    Send feedback / Report a bug
+                  </Button>
+                </SignInButton>
+              )}
+            </div>
+            <p className="v3-body text-xs text-center text-[var(--base-muted)] mt-2" style={{ transform: "skew(2deg)" }}>
+              Help us improve — report bugs and suggest features from your account.
             </p>
           </div>
 
