@@ -125,6 +125,7 @@ export const run = internalMutation({
 
     for (const item of FEEDBACK_ITEMS) {
       const user = SEED_USERS[item.createdByIndex];
+      if (!user) throw new Error(`Invalid createdByIndex: ${item.createdByIndex}`);
       const createdAt = now - item.createdAtOffsetDays * dayMs;
       const id = await ctx.db.insert("feedback", {
         clerkUserId: user.clerkUserId,
@@ -147,12 +148,14 @@ export const run = internalMutation({
     for (let i = 0; i < feedbackIds.length; i++) {
       const feedbackId = feedbackIds[i];
       const item = FEEDBACK_ITEMS[i];
+      if (feedbackId === undefined || !item) continue;
       const targetScore = item.voteScore;
       let score = 0;
       const voters = SEED_USERS.map((u) => u.clerkUserId);
       for (let v = 0; v < Math.min(Math.abs(targetScore) + 2, voters.length * 2); v++) {
         const value: 1 | -1 = targetScore >= 0 ? 1 : -1;
         const clerkUserId = voters[v % voters.length];
+        if (!clerkUserId) continue;
         const existing = await ctx.db
           .query("feedbackVotes")
           .withIndex("by_feedback_user", (q) =>
@@ -182,11 +185,14 @@ export const run = internalMutation({
     ];
     for (let i = 0; i < Math.min(5, feedbackIds.length); i++) {
       const feedbackId = feedbackIds[i];
+      if (feedbackId === undefined) continue;
       for (let u = 0; u < SEED_USERS.length; u++) {
         const rating = importanceRatings[(i + u) % importanceRatings.length];
+        const seedUser = SEED_USERS[u];
+        if (!rating || !seedUser) continue;
         await ctx.db.insert("feedbackImportance", {
           feedbackId,
-          clerkUserId: SEED_USERS[u].clerkUserId,
+          clerkUserId: seedUser.clerkUserId,
           rating,
         });
       }
@@ -217,6 +223,7 @@ export const run = internalMutation({
       parentId: Id<"feedbackComments"> | undefined = undefined
     ): Promise<Id<"feedbackComments">> => {
       const user = SEED_USERS[userIndex];
+      if (!user) throw new Error(`Invalid userIndex: ${userIndex}`);
       const createdAt = now - (commentIndex % 5) * dayMs;
       commentIndex++;
       const id = await ctx.db.insert("feedbackComments", {
@@ -234,86 +241,100 @@ export const run = internalMutation({
     };
 
     // Feedback 0: 4 comments (2 with replies)
-    const f0 = feedbackIds[0];
-    const c0_1 = await addComment(f0, 0, commentBodies[0].body);
-    const c0_2 = await addComment(f0, 1, commentBodies[1].body);
-    const c0_3 = await addComment(f0, 2, commentBodies[2].body);
+    const f0 = feedbackIds[0]!;
+    const c0_1 = await addComment(f0, 0, commentBodies[0]!.body);
+    await addComment(f0, 1, commentBodies[1]!.body);
+    await addComment(f0, 2, commentBodies[2]!.body);
     await addComment(f0, 1, "Same here – we need this for our monthly reports.", c0_1);
     await ctx.db.patch(f0, { commentCount: 4 });
 
     // Feedback 1: 2 comments
-    const f1 = feedbackIds[1];
-    await addComment(f1, 0, commentBodies[3].body);
-    await addComment(f1, 2, commentBodies[4].body);
+    const f1 = feedbackIds[1]!;
+    await addComment(f1, 0, commentBodies[3]!.body);
+    await addComment(f1, 2, commentBodies[4]!.body);
     await ctx.db.patch(f1, { commentCount: 2 });
 
     // Feedback 2: 3 comments (one reply)
-    const f2 = feedbackIds[2];
-    const c2_1 = await addComment(f2, 0, commentBodies[5].body);
-    await addComment(f2, 2, commentBodies[6].body);
+    const f2 = feedbackIds[2]!;
+    const c2_1 = await addComment(f2, 0, commentBodies[5]!.body);
+    await addComment(f2, 2, commentBodies[6]!.body);
     await addComment(f2, 1, "Agreed on system preference.", c2_1);
     await ctx.db.patch(f2, { commentCount: 3 });
 
     // Feedback 3: 2 comments
-    const f3 = feedbackIds[3];
-    await addComment(f3, 1, commentBodies[7].body);
-    await addComment(f3, 2, commentBodies[8].body);
+    const f3 = feedbackIds[3]!;
+    await addComment(f3, 1, commentBodies[7]!.body);
+    await addComment(f3, 2, commentBodies[8]!.body);
     await ctx.db.patch(f3, { commentCount: 2 });
 
     // Feedback 4: 1 comment
-    const f4 = feedbackIds[4];
-    await addComment(f4, 0, commentBodies[9].body);
+    const f4 = feedbackIds[4]!;
+    await addComment(f4, 0, commentBodies[9]!.body);
     await ctx.db.patch(f4, { commentCount: 1 });
 
     // Feedback 5: 2 comments
-    const f5 = feedbackIds[5];
-    await addComment(f5, 1, commentBodies[10].body);
+    const f5 = feedbackIds[5]!;
+    await addComment(f5, 1, commentBodies[10]!.body);
     await ctx.db.patch(f5, { commentCount: 2 });
 
     // Feedback 6: 1 comment
-    const f6 = feedbackIds[6];
-    await addComment(f6, 2, commentBodies[11].body);
+    const f6 = feedbackIds[6]!;
+    await addComment(f6, 2, commentBodies[11]!.body);
     await ctx.db.patch(f6, { commentCount: 1 });
 
     // Feedback 7: 1 comment
-    const f7 = feedbackIds[7];
-    await addComment(f7, 0, commentBodies[12].body);
+    const f7 = feedbackIds[7]!;
+    await addComment(f7, 0, commentBodies[12]!.body);
     await ctx.db.patch(f7, { commentCount: 1 });
 
     // Add like/dislike counts to some comments (one vote per user per comment)
     const allComments = await ctx.db.query("feedbackComments").collect();
     for (let i = 0; i < allComments.length; i++) {
       const c = allComments[i];
+      if (!c) continue;
       const likeCount = i % 3 === 0 ? 2 : i % 3 === 1 ? 1 : 0;
       const dislikeCount = i % 5 === 4 ? 1 : 0;
       await ctx.db.patch(c._id, { likeCount, dislikeCount });
       for (let u = 0; u < likeCount && u < SEED_USERS.length; u++) {
+        const seedUser = SEED_USERS[u];
+        if (!seedUser) continue;
         await ctx.db.insert("commentVotes", {
           commentId: c._id,
-          clerkUserId: SEED_USERS[u].clerkUserId,
+          clerkUserId: seedUser.clerkUserId,
           value: 1,
         });
       }
       if (dislikeCount > 0) {
-        await ctx.db.insert("commentVotes", {
-          commentId: c._id,
-          clerkUserId: SEED_USERS[SEED_USERS.length - 1].clerkUserId,
-          value: -1,
-        });
+        const lastUser = SEED_USERS[SEED_USERS.length - 1];
+        if (lastUser) {
+          await ctx.db.insert("commentVotes", {
+            commentId: c._id,
+            clerkUserId: lastUser.clerkUserId,
+            value: -1,
+          });
+        }
       }
     }
 
     // Subscriptions: a couple of seed users "subscribed" to first two feedback items
-    await ctx.db.insert("feedbackSubscriptions", {
-      feedbackId: feedbackIds[0],
-      clerkUserId: SEED_USERS[1].clerkUserId,
-      createdAt: now - 5 * dayMs,
-    });
-    await ctx.db.insert("feedbackSubscriptions", {
-      feedbackId: feedbackIds[2],
-      clerkUserId: SEED_USERS[0].clerkUserId,
-      createdAt: now - 2 * dayMs,
-    });
+    const subF0 = feedbackIds[0];
+    const subF2 = feedbackIds[2];
+    const seedUser1 = SEED_USERS[1];
+    const seedUser0 = SEED_USERS[0];
+    if (subF0 && seedUser1) {
+      await ctx.db.insert("feedbackSubscriptions", {
+        feedbackId: subF0,
+        clerkUserId: seedUser1.clerkUserId,
+        createdAt: now - 5 * dayMs,
+      });
+    }
+    if (subF2 && seedUser0) {
+      await ctx.db.insert("feedbackSubscriptions", {
+        feedbackId: subF2,
+        clerkUserId: seedUser0.clerkUserId,
+        createdAt: now - 2 * dayMs,
+      });
+    }
 
     return {
       seeded: true,
