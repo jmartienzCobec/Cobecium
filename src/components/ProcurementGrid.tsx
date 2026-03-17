@@ -35,6 +35,7 @@ function stateKey(s: string | null | undefined) {
 
 export function ProcurementGrid() {
   const links = useQuery(api.procurementLinks.list);
+  const exportPayload = useQuery(api.procurementLinks.exportForResearch);
   const prompts = useQuery(api.systemPrompts.list);
   const myRole = useQuery(api.users.getMyRole);
   const isAdmin = myRole?.role === "admin";
@@ -137,6 +138,12 @@ export function ProcurementGrid() {
     setFormOpen(false);
     setEditing(null);
     // TODO: wire to Convex mutation when implemented
+  };
+
+  const handleExportForResearch = async () => {
+    if (!exportPayload) return;
+    const json = JSON.stringify(exportPayload, null, 2);
+    await navigator.clipboard.writeText(json);
   };
 
   const handleImportSubmit = async () => {
@@ -283,27 +290,38 @@ export function ProcurementGrid() {
               className="border-2 border-accent bg-card text-foreground placeholder:text-muted-foreground focus-visible:ring-accent rounded-none"
             />
           </div>
-          {isAdmin && (
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setImportOpen(true);
-                  setImportError(null);
-                  setImportText("");
-                }}
-                className="border-2 border-accent text-accent font-semibold uppercase hover:bg-accent hover:text-accent-foreground rounded-none"
-              >
-                Import JSON
-              </Button>
-              <Button
-                onClick={handleAdd}
-                className="bg-primary text-primary-foreground font-bold uppercase hover:bg-primary/90 rounded-none"
-              >
-                Add link
-              </Button>
-            </div>
-          )}
+          <div className="flex gap-3">
+            <Button
+              variant="outline"
+              onClick={handleExportForResearch}
+              disabled={!exportPayload}
+              className="border-2 border-accent text-accent font-semibold uppercase hover:bg-accent hover:text-accent-foreground rounded-none"
+              title="Copy all procurement links as JSON to clipboard for research agents"
+            >
+              Export for research
+            </Button>
+            {isAdmin && (
+              <>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setImportOpen(true);
+                    setImportError(null);
+                    setImportText("");
+                  }}
+                  className="border-2 border-accent text-accent font-semibold uppercase hover:bg-accent hover:text-accent-foreground rounded-none"
+                >
+                  Import JSON
+                </Button>
+                <Button
+                  onClick={handleAdd}
+                  className="bg-primary text-primary-foreground font-bold uppercase hover:bg-primary/90 rounded-none"
+                >
+                  Add link
+                </Button>
+              </>
+            )}
+          </div>
         </div>
 
         {links.length === 0 ? (

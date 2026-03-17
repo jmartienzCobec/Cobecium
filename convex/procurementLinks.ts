@@ -29,3 +29,26 @@ export const list = query({
     return await ctx.db.query("procurementLinks").collect();
   },
 });
+
+/**
+ * Export all procurement links in a concise, research-agent-friendly JSON shape.
+ * Use this payload to pass to external research agents tasked with finding more portals.
+ * Omits internal IDs and timestamps; includes exportedAt and count for context.
+ */
+export const exportForResearch = query({
+  args: {},
+  handler: async (ctx) => {
+    const rows = await ctx.db.query("procurementLinks").collect();
+    const links = rows.map((r) => ({
+      state: r.state,
+      city: r.city,
+      official_website: r.official_website,
+      procurement_link: r.procurement_link,
+    }));
+    return {
+      exportedAt: new Date().toISOString(),
+      count: links.length,
+      links,
+    };
+  },
+});
