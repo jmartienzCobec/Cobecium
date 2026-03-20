@@ -1,5 +1,6 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
+import { requireAdmin } from "./users";
 
 const procurementLinkValidator = v.object({
   state: v.string(),
@@ -14,12 +15,52 @@ export const importFromJson = mutation({
     links: v.array(procurementLinkValidator),
   },
   handler: async (ctx, { links }) => {
+    await requireAdmin(ctx);
     const inserted: string[] = [];
     for (const row of links) {
       await ctx.db.insert("procurementLinks", row);
       inserted.push(row.procurement_link);
     }
     return { inserted: inserted.length };
+  },
+});
+
+export const create = mutation({
+  args: {
+    state: v.string(),
+    city: v.string(),
+    official_website: v.string(),
+    procurement_link: v.string(),
+  },
+  handler: async (ctx, row) => {
+    await requireAdmin(ctx);
+    await ctx.db.insert("procurementLinks", row);
+  },
+});
+
+export const update = mutation({
+  args: {
+    id: v.id("procurementLinks"),
+    state: v.string(),
+    city: v.string(),
+    official_website: v.string(),
+    procurement_link: v.string(),
+  },
+  handler: async (ctx, { id, ...patch }) => {
+    await requireAdmin(ctx);
+    const doc = await ctx.db.get(id);
+    if (!doc) throw new Error("Procurement link not found");
+    await ctx.db.patch(id, patch);
+  },
+});
+
+export const remove = mutation({
+  args: { id: v.id("procurementLinks") },
+  handler: async (ctx, { id }) => {
+    await requireAdmin(ctx);
+    const doc = await ctx.db.get(id);
+    if (!doc) throw new Error("Procurement link not found");
+    await ctx.db.delete(id);
   },
 });
 

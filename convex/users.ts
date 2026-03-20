@@ -1,5 +1,5 @@
 import { mutation, query } from "./_generated/server";
-import type { QueryCtx } from "./_generated/server";
+import type { MutationCtx, QueryCtx } from "./_generated/server";
 import type { Doc } from "./_generated/dataModel";
 import { v } from "convex/values";
 
@@ -7,7 +7,9 @@ import { v } from "convex/values";
  * Helper: ensure the current user is authenticated and has role "admin".
  * Throws if not authenticated or not admin. Returns the user doc.
  */
-export async function requireAdmin(ctx: QueryCtx): Promise<Doc<"lynxUsers">> {
+export async function requireAdmin(
+  ctx: QueryCtx | MutationCtx
+): Promise<Doc<"lynxUsers">> {
   const identity = await ctx.auth.getUserIdentity();
   if (!identity) throw new Error("Not authenticated");
   const user = await ctx.db

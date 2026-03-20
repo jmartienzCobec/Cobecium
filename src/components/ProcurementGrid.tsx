@@ -40,6 +40,9 @@ export function ProcurementGrid() {
   const myRole = useQuery(api.users.getMyRole);
   const isAdmin = myRole?.role === "admin";
   const importFromJson = useMutation(api.procurementLinks.importFromJson);
+  const createLink = useMutation(api.procurementLinks.create);
+  const updateLink = useMutation(api.procurementLinks.update);
+  const removeLink = useMutation(api.procurementLinks.remove);
   const createSystemPrompt = useMutation(api.systemPrompts.create);
   const updateSystemPrompt = useMutation(api.systemPrompts.update);
   const [contextMenu, setContextMenu] = useState<null | {
@@ -134,10 +137,48 @@ export function ProcurementGrid() {
     if (!open) setEditing(null);
   };
 
-  const handleSubmit = (_data: ProcurementLinkFields) => {
-    setFormOpen(false);
-    setEditing(null);
-    // TODO: wire to Convex mutation when implemented
+  const handleSubmit = async (data: ProcurementLinkFields) => {
+    try {
+      if (editing) {
+        await updateLink({
+          id: editing.id,
+          state: data.state,
+          city: data.city,
+          official_website: data.official_website,
+          procurement_link: data.procurement_link,
+        });
+      } else {
+        await createLink({
+          state: data.state,
+          city: data.city,
+          official_website: data.official_website,
+          procurement_link: data.procurement_link,
+        });
+      }
+    } catch (e) {
+      alert(
+        e instanceof Error ? e.message : "Failed to save procurement link."
+      );
+      throw e;
+    }
+  };
+
+  const handleDeleteLink = async (link: Doc<"procurementLinks">) => {
+    const label = `${link.city}, ${link.state}`;
+    if (
+      !window.confirm(
+        `Delete procurement link for ${label}? This cannot be undone.`
+      )
+    ) {
+      return;
+    }
+    try {
+      await removeLink({ id: link._id });
+    } catch (e) {
+      alert(
+        e instanceof Error ? e.message : "Failed to delete procurement link."
+      );
+    }
   };
 
   const handleExportForResearch = async () => {
@@ -392,20 +433,29 @@ export function ProcurementGrid() {
                           </span>
                         )}
                         {isAdmin && (
-                          <button
-                            type="button"
-                            onClick={() =>
-                              handleEdit(link._id, {
-                                state: link.state,
-                                city: link.city,
-                                official_website: link.official_website,
-                                procurement_link: link.procurement_link,
-                              })
-                            }
-                            className="text-xs text-muted-foreground hover:text-primary font-semibold uppercase shrink-0"
-                          >
-                            Edit
-                          </button>
+                          <>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                handleEdit(link._id, {
+                                  state: link.state,
+                                  city: link.city,
+                                  official_website: link.official_website,
+                                  procurement_link: link.procurement_link,
+                                })
+                              }
+                              className="text-xs text-muted-foreground hover:text-primary font-semibold uppercase shrink-0"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => void handleDeleteLink(link)}
+                              className="text-xs text-muted-foreground hover:text-destructive font-semibold uppercase shrink-0"
+                            >
+                              Delete
+                            </button>
+                          </>
                         )}
                       </li>
                     ))}

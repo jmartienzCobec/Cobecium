@@ -24,7 +24,7 @@ type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   initial?: ProcurementLinkFields;
-  onSubmit: (data: ProcurementLinkFields) => void;
+  onSubmit: (data: ProcurementLinkFields) => void | Promise<void>;
   isEditing: boolean;
 };
 
@@ -62,11 +62,15 @@ export function ProcurementLinkForm({
   const stateTrimmed = form.state.trim();
   const cityTrimmed = form.city.trim();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!stateTrimmed || !cityTrimmed) return;
-    onSubmit(form);
-    onOpenChange(false);
+    try {
+      await Promise.resolve(onSubmit(form));
+      onOpenChange(false);
+    } catch {
+      // Caller may alert; keep dialog open for retry.
+    }
   };
 
   return (
