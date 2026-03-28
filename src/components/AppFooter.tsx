@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 /**
- * Global app footer: "Built by Cobec" and "Powered By" (Convex, Netlify, Clerk).
+ * Global app footer: attribution and "Powered By" (Convex, Netlify, Clerk).
  * Matches the app's dark theme, teal accent, and Syne typography.
  */
 export function AppFooter() {
@@ -31,16 +31,16 @@ export function AppFooter() {
           </Link>
           <span className="hidden sm:inline text-accent/50" aria-hidden>·</span>
           <span className="text-xs font-semibold uppercase tracking-widest text-accent/90">
-            Built by Cobec:
+            Built by Justin Martinez at{" "}
+            <a
+              href="https://www.cobec.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent hover:text-primary underline underline-offset-2 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded-sm"
+            >
+              Cobec
+            </a>
           </span>
-          <a
-            href="https://www.cobec.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-semibold text-accent hover:text-primary transition-colors underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded-sm"
-          >
-            https://www.cobec.com/
-          </a>
         </div>
         <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3">
           <span className="text-xs font-semibold uppercase tracking-widest text-accent/90">
