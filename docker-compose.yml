@@ -1,7 +1,7 @@
 # Cobecium dev stack: Convex (backend + dashboard) + web app.
 # Tailscale: use .env.local with cobec-spark (or your hostname), then:
 #   docker compose --env-file .env.local up --build
-# App: http://cobec-spark:5173   Dashboard: http://cobec-spark:6791
+# App: http://cobec-spark:9560   Dashboard: http://cobec-spark:6791
 
 services:
   backend:
@@ -39,7 +39,7 @@ services:
   app:
     build: .
     ports:
-      - "5173:5173"
+      - "9560:9560"
     env_file:
       - .env.local
     environment:

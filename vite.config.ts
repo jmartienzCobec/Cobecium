@@ -10,7 +10,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: 5173,
+    port: 9560,
     host: true,
     // Allow Tailscale hostname when accessing from another device (e.g. headless Nvidia Spark)
     allowedHosts: ["cobec-spark"],

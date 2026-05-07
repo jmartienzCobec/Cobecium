@@ -9,7 +9,7 @@ RUN bun install --frozen-lockfile || bun install
 
 COPY . .
 
-EXPOSE 5173
+EXPOSE 9560
 
 # Convex dev pushes to CONVEX_SELF_HOSTED_URL; Vite serves the app
 ENTRYPOINT ["sh", "-c", "chmod +x start.sh && ./start.sh"]
